@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>F4F Operations Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to dashboard content</a>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Dashboard navigation">
+      <a class="brand" href="#dashboard" aria-label="F4F Operations Dashboard home">
+        <img class="brand-logo" src="assets/f4f-logo.png" alt="">
+        <span><strong>Fenton4Fitness</strong><small>Operations</small></span>
+      </a>
+      <nav>
+        <ul class="nav-list" id="primary-nav">
+          <li><a href="#dashboard" data-route="dashboard" aria-current="page">Dashboard</a></li>
+          <li><a href="#leads" data-route="leads">Leads</a></li>
+          <li><a href="#athletes" data-route="athletes">Athletes</a></li>
+          <li><a href="#clients" data-route="clients">Clients</a></li>
+          <li><a href="#teams" data-route="teams">Teams</a></li>
+          <li><a href="#training" data-route="training">Training</a></li>
+          <li><a href="#schedule" data-route="schedule">Schedule</a></li>
+          <li><a href="#revenue" data-route="revenue">Revenue</a></li>
+          <li><a href="#messages" data-route="messages">Messages</a></li>
+          <li><a href="#settings" data-route="settings">Settings</a></li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="environment-badge">Local Phase 1</span>
+        <button class="text-button" id="logout-button" type="button">Log out</button>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <button class="menu-button" id="menu-button" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+        <div><p class="eyebrow">Internal application</p><p class="page-context" id="page-context">Dashboard overview</p></div>
+        <div class="user-chip" aria-label="Current user"><span aria-hidden="true">JF</span><div><strong>Owner</strong><small>Local preview</small></div></div>
+      </header>
+
+      <main id="main" tabindex="-1">
+        <section class="view" id="view-dashboard" data-view="dashboard">
+          <div class="page-heading"><div><p class="eyebrow">F4F command center</p><h1>Business overview</h1><p>Phase 1 presents safe empty states until authenticated production data is connected.</p></div><span class="status-pill">Foundation ready</span></div>
+          <div class="stat-grid" aria-label="Business metrics">
+            <article class="stat-card"><span>New Leads</span><strong>—</strong><small>Awaiting secure API connection</small></article>
+            <article class="stat-card"><span>Active Clients</span><strong>—</strong><small>Not connected in Phase 1</small></article>
+            <article class="stat-card"><span>Active Athletes</span><strong>—</strong><small>Not connected in Phase 1</small></article>
+            <article class="stat-card"><span>Upcoming Sessions</span><strong>—</strong><small>Scheduling planned for Phase 4</small></article>
+            <article class="stat-card"><span>Monthly Revenue</span><strong>—</strong><small>Financial data is not connected</small></article>
+            <article class="stat-card"><span>Conversion Rate</span><strong>—</strong><small>Requires lead-status history</small></article>
+          </div>
+          <div class="panel-grid">
+            <article class="panel"><div class="panel-heading"><div><p class="eyebrow">Lead activity</p><h2>Recent inquiries</h2></div><a href="#leads">View leads</a></div><div class="empty-state"><strong>No production data loaded</strong><p>The deployed dashboard will request an allowlisted lead projection through an authenticated API.</p></div></article>
+            <article class="panel"><p class="eyebrow">System readiness</p><h2>Phase 1 modules</h2><ul class="check-list"><li class="ready">Responsive application shell</li><li class="ready">Authentication guard interface</li><li class="ready">Read-only lead normalization</li><li>Production Cognito connection</li><li>Production lead-table read access</li></ul></article>
+          </div>
+        </section>
+
+        <section class="view" id="view-leads" data-view="leads" hidden>
+          <div class="page-heading"><div><p class="eyebrow">Read-only foundation</p><h1>Leads</h1><p>Contact details are visible only in this local mock-data preview.</p></div><span class="status-pill">Read only</span></div>
+          <div class="panel table-panel"><div class="toolbar"><label for="lead-filter">Filter leads</label><select id="lead-filter"><option value="all">All lead types</option><option value="training">Training inquiries</option><option value="website-service-inquiry">Website services</option><option value="testimonial">Testimonials</option></select></div><div class="table-wrap"><table><thead><tr><th>Name</th><th>Contact</th><th>Lead type</th><th>Submitted</th><th>Status</th><th>Follow-up</th></tr></thead><tbody id="leads-table-body"></tbody></table></div><div class="empty-state" id="leads-empty" hidden><strong>No leads match this filter.</strong></div></div>
+        </section>
+
+        <section class="view" id="view-coming-soon" data-view="coming-soon" hidden>
+          <div class="coming-soon"><img class="brand-logo brand-logo-large" src="assets/f4f-logo.png" alt=""><p class="eyebrow">Planned module</p><h1 id="coming-soon-title">Coming soon</h1><p>This module is intentionally deferred so authentication and private-data controls can be completed first.</p></div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <div class="auth-gate" id="auth-gate" hidden><div class="auth-card"><img class="brand-logo brand-logo-large" src="assets/f4f-logo.png" alt="Fenton4Fitness"><p class="eyebrow">Protected application</p><h1>Authentication required</h1><p>Production access will use Amazon Cognito. No real users or passwords exist in Phase 1.</p><button class="primary-button" id="preview-login" type="button">Enter local preview</button><small>This local-only preview does not represent a production login.</small></div></div>
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

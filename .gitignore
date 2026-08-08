@@ -1,0 +1,36 @@
+# Terraform state, plans, and provider caches
+**/.terraform/
+**/*.tfstate
+**/*.tfstate.*
+**/*.tfplan
+**/*.plan
+**/*.tfvars
+**/*.tfvars.json
+!**/*.tfvars.example
+
+# Secrets and environment-specific configuration
+.env
+.env.*
+!.env.example
+**/*.local.json
+**/config.local.js
+
+# Python, test, and build output
+**/__pycache__/
+**/*.py[cod]
+.pytest_cache/
+coverage/
+dist/
+build/
+*.zip
+
+# Local operations evidence
+.local-backups/
+screenshots/
+test-exports/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
