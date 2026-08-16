@@ -15,8 +15,11 @@ foreach ($File in $JavaScriptFiles) {
     if ($LASTEXITCODE -ne 0) { throw "JavaScript syntax check failed: $($File.Name)" }
 }
 
-& $NodeExecutable (Join-Path $ProjectRoot "frontend\tests\auth-guard.test.js")
-if ($LASTEXITCODE -ne 0) { throw "Frontend authentication guard tests failed." }
+$FrontendTests = Get-ChildItem -Path (Join-Path $ProjectRoot "frontend\tests") -Filter "*.test.js"
+foreach ($Test in $FrontendTests) {
+    & $NodeExecutable $Test.FullName
+    if ($LASTEXITCODE -ne 0) { throw "Frontend test failed: $($Test.Name)" }
+}
 
 Push-Location $ProjectRoot
 try {

@@ -31,16 +31,43 @@ leads = load_module("leads_lambda", LEADS_PATH / "lambda_function.py")
 from lead_normalizer import normalize_lead
 
 
+def owner_event(query=None):
+    return {
+        "requestContext": {
+            "authorizer": {
+                "jwt": {"claims": {"cognito:groups": "[OwnerAdmin]"}}
+            }
+        },
+        "queryStringParameters": query,
+    }
+
+
 class DashboardBackendTests(unittest.TestCase):
-    def test_health_endpoint(self):
+    def test_unauthenticated_health_request_is_denied(self):
         response = health.lambda_handler({}, None)
+        self.assertEqual(response["statusCode"], 403)
+
+    def test_invalid_or_non_owner_claim_is_denied(self):
+        event = {
+            "requestContext": {
+                "authorizer": {"jwt": {"claims": {"cognito:groups": "[Coach]"}}}
+            }
+        }
+        self.assertEqual(health.lambda_handler(event, None)["statusCode"], 403)
+        self.assertEqual(leads.lambda_handler(event, None)["statusCode"], 403)
+
+    def test_authenticated_owner_health_endpoint(self):
+        response = health.lambda_handler(owner_event(), None)
         self.assertEqual(response["statusCode"], 200)
         self.assertTrue(json.loads(response["body"])["ok"])
 
     def test_lead_normalization_allowlists_fields(self):
-        result = normalize_lead({"leadId": "abc", "name": "Sample", "email": "sample@example.test", "phone": "555", "leadType": "youth-athlete", "submissionType": "lead", "submittedAt": "2026-08-08T12:00:00Z", "injuryHistory": "must not be returned", "message": "private"})
+        result = normalize_lead({"leadId": "abc", "name": "Sample Person", "email": "sample@example.test", "phone": "555", "leadType": "youth-athlete", "submissionType": "lead", "submittedAt": "2026-08-08T12:00:00Z", "injuryHistory": "must not be returned", "athleteGoals": "private", "message": "private"})
         self.assertEqual(result["status"], "New")
+        self.assertEqual(result["firstName"], "Sample")
+        self.assertEqual(result["lastName"], "Person")
         self.assertNotIn("injuryHistory", result)
+        self.assertNotIn("athleteGoals", result)
         self.assertNotIn("message", result)
 
     def test_invalid_lead_is_rejected(self):
@@ -58,12 +85,13 @@ class DashboardBackendTests(unittest.TestCase):
         original = leads.TABLE
         leads.TABLE = table
         try:
-            response = leads.lambda_handler({}, None)
+            response = leads.lambda_handler(owner_event(), None)
         finally:
             leads.TABLE = original
         payload = json.loads(response["body"])
         self.assertEqual(response["statusCode"], 200)
         self.assertEqual(len(payload["items"]), 1)
+        self.assertEqual([call[0] for call in table.method_calls], ["scan"])
 
     def test_leads_endpoint_handles_storage_failure(self):
         table = Mock()
@@ -71,7 +99,7 @@ class DashboardBackendTests(unittest.TestCase):
         original = leads.TABLE
         leads.TABLE = table
         try:
-            response = leads.lambda_handler({}, None)
+            response = leads.lambda_handler(owner_event(), None)
         finally:
             leads.TABLE = original
         self.assertEqual(response["statusCode"], 500)

@@ -1,6 +1,6 @@
 # Architecture
 
-## Phase 1 target
+## Phase 2 production target
 
 ```mermaid
 flowchart TB
@@ -9,7 +9,6 @@ flowchart TB
       S3[Private S3 frontend]
       CF -->|Origin Access Control| S3
     end
-
     subgraph Identity[Identity boundary]
       Cognito[Cognito user pool]
       Owners[OwnerAdmin group]
@@ -17,7 +16,6 @@ flowchart TB
       Owners --> Cognito
       Coaches --> Cognito
     end
-
     subgraph Application[Authenticated application boundary]
       API[API Gateway HTTP API]
       Auth[JWT authorizer]
@@ -30,40 +28,40 @@ flowchart TB
       Health --> Logs
       Leads --> Logs
     end
-
     subgraph Existing[Existing Project 04 boundary]
       DDB[(F4F lead table)]
       Capture[Lead capture Lambda]
       Capture --> DDB
     end
-
     Browser[John or Jess browser] -->|HTTPS| CF
-    Browser -->|SRP authentication| Cognito
+    Browser -->|Authorization code + PKCE and TOTP| Cognito
     Browser -->|Bearer JWT over HTTPS| API
-    Leads -->|Scan/GetItem/Query only; projected fields| DDB
+    Leads -->|Capped paginated Scan and projected fields| DDB
 ```
 
-The frontend never calls DynamoDB. Cognito identity is evaluated at API Gateway,
-and Lambda receives only already-authorized requests. Phase 1 keeps both routes
-authenticated, including health, to avoid creating an unnecessary public API.
+The frontend never calls DynamoDB. API Gateway validates the Cognito token, and
+each Lambda independently requires membership in `OwnerAdmin`. Both routes,
+including health, are authenticated. The future `Coach` group has no Phase 2
+data access.
 
 ## Lead-read strategy
 
-Project 04 uses `leadId` for idempotent writes and stores `submittedAt` as an ISO
-timestamp. It does not currently expose a query-oriented index for chronological
-lead lists. Phase 1 therefore proposes a capped, paginated `Scan` with a
-`ProjectionExpression` and response allowlist. This is acceptable only for the
-small initial dataset. Before volume increases, prefer a purpose-built index or
-read model created through a separately reviewed Project 04 migration.
+Project 04 uses `leadId` as its partition key and has no secondary index. Phase
+2 therefore uses a capped, paginated `Scan` with a `ProjectionExpression` and a
+second response allowlist. This is acceptable for the current small dataset.
+Before volume grows, a purpose-built index or read model should be introduced
+through a separately reviewed Project 04 migration.
 
-## Custom domain later
+## Staged custom-domain rollout
 
-The initial deployment can use the generated CloudFront hostname. A future
-`dashboard.fenton4fitness.com` change requires:
+`app.fenton4fitness.com` is the permanent Coach/Athlete platform hostname and
+requires separate approvals:
 
-1. An ACM certificate in `us-east-1` covering the dashboard hostname.
-2. The hostname added as a CloudFront alternate domain name.
-3. A Porkbun CNAME from `dashboard` to the CloudFront domain.
-4. Updated CORS and Cognito callback/logout URLs.
+1. Certificate stage requests one ACM certificate in `us-east-1`; its validation
+   CNAME is added manually in Porkbun and issuance is confirmed.
+2. Application stage creates the private frontend, CloudFront alias, Cognito,
+   authenticated API, Lambdas, logging, and exact-table read permission.
+3. DNS cutover manually adds an approved Porkbun `app` CNAME pointing to
+   the new CloudFront hostname.
 
-No DNS or ACM resource is included in the Phase 1 foundation.
+Terraform does not manage Porkbun DNS and creates no Cognito users.

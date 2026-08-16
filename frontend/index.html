@@ -4,12 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <title>F4F Operations Dashboard</title>
+  <title>F4F Athlete Performance Hub</title>
   <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/athlete.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to dashboard content</a>
-  <div class="app-shell">
+  <div class="app-shell" id="coach-shell" hidden>
     <aside class="sidebar" id="sidebar" aria-label="Dashboard navigation">
       <a class="brand" href="#dashboard" aria-label="F4F Operations Dashboard home">
         <img class="brand-logo" src="assets/f4f-logo.png" alt="">
@@ -39,14 +40,14 @@
       <header class="topbar">
         <button class="menu-button" id="menu-button" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
         <div><p class="eyebrow">Internal application</p><p class="page-context" id="page-context">Dashboard overview</p></div>
-        <div class="user-chip" aria-label="Current user"><span aria-hidden="true">JF</span><div><strong>Owner</strong><small>Local preview</small></div></div>
+        <div class="user-chip" aria-label="Current user"><img class="user-avatar" src="assets/f4f-logo.png" alt="Fenton4Fitness"><div><strong>Owner</strong><small>Local preview</small></div></div>
       </header>
 
       <main id="main" tabindex="-1">
         <section class="view" id="view-dashboard" data-view="dashboard">
           <div class="page-heading"><div><p class="eyebrow">F4F command center</p><h1>Business overview</h1><p>Phase 1 presents safe empty states until authenticated production data is connected.</p></div><span class="status-pill">Foundation ready</span></div>
           <div class="stat-grid" aria-label="Business metrics">
-            <article class="stat-card"><span>New Leads</span><strong>—</strong><small>Awaiting secure API connection</small></article>
+            <article class="stat-card"><span>New Leads</span><strong id="new-leads-value">—</strong><small id="new-leads-note">Awaiting authenticated data</small></article>
             <article class="stat-card"><span>Active Clients</span><strong>—</strong><small>Not connected in Phase 1</small></article>
             <article class="stat-card"><span>Active Athletes</span><strong>—</strong><small>Not connected in Phase 1</small></article>
             <article class="stat-card"><span>Upcoming Sessions</span><strong>—</strong><small>Scheduling planned for Phase 4</small></article>
@@ -54,14 +55,14 @@
             <article class="stat-card"><span>Conversion Rate</span><strong>—</strong><small>Requires lead-status history</small></article>
           </div>
           <div class="panel-grid">
-            <article class="panel"><div class="panel-heading"><div><p class="eyebrow">Lead activity</p><h2>Recent inquiries</h2></div><a href="#leads">View leads</a></div><div class="empty-state"><strong>No production data loaded</strong><p>The deployed dashboard will request an allowlisted lead projection through an authenticated API.</p></div></article>
+            <article class="panel"><div class="panel-heading"><div><p class="eyebrow">Lead activity</p><h2>Recent inquiries</h2></div><a href="#leads">View leads</a></div><div id="recent-inquiries"><div class="empty-state"><strong>Authentication required</strong><p>Sign in to load the allowlisted production lead view.</p></div></div></article>
             <article class="panel"><p class="eyebrow">System readiness</p><h2>Phase 1 modules</h2><ul class="check-list"><li class="ready">Responsive application shell</li><li class="ready">Authentication guard interface</li><li class="ready">Read-only lead normalization</li><li>Production Cognito connection</li><li>Production lead-table read access</li></ul></article>
           </div>
         </section>
 
         <section class="view" id="view-leads" data-view="leads" hidden>
           <div class="page-heading"><div><p class="eyebrow">Read-only foundation</p><h1>Leads</h1><p>Contact details are visible only in this local mock-data preview.</p></div><span class="status-pill">Read only</span></div>
-          <div class="panel table-panel"><div class="toolbar"><label for="lead-filter">Filter leads</label><select id="lead-filter"><option value="all">All lead types</option><option value="training">Training inquiries</option><option value="website-service-inquiry">Website services</option><option value="testimonial">Testimonials</option></select></div><div class="table-wrap"><table><thead><tr><th>Name</th><th>Contact</th><th>Lead type</th><th>Submitted</th><th>Status</th><th>Follow-up</th></tr></thead><tbody id="leads-table-body"></tbody></table></div><div class="empty-state" id="leads-empty" hidden><strong>No leads match this filter.</strong></div></div>
+          <div class="panel table-panel"><div class="toolbar"><label for="lead-filter">Filter leads</label><select id="lead-filter"><option value="all">All lead types</option><option value="training">Training inquiries</option><option value="website-service-inquiry">Website services</option><option value="testimonial">Testimonials</option></select></div><p class="data-state" id="leads-state" data-state="idle" role="status" hidden></p><div class="table-wrap"><table><thead><tr><th>Name</th><th>Contact</th><th>Lead type</th><th>Submitted</th><th>Status</th><th>Follow-up</th></tr></thead><tbody id="leads-table-body"></tbody></table></div><div class="empty-state" id="leads-empty"><strong>No leads match this filter.</strong></div></div>
         </section>
 
         <section class="view" id="view-coming-soon" data-view="coming-soon" hidden>
@@ -70,11 +71,61 @@
       </main>
     </div>
   </div>
-  <div class="auth-gate" id="auth-gate" hidden><div class="auth-card"><img class="brand-logo brand-logo-large" src="assets/f4f-logo.png" alt="Fenton4Fitness"><p class="eyebrow">Protected application</p><h1>Authentication required</h1><p>Production access will use Amazon Cognito. No real users or passwords exist in Phase 1.</p><button class="primary-button" id="preview-login" type="button">Enter local preview</button><small>This local-only preview does not represent a production login.</small></div></div>
+
+  <div class="athlete-shell" id="athlete-shell" hidden>
+    <header class="athlete-header">
+      <a href="#athlete-today" class="athlete-brand" aria-label="Athlete Performance Hub home"><img src="assets/f4f-logo.png" alt=""><span><strong>F4F</strong><small>Performance Hub</small></span></a>
+      <div class="athlete-avatar" aria-label="Fictional demo athlete"><span id="athlete-initials">JR</span></div>
+    </header>
+    <main class="athlete-main" id="athlete-main" tabindex="-1">
+      <section id="athlete-view-today" data-athlete-view="athlete-today">
+        <p class="demo-label">Fictional demo athlete · Local preview only</p>
+        <div class="athlete-welcome"><div><span class="athlete-kicker">Today</span><h1>Ready to work, <span data-demo-athlete-name>Jordan</span>?</h1></div><span class="athlete-date">Tuesday<br><strong>Aug 18</strong></span></div>
+        <article class="today-workout">
+          <div class="workout-topline"><span>Assigned workout</span><strong id="athlete-workout-progress">0 of 5 exercises</strong></div>
+          <h2 id="athlete-workout-title">Lower Body Power</h2>
+          <p id="athlete-workout-meta">Today · 4:30 PM · 45 min</p>
+          <ul class="exercise-preview" id="athlete-exercises"></ul>
+          <div class="coach-note"><span>Coach note</span><p id="athlete-coach-note"></p></div>
+          <button class="athlete-primary" id="athlete-start-workout" type="button">Start workout</button>
+          <small class="workout-state" id="athlete-workout-state">Preview only · no results will be saved</small>
+        </article>
+        <div class="athlete-answer-grid">
+          <article class="athlete-card"><span class="athlete-kicker">Last time</span><h2>Your last comparable workout</h2><div class="last-workout" id="athlete-last-workout"></div></article>
+          <article class="athlete-card improvement-card"><span class="athlete-kicker">Progress</span><h2>You're moving forward</h2><p><strong>2</strong> recent personal records</p><a href="#athlete-progress">See progress</a></article>
+        </div>
+      </section>
+
+      <section id="athlete-view-workouts" data-athlete-view="athlete-workouts" hidden>
+        <div class="athlete-page-heading"><span class="athlete-kicker">Your plan</span><h1>Upcoming workouts</h1><p>Coach-assigned sessions are easy to find and ready when you are.</p></div>
+        <article class="athlete-card"><ul class="upcoming-list" id="athlete-upcoming-list"></ul></article>
+      </section>
+
+      <section id="athlete-view-progress" data-athlete-view="athlete-progress" hidden>
+        <div class="athlete-page-heading"><span class="athlete-kicker">Basic progress</span><h1>Recent PRs</h1><p>A simple view of your latest improvements.</p></div>
+        <article class="athlete-card"><ul class="pr-list" id="athlete-pr-list"></ul></article>
+      </section>
+
+      <section id="athlete-view-profile" data-athlete-view="athlete-profile" hidden>
+        <div class="athlete-page-heading"><span class="athlete-kicker">Profile</span><h1 id="athlete-profile-name">Jordan · Fictional demo athlete</h1><p>This preview contains synthetic training data only.</p></div>
+        <article class="athlete-card profile-card"><span>Training focus</span><strong id="athlete-profile-focus">Speed &amp; strength</strong><hr><button class="athlete-secondary local-role-switch" data-switch-role="coach" type="button">Switch to Coach preview</button><button class="athlete-secondary" id="athlete-logout-button" type="button">Log out</button></article>
+      </section>
+    </main>
+    <nav class="athlete-bottom-nav" aria-label="Athlete navigation">
+      <a href="#athlete-today" data-athlete-route="athlete-today" aria-current="page"><span aria-hidden="true">●</span>Today</a>
+      <a href="#athlete-workouts" data-athlete-route="athlete-workouts"><span aria-hidden="true">▤</span>Workouts</a>
+      <a href="#athlete-progress" data-athlete-route="athlete-progress"><span aria-hidden="true">↗</span>Progress</a>
+      <a href="#athlete-profile" data-athlete-route="athlete-profile"><span aria-hidden="true">○</span>Profile</a>
+    </nav>
+  </div>
+
+  <div class="auth-gate" id="auth-gate" hidden><div class="auth-card"><img class="brand-logo brand-logo-large" src="assets/f4f-logo.png" alt="Fenton4Fitness"><p class="eyebrow">Protected application</p><h1>Authentication required</h1><p>Production access uses Amazon Cognito and is limited to approved OwnerAdmin users.</p><div class="local-preview-choices" id="local-preview-choices"><button class="primary-button" id="preview-coach-login" type="button">Preview as Coach</button><button class="secondary-button" id="preview-athlete-login" type="button">Preview as Athlete</button></div><button class="primary-button" id="production-login" type="button">Sign in securely</button><small id="auth-message">Sign in through the protected Fenton4Fitness identity service.</small></div></div>
   <script src="js/config.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/api.js"></script>
   <script src="js/data.js"></script>
+  <script src="js/app-state.js"></script>
+  <script src="js/athlete.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

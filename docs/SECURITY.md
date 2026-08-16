@@ -4,31 +4,36 @@
 
 Lead names, emails, phone numbers, and follow-up state are private business data.
 Messages, goals, injury history, medical notes, and training narratives are more
-sensitive and are explicitly excluded from Phase 1 API responses.
+sensitive and are excluded from Phase 2 API responses.
 
-## Controls in the foundation
+## Phase 2 controls
 
-- Cognito SRP authentication; no browser client secret and no credentials in Git
-- JWT authorization on every API route
-- Optional TOTP MFA architecture and strong password policy
-- OwnerAdmin and future Coach groups, with no real users created
-- Exact-table DynamoDB read permission; no write, update, or delete permissions
-- Projected DynamoDB reads and a second response-level allowlist
+- Cognito authorization-code flow with PKCE; no browser client secret or AWS credentials
+- JWT authorization on every API route plus Lambda OwnerAdmin enforcement
+- Required TOTP MFA, strong passwords, verified email recovery, and short tokens
+- OwnerAdmin and future Coach groups, with no real users created by Terraform
+- Exact-table `dynamodb:Scan` permission only; no wildcard or write permission
+- Projected DynamoDB reads and a second response-level field allowlist
 - Private S3 with CloudFront OAC, TLS, CSP, HSTS, clickjacking protection, and a
   restrictive permissions policy
-- Explicit CORS origins and API throttling
-- Finite CloudWatch retention and logs without contact details or record bodies
-- Deployment gate defaulting to false
+- Explicit CORS origins, API throttling, finite log retention, and logs that do
+  not contain contact details or record bodies
+- A deployment stage defaulting to `local`, which creates nothing
 
 ## Required review before production
 
-- Confirm Cognito threat-protection cost and MFA enrollment policy.
+- Establish and test break-glass owner recovery before onboarding users.
 - Add CloudTrail/audit-event design before any data mutation is introduced.
-- Decide whether the Coach role may view contact information.
+- Decide whether the future Coach role may view contact information.
 - Add automated dependency and infrastructure scanning in CI.
 - Confirm data retention, deletion, export, and incident-response procedures.
-- Review privacy and regulatory obligations before storing medical information.
-- Add WAF/rate-based controls if risk or traffic justifies them.
+- Review privacy obligations before storing or displaying medical information.
+- Add WAF/rate controls if risk or traffic justifies them.
 
-The local preview gate is a UI-development convenience only. It stores a marker
-in browser session storage and provides no production security boundary.
+The local preview gate is a UI convenience only. Production mode refuses that
+bypass. Tokens remain in session storage, are cleared on expiry/logout, and are
+never logged.
+
+The fictional Athlete experience is also localhost-only. Production role
+resolution remains Coach/OwnerAdmin until athlete identity, relationship-based
+authorization, and production data controls receive separate approval.

@@ -1,0 +1,20 @@
+"use strict";
+const fs = require("fs");
+const vm = require("vm");
+const assert = require("assert");
+
+const context = { window: {} };
+vm.createContext(context);
+vm.runInContext(fs.readFileSync(require.resolve("../js/app-state.js"), "utf8"), context);
+const state = context.window.F4F_APP_STATE;
+const items = state.leadsFromPayload({ items: [{ leadId: "1", status: "New", submittedAt: "2026-08-08T12:00:00Z" }, { leadId: "2", status: "Contacted", submittedAt: "2026-08-07T12:00:00Z" }] });
+assert.strictEqual(items.length, 2);
+assert.strictEqual(state.summarize(items).newLeadCount, 1);
+assert.strictEqual(state.summarize(items).recent[0].leadId, "1");
+assert.strictEqual(state.leadsFromPayload({}).length, 0);
+assert.strictEqual(state.resultState({ loading: true }), "loading");
+assert.strictEqual(state.resultState({ count: 0 }), "empty");
+assert.strictEqual(state.resultState({ count: 2 }), "ready");
+assert.strictEqual(state.resultState({ error: new Error("synthetic") }), "error");
+assert.strictEqual(state.resultState({ authenticated: false }), "auth-expired");
+console.log("Live lead payload, summary, loading, empty, API error, and auth-expiry state tests passed.");

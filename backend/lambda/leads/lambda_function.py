@@ -5,6 +5,7 @@ import os
 
 import boto3
 
+from authz import is_owner_admin
 from lead_normalizer import normalize_lead
 
 
@@ -43,6 +44,8 @@ def _encode_cursor(value):
 
 def lambda_handler(event, context):
     """Return a paginated, allowlisted projection of existing lead records."""
+    if not is_owner_admin(event):
+        return _response(403, {"ok": False, "message": "OwnerAdmin access is required."})
     if TABLE is None:
         return _response(503, {"ok": False, "message": "Lead storage is not configured."})
 
@@ -50,7 +53,7 @@ def lambda_handler(event, context):
     cursor = _decode_cursor(query.get("cursor"))
     scan_options = {
         "Limit": MAX_RESULTS,
-        "ProjectionExpression": "leadId,#name,email,phone,parentEmail,parentPhone,leadType,submissionType,submittedAt,#status,followUpStatus,athleteName",
+        "ProjectionExpression": "leadId,#name,firstName,lastName,email,phone,parentName,parentEmail,parentPhone,leadType,submissionType,createdAt,submittedAt,#status,followUpStatus,athleteName",
         "ExpressionAttributeNames": {"#name": "name", "#status": "status"},
     }
     if cursor:

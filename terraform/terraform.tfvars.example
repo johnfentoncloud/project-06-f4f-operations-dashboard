@@ -1,6 +1,7 @@
-# Keep false until the complete plan is reviewed and deployment is approved.
-deploy_dashboard = false
-environment      = "dev"
+# Use certificate first. Switch to application only after ACM is ISSUED and the
+# complete application plan receives separate approval.
+deployment_stage = "local"
+environment      = "prod"
 
 # Required only before an approved deployment. Use local ignored tfvars.
 dashboard_bucket_name     = "REPLACE-WITH-GLOBALLY-UNIQUE-BUCKET-NAME"
@@ -8,6 +9,7 @@ existing_leads_table_name = "REPLACE-WITH-EXISTING-PROJECT-04-TABLE-NAME"
 existing_leads_table_arn  = "arn:aws:dynamodb:us-east-1:ACCOUNT_ID:table/EXISTING_TABLE_NAME"
 
 allowed_origins = [
+  "https://app.fenton4fitness.com",
   "http://localhost:8080",
   "http://127.0.0.1:8080",
 ]

@@ -4,10 +4,15 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "deploy_dashboard" {
-  description = "Explicit deployment approval gate. Keep false during Phase 1 local development."
-  type        = bool
-  default     = false
+variable "deployment_stage" {
+  description = "Approval gate: local creates nothing, certificate requests ACM only, application creates the dashboard after certificate issuance."
+  type        = string
+  default     = "local"
+
+  validation {
+    condition     = contains(["local", "certificate", "application"], var.deployment_stage)
+    error_message = "deployment_stage must be local, certificate, or application."
+  }
 }
 
 variable "environment" {
@@ -27,7 +32,7 @@ variable "dashboard_bucket_name" {
   default     = ""
 
   validation {
-    condition     = !var.deploy_dashboard || length(var.dashboard_bucket_name) >= 3
+    condition     = var.deployment_stage != "application" || length(var.dashboard_bucket_name) >= 3
     error_message = "Provide a globally unique dashboard_bucket_name before enabling deployment."
   }
 }
@@ -44,7 +49,7 @@ variable "existing_leads_table_arn" {
   default     = ""
 
   validation {
-    condition     = !var.deploy_dashboard || can(regex("^arn:aws:dynamodb:[a-z0-9-]+:[0-9]{12}:table/", var.existing_leads_table_arn))
+    condition     = var.deployment_stage != "application" || can(regex("^arn:aws:dynamodb:[a-z0-9-]+:[0-9]{12}:table/", var.existing_leads_table_arn))
     error_message = "Provide the exact existing lead-table ARN before enabling deployment."
   }
 }
@@ -52,7 +57,19 @@ variable "existing_leads_table_arn" {
 variable "allowed_origins" {
   description = "Dashboard origins allowed by API Gateway CORS."
   type        = list(string)
-  default     = ["http://localhost:8080", "http://127.0.0.1:8080"]
+  default     = ["https://app.fenton4fitness.com", "http://localhost:8080", "http://127.0.0.1:8080"]
+}
+
+variable "dashboard_domain_name" {
+  description = "Permanent Athlete Performance Hub hostname. Porkbun DNS remains externally managed."
+  type        = string
+  default     = "app.fenton4fitness.com"
+}
+
+variable "cognito_domain_prefix" {
+  description = "Globally unique prefix for the Cognito managed-login domain."
+  type        = string
+  default     = "f4f-operations-065634457564"
 }
 
 variable "log_retention_days" {
