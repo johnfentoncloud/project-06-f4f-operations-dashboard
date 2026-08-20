@@ -7,6 +7,7 @@
   <title>F4F Athlete Performance Hub</title>
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="stylesheet" href="css/athlete.css">
+  <link rel="stylesheet" href="css/training.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to dashboard content</a>
@@ -24,6 +25,9 @@
           <li><a href="#clients" data-route="clients">Clients</a></li>
           <li><a href="#teams" data-route="teams">Teams</a></li>
           <li><a href="#training" data-route="training">Training</a></li>
+          <li><a href="#exercises" data-route="exercises">Exercise Library</a></li>
+          <li><a href="#workout-builder" data-route="workout-builder">Workout Builder</a></li>
+          <li><a href="#workout-templates" data-route="workout-templates">Workout Templates</a></li>
           <li><a href="#schedule" data-route="schedule">Schedule</a></li>
           <li><a href="#revenue" data-route="revenue">Revenue</a></li>
           <li><a href="#messages" data-route="messages">Messages</a></li>
@@ -40,7 +44,7 @@
       <header class="topbar">
         <button class="menu-button" id="menu-button" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
         <div><p class="eyebrow">Internal application</p><p class="page-context" id="page-context">Dashboard overview</p></div>
-        <div class="user-chip" aria-label="Current user"><img class="user-avatar" src="assets/f4f-logo.png" alt="Fenton4Fitness"><div><strong>Owner</strong><small>Local preview</small></div></div>
+        <div class="user-chip" aria-label="Current user"><img class="user-avatar" src="assets/f4f-logo.png" alt="Fenton4Fitness"><div><strong>Owner</strong><small>Local preview</small></div><button class="account-signout" id="header-logout-button" type="button">Sign Out</button></div>
       </header>
 
       <main id="main" tabindex="-1">
@@ -63,6 +67,43 @@
         <section class="view" id="view-leads" data-view="leads" hidden>
           <div class="page-heading"><div><p class="eyebrow">Read-only foundation</p><h1>Leads</h1><p>Contact details are visible only in this local mock-data preview.</p></div><span class="status-pill">Read only</span></div>
           <div class="panel table-panel"><div class="toolbar"><label for="lead-filter">Filter leads</label><select id="lead-filter"><option value="all">All lead types</option><option value="training">Training inquiries</option><option value="website-service-inquiry">Website services</option><option value="testimonial">Testimonials</option></select></div><p class="data-state" id="leads-state" data-state="idle" role="status" hidden></p><div class="table-wrap"><table><thead><tr><th>Name</th><th>Contact</th><th>Lead type</th><th>Submitted</th><th>Status</th><th>Follow-up</th></tr></thead><tbody id="leads-table-body"></tbody></table></div><div class="empty-state" id="leads-empty"><strong>No leads match this filter.</strong></div></div>
+        </section>
+
+        <section class="view" id="view-exercises" data-view="exercises" hidden>
+          <div class="page-heading"><div><p class="eyebrow">Coach programming</p><h1>Exercise Library</h1><p>Search the original F4F starter library, save favorites, and add movements directly to the workout in progress.</p></div><span class="status-pill" id="exercise-count">0 exercises</span></div>
+          <div class="training-layout">
+            <aside class="panel exercise-filters" aria-label="Exercise filters">
+              <label for="exercise-search">Search exercises<input id="exercise-search" type="search" placeholder="Try Front Squat"></label>
+              <label for="exercise-category">Category<select id="exercise-category"></select></label>
+              <label for="exercise-equipment">Equipment<select id="exercise-equipment"></select></label>
+              <label for="exercise-pattern">Movement pattern<select id="exercise-pattern"></select></label>
+              <label class="check-control"><input id="exercise-favorites" type="checkbox"> Favorites only</label>
+              <div class="recent-list"><span class="eyebrow">Recently used</span><div id="recent-exercises"></div></div>
+              <a class="secondary-button compact-button builder-link" href="#workout-builder">Open Workout Builder</a>
+            </aside>
+            <div class="exercise-results" id="exercise-results" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <section class="view" id="view-workout-builder" data-view="workout-builder" hidden>
+          <div class="page-heading"><div><p class="eyebrow">Coach programming</p><h1>Workout Builder</h1><p>Organize ordered exercises into simple sections and configure only the prescription fields each movement needs.</p></div><span class="status-pill" id="builder-count">0 exercises</span></div>
+          <div class="builder-layout">
+            <aside class="panel workout-details">
+              <label for="workout-name">Workout name<input id="workout-name" type="text" maxlength="100"></label>
+              <label for="workout-description">Description / coach note<textarea id="workout-description" rows="5" maxlength="500"></textarea></label>
+              <a class="secondary-button compact-button" href="#exercises">Add from Exercise Library</a>
+              <button class="secondary-button compact-button" id="load-demo-workout" type="button">Restore demo workout</button>
+              <button class="primary-button" id="save-template" type="button">Save as Template</button>
+              <p class="builder-status" id="builder-status" role="status"></p>
+              <small class="local-only-note">Local prototype only · no athlete assignment or production write occurs.</small>
+            </aside>
+            <div class="builder-exercises" id="workout-exercise-list"></div>
+          </div>
+        </section>
+
+        <section class="view" id="view-workout-templates" data-view="workout-templates" hidden>
+          <div class="page-heading"><div><p class="eyebrow">Coach programming</p><h1>Workout Templates</h1><p>Open a saved template or continue building a new workout.</p></div></div>
+          <div class="panel template-list" id="template-list" aria-live="polite"></div>
         </section>
 
         <section class="view" id="view-coming-soon" data-view="coming-soon" hidden>
@@ -125,7 +166,9 @@
   <script src="js/api.js"></script>
   <script src="js/data.js"></script>
   <script src="js/app-state.js"></script>
+  <script src="js/exercise-library.js?v=phase3b"></script>
+  <script src="js/workout-builder.js?v=phase3"></script>
   <script src="js/athlete.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=phase3b"></script>
 </body>
 </html>

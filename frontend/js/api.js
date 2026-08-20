@@ -21,9 +21,24 @@
       error.name = "AuthenticationExpiredError";
       throw error;
     }
-    if (!response.ok) throw new Error(`Dashboard API returned HTTP ${response.status}.`);
+    if (!response.ok) {
+      const payload = await response.json().catch(() => ({}));
+      const error = new Error(payload.message || `Dashboard API returned HTTP ${response.status}.`);
+      error.status = response.status;
+      throw error;
+    }
     return response.json();
   }
 
-  window.F4F_API = Object.freeze({ health: () => request("/health"), listLeads: cursor => request(`/leads${cursor ? `?cursor=${encodeURIComponent(cursor)}` : ""}`) });
+  const json = (method, payload, idempotencyKey) => ({ method, headers: { "Content-Type": "application/json", ...(idempotencyKey ? { "Idempotency-Key": idempotencyKey } : {}) }, body: JSON.stringify(payload) });
+  window.F4F_API = Object.freeze({
+    health: () => request("/health"),
+    listLeads: cursor => request(`/leads${cursor ? `?cursor=${encodeURIComponent(cursor)}` : ""}`),
+    listExercises: cursor => request(`/exercises${cursor ? `?cursor=${encodeURIComponent(cursor)}` : ""}`),
+    getExercise: exerciseId => request(`/exercises/${encodeURIComponent(exerciseId)}`),
+    listWorkoutTemplates: cursor => request(`/workout-templates${cursor ? `?cursor=${encodeURIComponent(cursor)}` : ""}`),
+    getWorkoutTemplate: (templateId, version) => request(`/workout-templates/${encodeURIComponent(templateId)}${version ? `/versions/${encodeURIComponent(version)}` : ""}`),
+    createWorkoutTemplate: (payload, key) => request("/workout-templates", json("POST", { ...payload, idempotencyKey: key }, key)),
+    updateWorkoutTemplate: (templateId, payload, key) => request(`/workout-templates/${encodeURIComponent(templateId)}`, json("PUT", { ...payload, idempotencyKey: key }, key))
+  });
 })();

@@ -32,6 +32,14 @@ locals {
     Environment = var.environment
     ManagedBy   = "Terraform"
   }
+  lambda_archive_excludes = [
+    "__pycache__/**",
+    "**/__pycache__/**",
+    "*.pyc",
+    "**/*.pyc",
+    "*.pyo",
+    "**/*.pyo"
+  ]
 }
 
 resource "aws_acm_certificate" "dashboard" {
@@ -51,6 +59,7 @@ data "archive_file" "health" {
   type        = "zip"
   source_dir  = "${path.module}/../backend/lambda/health"
   output_path = "${path.module}/.terraform/${local.name_prefix}-health.zip"
+  excludes    = local.lambda_archive_excludes
 }
 
 data "archive_file" "leads" {
@@ -58,6 +67,23 @@ data "archive_file" "leads" {
   type        = "zip"
   source_dir  = "${path.module}/../backend/lambda/leads"
   output_path = "${path.module}/.terraform/${local.name_prefix}-leads.zip"
+  excludes    = local.lambda_archive_excludes
+}
+
+data "archive_file" "training_read" {
+  count       = local.application_enabled ? 1 : 0
+  type        = "zip"
+  source_dir  = "${path.module}/../backend/lambda/training_read"
+  output_path = "${path.module}/.terraform/${local.name_prefix}-training-read.zip"
+  excludes    = local.lambda_archive_excludes
+}
+
+data "archive_file" "training_write" {
+  count       = local.application_enabled ? 1 : 0
+  type        = "zip"
+  source_dir  = "${path.module}/../backend/lambda/training_write"
+  output_path = "${path.module}/.terraform/${local.name_prefix}-training-write.zip"
+  excludes    = local.lambda_archive_excludes
 }
 
 resource "aws_s3_bucket" "frontend" {
@@ -329,6 +355,20 @@ resource "aws_iam_role" "leads_lambda" {
   tags               = local.tags
 }
 
+resource "aws_iam_role" "training_read_lambda" {
+  count              = local.application_enabled ? 1 : 0
+  name               = "${local.name_prefix}-training-read-role"
+  assume_role_policy = jsonencode({ Version = "2012-10-17", Statement = [{ Effect = "Allow", Principal = { Service = "lambda.amazonaws.com" }, Action = "sts:AssumeRole" }] })
+  tags               = local.tags
+}
+
+resource "aws_iam_role" "training_write_lambda" {
+  count              = local.application_enabled ? 1 : 0
+  name               = "${local.name_prefix}-training-write-role"
+  assume_role_policy = jsonencode({ Version = "2012-10-17", Statement = [{ Effect = "Allow", Principal = { Service = "lambda.amazonaws.com" }, Action = "sts:AssumeRole" }] })
+  tags               = local.tags
+}
+
 resource "aws_iam_role_policy_attachment" "health_lambda_basic" {
   count      = local.application_enabled ? 1 : 0
   role       = aws_iam_role.health_lambda[0].name
@@ -339,6 +379,86 @@ resource "aws_iam_role_policy_attachment" "leads_lambda_basic" {
   count      = local.application_enabled ? 1 : 0
   role       = aws_iam_role.leads_lambda[0].name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_role_policy_attachment" "training_read_lambda_basic" {
+  count      = local.application_enabled ? 1 : 0
+  role       = aws_iam_role.training_read_lambda[0].name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_role_policy_attachment" "training_write_lambda_basic" {
+  count      = local.application_enabled ? 1 : 0
+  role       = aws_iam_role.training_write_lambda[0].name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_dynamodb_table" "training_content" {
+  count                       = local.application_enabled ? 1 : 0
+  name                        = "f4f-training-content"
+  billing_mode                = "PAY_PER_REQUEST"
+  deletion_protection_enabled = true
+  hash_key                    = "PK"
+  range_key                   = "SK"
+  attribute {
+    name = "PK"
+    type = "S"
+  }
+  attribute {
+    name = "SK"
+    type = "S"
+  }
+  attribute {
+    name = "GSI1PK"
+    type = "S"
+  }
+  attribute {
+    name = "GSI1SK"
+    type = "S"
+  }
+  global_secondary_index {
+    name            = "GSI1"
+    hash_key        = "GSI1PK"
+    range_key       = "GSI1SK"
+    projection_type = "ALL"
+  }
+  point_in_time_recovery {
+    enabled = true
+  }
+  server_side_encryption {
+    enabled = true
+  }
+  tags = local.tags
+}
+
+data "aws_iam_policy_document" "training_read" {
+  count = local.application_enabled ? 1 : 0
+  statement {
+    actions   = ["dynamodb:GetItem", "dynamodb:Query"]
+    resources = [aws_dynamodb_table.training_content[0].arn, "${aws_dynamodb_table.training_content[0].arn}/index/GSI1"]
+  }
+}
+
+resource "aws_iam_role_policy" "training_read" {
+  count  = local.application_enabled ? 1 : 0
+  name   = "${local.name_prefix}-training-read"
+  role   = aws_iam_role.training_read_lambda[0].id
+  policy = data.aws_iam_policy_document.training_read[0].json
+}
+
+data "aws_iam_policy_document" "training_write" {
+  count = local.application_enabled ? 1 : 0
+  statement {
+    actions   = ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:TransactWriteItems", "dynamodb:UpdateItem"]
+    resources = [aws_dynamodb_table.training_content[0].arn]
+  }
+}
+
+resource "aws_iam_role_policy" "training_write" {
+  count  = local.application_enabled ? 1 : 0
+  name   = "${local.name_prefix}-training-write"
+  role   = aws_iam_role.training_write_lambda[0].id
+  policy = data.aws_iam_policy_document.training_write[0].json
 }
 
 data "aws_iam_policy_document" "lead_read" {
@@ -395,6 +515,34 @@ resource "aws_lambda_function" "leads" {
   tags = local.tags
 }
 
+resource "aws_lambda_function" "training_read" {
+  count            = local.application_enabled ? 1 : 0
+  function_name    = "${local.name_prefix}-training-read"
+  role             = aws_iam_role.training_read_lambda[0].arn
+  runtime          = "python3.13"
+  handler          = "lambda_function.lambda_handler"
+  filename         = data.archive_file.training_read[0].output_path
+  source_code_hash = data.archive_file.training_read[0].output_base64sha256
+  timeout          = 10
+  memory_size      = 256
+  environment { variables = { TRAINING_TABLE_NAME = aws_dynamodb_table.training_content[0].name, OWNER_GROUP = "OwnerAdmin" } }
+  tags = local.tags
+}
+
+resource "aws_lambda_function" "training_write" {
+  count            = local.application_enabled ? 1 : 0
+  function_name    = "${local.name_prefix}-training-write"
+  role             = aws_iam_role.training_write_lambda[0].arn
+  runtime          = "python3.13"
+  handler          = "lambda_function.lambda_handler"
+  filename         = data.archive_file.training_write[0].output_path
+  source_code_hash = data.archive_file.training_write[0].output_base64sha256
+  timeout          = 10
+  memory_size      = 256
+  environment { variables = { TRAINING_TABLE_NAME = aws_dynamodb_table.training_content[0].name, OWNER_GROUP = "OwnerAdmin" } }
+  tags = local.tags
+}
+
 resource "aws_cloudwatch_log_group" "health" {
   count             = local.application_enabled ? 1 : 0
   name              = "/aws/lambda/${aws_lambda_function.health[0].function_name}"
@@ -405,6 +553,20 @@ resource "aws_cloudwatch_log_group" "health" {
 resource "aws_cloudwatch_log_group" "leads" {
   count             = local.application_enabled ? 1 : 0
   name              = "/aws/lambda/${aws_lambda_function.leads[0].function_name}"
+  retention_in_days = var.log_retention_days
+  tags              = local.tags
+}
+
+resource "aws_cloudwatch_log_group" "training_read" {
+  count             = local.application_enabled ? 1 : 0
+  name              = "/aws/lambda/${aws_lambda_function.training_read[0].function_name}"
+  retention_in_days = var.log_retention_days
+  tags              = local.tags
+}
+
+resource "aws_cloudwatch_log_group" "training_write" {
+  count             = local.application_enabled ? 1 : 0
+  name              = "/aws/lambda/${aws_lambda_function.training_write[0].function_name}"
   retention_in_days = var.log_retention_days
   tags              = local.tags
 }
@@ -422,8 +584,8 @@ resource "aws_apigatewayv2_api" "dashboard" {
   protocol_type = "HTTP"
   cors_configuration {
     allow_credentials = false
-    allow_headers     = ["authorization", "content-type"]
-    allow_methods     = ["GET"]
+    allow_headers     = ["authorization", "content-type", "idempotency-key"]
+    allow_methods     = ["GET", "OPTIONS", "POST", "PUT"]
     allow_origins     = var.allowed_origins
     max_age           = 300
   }
@@ -515,4 +677,70 @@ resource "aws_lambda_permission" "leads_api" {
   function_name = aws_lambda_function.leads[0].function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.dashboard[0].execution_arn}/*/GET/leads"
+}
+
+resource "aws_apigatewayv2_integration" "training_read" {
+  count                  = local.application_enabled ? 1 : 0
+  api_id                 = aws_apigatewayv2_api.dashboard[0].id
+  integration_type       = "AWS_PROXY"
+  integration_uri        = aws_lambda_function.training_read[0].invoke_arn
+  payload_format_version = "2.0"
+}
+
+resource "aws_apigatewayv2_integration" "training_write" {
+  count                  = local.application_enabled ? 1 : 0
+  api_id                 = aws_apigatewayv2_api.dashboard[0].id
+  integration_type       = "AWS_PROXY"
+  integration_uri        = aws_lambda_function.training_write[0].invoke_arn
+  payload_format_version = "2.0"
+}
+
+locals {
+  training_read_routes = toset([
+    "GET /exercises",
+    "GET /exercises/{exerciseId}",
+    "GET /workout-templates",
+    "GET /workout-templates/{templateId}",
+    "GET /workout-templates/{templateId}/versions/{version}"
+  ])
+  training_write_routes = toset([
+    "POST /workout-templates",
+    "PUT /workout-templates/{templateId}"
+  ])
+}
+
+resource "aws_apigatewayv2_route" "training_read" {
+  for_each           = local.application_enabled ? local.training_read_routes : toset([])
+  api_id             = aws_apigatewayv2_api.dashboard[0].id
+  route_key          = each.value
+  authorization_type = "JWT"
+  authorizer_id      = aws_apigatewayv2_authorizer.cognito[0].id
+  target             = "integrations/${aws_apigatewayv2_integration.training_read[0].id}"
+}
+
+resource "aws_apigatewayv2_route" "training_write" {
+  for_each           = local.application_enabled ? local.training_write_routes : toset([])
+  api_id             = aws_apigatewayv2_api.dashboard[0].id
+  route_key          = each.value
+  authorization_type = "JWT"
+  authorizer_id      = aws_apigatewayv2_authorizer.cognito[0].id
+  target             = "integrations/${aws_apigatewayv2_integration.training_write[0].id}"
+}
+
+resource "aws_lambda_permission" "training_read_api" {
+  count         = local.application_enabled ? 1 : 0
+  statement_id  = "AllowDashboardApiTrainingRead"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.training_read[0].function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.dashboard[0].execution_arn}/*/GET/*"
+}
+
+resource "aws_lambda_permission" "training_write_api" {
+  count         = local.application_enabled ? 1 : 0
+  statement_id  = "AllowDashboardApiTrainingWrite"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.training_write[0].function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.dashboard[0].execution_arn}/*/*/workout-templates*"
 }

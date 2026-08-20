@@ -2,6 +2,14 @@
   "use strict";
   const functionalRoutes = new Set(["dashboard", "leads"]);
   const labels = { dashboard: "Dashboard overview", leads: "Lead viewer", athletes: "Athletes", clients: "Clients", teams: "Teams", training: "Training", schedule: "Schedule", revenue: "Revenue", messages: "Messages", settings: "Settings" };
+  if (window.F4F_WORKOUTS) {
+    functionalRoutes.add("exercises");
+    functionalRoutes.add("workout-builder");
+    labels.exercises = "Exercise Library";
+    labels["workout-builder"] = "Workout Builder";
+    functionalRoutes.add("workout-templates");
+    labels["workout-templates"] = "Workout Templates";
+  }
   let leads = [];
 
   function escapeHtml(value) {
@@ -101,6 +109,8 @@
   async function showExperience({ loadCoachData = true } = {}) {
     const authenticated = window.F4F_AUTH.isAuthenticated();
     const athlete = authenticated && window.F4F_AUTH.getExperience() === "athlete";
+    const headerLogout = document.querySelector("#header-logout-button");
+    if (headerLogout) headerLogout.hidden = !authenticated || athlete;
     document.querySelector("#coach-shell").hidden = athlete || !authenticated;
     const athleteShell = document.querySelector("#athlete-shell");
     if (athleteShell) athleteShell.hidden = !athlete;
@@ -153,6 +163,7 @@
     document.querySelector("#preview-athlete-login")?.addEventListener("click", () => localLogin("athlete"));
     document.querySelector("#production-login").addEventListener("click", () => window.F4F_AUTH.login());
     document.querySelector("#logout-button").addEventListener("click", logout);
+    document.querySelector("#header-logout-button")?.addEventListener("click", logout);
     document.querySelector("#athlete-logout-button")?.addEventListener("click", logout);
     document.querySelectorAll("[data-switch-role]").forEach(button => button.addEventListener("click", async () => {
       if (!window.F4F_AUTH.setLocalExperience(button.dataset.switchRole)) return;

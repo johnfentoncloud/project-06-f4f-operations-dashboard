@@ -1,0 +1,1782 @@
+[
+  {
+    "exerciseId": "f4f-001-back-squat",
+    "name": "Back Squat",
+    "category": "Strength",
+    "movementPattern": "Squat",
+    "equipment": "Barbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Back Squat with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "bilateral",
+      "lower body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-002-front-squat",
+    "name": "Front Squat",
+    "category": "Strength",
+    "movementPattern": "Squat",
+    "equipment": "Barbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Front Squat with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "anterior load",
+      "lower body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-003-goblet-squat",
+    "name": "Goblet Squat",
+    "category": "Strength",
+    "movementPattern": "Squat",
+    "equipment": "Kettlebell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Goblet Squat with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "beginner friendly",
+      "lower body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-004-box-squat",
+    "name": "Box Squat",
+    "category": "Strength",
+    "movementPattern": "Squat",
+    "equipment": "Barbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Box Squat with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "posterior chain",
+      "lower body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-005-split-squat",
+    "name": "Split Squat",
+    "category": "Strength",
+    "movementPattern": "Single-Leg",
+    "equipment": "Dumbbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Split Squat with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "unilateral",
+      "lower body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-006-reverse-lunge",
+    "name": "Reverse Lunge",
+    "category": "Strength",
+    "movementPattern": "Single-Leg",
+    "equipment": "Dumbbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Reverse Lunge with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "unilateral",
+      "lower body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-007-forward-lunge",
+    "name": "Forward Lunge",
+    "category": "Strength",
+    "movementPattern": "Single-Leg",
+    "equipment": "Dumbbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Forward Lunge with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "unilateral",
+      "lower body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-008-lateral-lunge",
+    "name": "Lateral Lunge",
+    "category": "Strength",
+    "movementPattern": "Single-Leg",
+    "equipment": "Dumbbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Lateral Lunge with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "frontal plane",
+      "lower body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-009-bulgarian-split-squat",
+    "name": "Bulgarian Split Squat",
+    "category": "Strength",
+    "movementPattern": "Single-Leg",
+    "equipment": "Dumbbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Bulgarian Split Squat with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "rear-foot elevated",
+      "lower body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-010-step-up",
+    "name": "Step-Up",
+    "category": "Strength",
+    "movementPattern": "Single-Leg",
+    "equipment": "Dumbbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Step-Up with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "unilateral",
+      "lower body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-011-conventional-deadlift",
+    "name": "Conventional Deadlift",
+    "category": "Strength",
+    "movementPattern": "Hinge",
+    "equipment": "Barbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Conventional Deadlift with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "posterior chain",
+      "bilateral"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-012-trap-bar-deadlift",
+    "name": "Trap Bar Deadlift",
+    "category": "Strength",
+    "movementPattern": "Hinge",
+    "equipment": "Trap Bar",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Trap Bar Deadlift with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "posterior chain",
+      "power"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-013-romanian-deadlift",
+    "name": "Romanian Deadlift",
+    "category": "Strength",
+    "movementPattern": "Hinge",
+    "equipment": "Barbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Romanian Deadlift with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "hamstrings",
+      "posterior chain"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-014-single-leg-romanian-deadlift",
+    "name": "Single-Leg Romanian Deadlift",
+    "category": "Strength",
+    "movementPattern": "Hinge",
+    "equipment": "Dumbbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Single-Leg Romanian Deadlift with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "unilateral",
+      "balance"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-015-hip-thrust",
+    "name": "Hip Thrust",
+    "category": "Strength",
+    "movementPattern": "Hinge",
+    "equipment": "Barbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Hip Thrust with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "glutes",
+      "posterior chain"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-016-glute-bridge",
+    "name": "Glute Bridge",
+    "category": "Strength",
+    "movementPattern": "Hinge",
+    "equipment": "Bodyweight",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Glute Bridge with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "activation",
+      "glutes"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-017-kettlebell-swing",
+    "name": "Kettlebell Swing",
+    "category": "Strength",
+    "movementPattern": "Hinge",
+    "equipment": "Kettlebell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Kettlebell Swing with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "power",
+      "posterior chain"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-018-bench-press",
+    "name": "Bench Press",
+    "category": "Strength",
+    "movementPattern": "Horizontal Push",
+    "equipment": "Barbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Bench Press with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "upper body",
+      "bilateral"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-019-incline-dumbbell-press",
+    "name": "Incline Dumbbell Press",
+    "category": "Strength",
+    "movementPattern": "Horizontal Push",
+    "equipment": "Dumbbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Incline Dumbbell Press with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "upper body",
+      "incline"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-020-dumbbell-floor-press",
+    "name": "Dumbbell Floor Press",
+    "category": "Strength",
+    "movementPattern": "Horizontal Push",
+    "equipment": "Dumbbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Dumbbell Floor Press with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "upper body",
+      "floor"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-021-push-up",
+    "name": "Push-Up",
+    "category": "Strength",
+    "movementPattern": "Horizontal Push",
+    "equipment": "Bodyweight",
+    "measurementType": "bodyweight",
+    "defaultUnit": "reps",
+    "instructions": "Perform Push-Up with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "upper body",
+      "bodyweight"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-022-strict-press",
+    "name": "Strict Press",
+    "category": "Strength",
+    "movementPattern": "Vertical Push",
+    "equipment": "Barbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Strict Press with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "overhead",
+      "upper body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-023-push-press",
+    "name": "Push Press",
+    "category": "Strength",
+    "movementPattern": "Vertical Push",
+    "equipment": "Barbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Push Press with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "power",
+      "overhead"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-024-half-kneeling-dumbbell-press",
+    "name": "Half-Kneeling Dumbbell Press",
+    "category": "Strength",
+    "movementPattern": "Vertical Push",
+    "equipment": "Dumbbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Half-Kneeling Dumbbell Press with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "unilateral",
+      "core"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-025-pull-up",
+    "name": "Pull-Up",
+    "category": "Strength",
+    "movementPattern": "Vertical Pull",
+    "equipment": "Pull-Up Bar",
+    "measurementType": "bodyweight",
+    "defaultUnit": "reps",
+    "instructions": "Perform Pull-Up with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "upper body",
+      "bodyweight"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-026-chin-up",
+    "name": "Chin-Up",
+    "category": "Strength",
+    "movementPattern": "Vertical Pull",
+    "equipment": "Pull-Up Bar",
+    "measurementType": "bodyweight",
+    "defaultUnit": "reps",
+    "instructions": "Perform Chin-Up with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "upper body",
+      "bodyweight"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-027-lat-pulldown",
+    "name": "Lat Pulldown",
+    "category": "Strength",
+    "movementPattern": "Vertical Pull",
+    "equipment": "Cable",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Lat Pulldown with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "upper body",
+      "back"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-028-bent-over-row",
+    "name": "Bent-Over Row",
+    "category": "Strength",
+    "movementPattern": "Horizontal Pull",
+    "equipment": "Barbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Bent-Over Row with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "upper body",
+      "back"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-029-chest-supported-row",
+    "name": "Chest-Supported Row",
+    "category": "Strength",
+    "movementPattern": "Horizontal Pull",
+    "equipment": "Dumbbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Chest-Supported Row with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "upper body",
+      "back"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-030-single-arm-cable-row",
+    "name": "Single-Arm Cable Row",
+    "category": "Strength",
+    "movementPattern": "Horizontal Pull",
+    "equipment": "Cable",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Single-Arm Cable Row with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "unilateral",
+      "back"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-031-inverted-row",
+    "name": "Inverted Row",
+    "category": "Strength",
+    "movementPattern": "Horizontal Pull",
+    "equipment": "Bodyweight",
+    "measurementType": "bodyweight",
+    "defaultUnit": "reps",
+    "instructions": "Perform Inverted Row with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "upper body",
+      "bodyweight"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-032-farmer-carry",
+    "name": "Farmer Carry",
+    "category": "Strength",
+    "movementPattern": "Carry",
+    "equipment": "Dumbbell",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform Farmer Carry with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "grip",
+      "total body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-033-suitcase-carry",
+    "name": "Suitcase Carry",
+    "category": "Strength",
+    "movementPattern": "Carry",
+    "equipment": "Kettlebell",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform Suitcase Carry with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "anti-lateral flexion",
+      "unilateral"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-034-front-rack-carry",
+    "name": "Front-Rack Carry",
+    "category": "Strength",
+    "movementPattern": "Carry",
+    "equipment": "Kettlebell",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform Front-Rack Carry with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "core",
+      "posture"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-035-sled-push",
+    "name": "Sled Push",
+    "category": "Strength",
+    "movementPattern": "Carry",
+    "equipment": "Sled",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform Sled Push with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "acceleration",
+      "lower body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-036-hang-power-clean",
+    "name": "Hang Power Clean",
+    "category": "Power",
+    "movementPattern": "Olympic / Power",
+    "equipment": "Barbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Hang Power Clean with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "explosive",
+      "total body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-037-high-pull",
+    "name": "High Pull",
+    "category": "Power",
+    "movementPattern": "Olympic / Power",
+    "equipment": "Barbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform High Pull with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "explosive",
+      "total body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-038-dumbbell-snatch",
+    "name": "Dumbbell Snatch",
+    "category": "Power",
+    "movementPattern": "Olympic / Power",
+    "equipment": "Dumbbell",
+    "measurementType": "weight_reps",
+    "defaultUnit": "lb",
+    "instructions": "Perform Dumbbell Snatch with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "unilateral",
+      "explosive"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-039-box-jump",
+    "name": "Box Jump",
+    "category": "Plyometrics",
+    "movementPattern": "Plyometrics",
+    "equipment": "Box",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Box Jump with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "vertical power",
+      "jump"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-040-broad-jump",
+    "name": "Broad Jump",
+    "category": "Plyometrics",
+    "movementPattern": "Plyometrics",
+    "equipment": "None",
+    "measurementType": "distance",
+    "defaultUnit": "in",
+    "instructions": "Perform Broad Jump with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "horizontal power",
+      "jump"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-041-countermovement-jump",
+    "name": "Countermovement Jump",
+    "category": "Plyometrics",
+    "movementPattern": "Plyometrics",
+    "equipment": "None",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Countermovement Jump with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "vertical power",
+      "jump"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-042-pogo-jump",
+    "name": "Pogo Jump",
+    "category": "Plyometrics",
+    "movementPattern": "Plyometrics",
+    "equipment": "None",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Pogo Jump with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "ankle stiffness",
+      "reactive"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-043-lateral-bound",
+    "name": "Lateral Bound",
+    "category": "Plyometrics",
+    "movementPattern": "Plyometrics",
+    "equipment": "None",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Lateral Bound with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "lateral power",
+      "single leg"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-044-skater-jump",
+    "name": "Skater Jump",
+    "category": "Plyometrics",
+    "movementPattern": "Plyometrics",
+    "equipment": "None",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Skater Jump with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "lateral power",
+      "balance"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-045-med-ball-chest-pass",
+    "name": "Med-Ball Chest Pass",
+    "category": "Power",
+    "movementPattern": "Olympic / Power",
+    "equipment": "Medicine Ball",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Med-Ball Chest Pass with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "upper-body power",
+      "throw"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-046-med-ball-rotational-throw",
+    "name": "Med-Ball Rotational Throw",
+    "category": "Power",
+    "movementPattern": "Rotation",
+    "equipment": "Medicine Ball",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Med-Ball Rotational Throw with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "rotational power",
+      "throw"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-047-med-ball-overhead-slam",
+    "name": "Med-Ball Overhead Slam",
+    "category": "Power",
+    "movementPattern": "Olympic / Power",
+    "equipment": "Medicine Ball",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Med-Ball Overhead Slam with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "total-body power",
+      "throw"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-048-wall-acceleration-drill",
+    "name": "Wall Acceleration Drill",
+    "category": "Speed",
+    "movementPattern": "Acceleration",
+    "equipment": "Wall",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Wall Acceleration Drill with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "sprint mechanics",
+      "warm-up"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-049-falling-start-sprint",
+    "name": "Falling Start Sprint",
+    "category": "Speed",
+    "movementPattern": "Acceleration",
+    "equipment": "None",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform Falling Start Sprint with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "sprint",
+      "first step"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-050-three-point-start-sprint",
+    "name": "Three-Point Start Sprint",
+    "category": "Speed",
+    "movementPattern": "Acceleration",
+    "equipment": "None",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform Three-Point Start Sprint with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "sprint",
+      "start"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-051-flying-sprint",
+    "name": "Flying Sprint",
+    "category": "Speed",
+    "movementPattern": "Speed",
+    "equipment": "None",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform Flying Sprint with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "max velocity",
+      "sprint"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-052-a-skip",
+    "name": "A-Skip",
+    "category": "Speed",
+    "movementPattern": "Speed",
+    "equipment": "None",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform A-Skip with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "sprint mechanics",
+      "rhythm"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-053-lateral-shuffle",
+    "name": "Lateral Shuffle",
+    "category": "Agility / Change of Direction",
+    "movementPattern": "Agility",
+    "equipment": "Cones",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform Lateral Shuffle with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "lateral movement",
+      "defense"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-054-carioca",
+    "name": "Carioca",
+    "category": "Agility / Change of Direction",
+    "movementPattern": "Agility",
+    "equipment": "Cones",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform Carioca with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "coordination",
+      "rotation"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-055-pro-agility-shuttle",
+    "name": "Pro Agility Shuttle",
+    "category": "Agility / Change of Direction",
+    "movementPattern": "Change of Direction",
+    "equipment": "Cones",
+    "measurementType": "time",
+    "defaultUnit": "sec",
+    "instructions": "Perform Pro Agility Shuttle with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "5-10-5",
+      "change of direction"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-056-t-drill",
+    "name": "T-Drill",
+    "category": "Agility / Change of Direction",
+    "movementPattern": "Change of Direction",
+    "equipment": "Cones",
+    "measurementType": "time",
+    "defaultUnit": "sec",
+    "instructions": "Perform T-Drill with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "agility",
+      "multidirectional"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-057-deceleration-stick",
+    "name": "Deceleration Stick",
+    "category": "Agility / Change of Direction",
+    "movementPattern": "Change of Direction",
+    "equipment": "Cones",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Deceleration Stick with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "braking",
+      "body control"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-058-run",
+    "name": "Run",
+    "category": "Conditioning",
+    "movementPattern": "Running",
+    "equipment": "None",
+    "measurementType": "distance",
+    "defaultUnit": "mi",
+    "instructions": "Perform Run with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "aerobic",
+      "conditioning"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-059-sprint",
+    "name": "Sprint",
+    "category": "Conditioning",
+    "movementPattern": "Running",
+    "equipment": "None",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform Sprint with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "anaerobic",
+      "speed"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-060-tempo-run",
+    "name": "Tempo Run",
+    "category": "Conditioning",
+    "movementPattern": "Running",
+    "equipment": "None",
+    "measurementType": "time",
+    "defaultUnit": "min",
+    "instructions": "Perform Tempo Run with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "aerobic",
+      "tempo"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-061-row",
+    "name": "Row",
+    "category": "Conditioning",
+    "movementPattern": "Rowing",
+    "equipment": "Rower",
+    "measurementType": "distance",
+    "defaultUnit": "m",
+    "instructions": "Perform Row with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "erg",
+      "total body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-062-bike",
+    "name": "Bike",
+    "category": "Conditioning",
+    "movementPattern": "Bike",
+    "equipment": "Bike",
+    "measurementType": "calories",
+    "defaultUnit": "cal",
+    "instructions": "Perform Bike with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "erg",
+      "lower body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-063-ski-erg",
+    "name": "Ski Erg",
+    "category": "Conditioning",
+    "movementPattern": "Ski",
+    "equipment": "Ski Erg",
+    "measurementType": "distance",
+    "defaultUnit": "m",
+    "instructions": "Perform Ski Erg with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "erg",
+      "upper body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-064-jump-rope",
+    "name": "Jump Rope",
+    "category": "Conditioning",
+    "movementPattern": "Jump Rope",
+    "equipment": "Jump Rope",
+    "measurementType": "time",
+    "defaultUnit": "sec",
+    "instructions": "Perform Jump Rope with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "footwork",
+      "conditioning"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-065-burpee",
+    "name": "Burpee",
+    "category": "Conditioning",
+    "movementPattern": "Bodyweight Conditioning",
+    "equipment": "Bodyweight",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Burpee with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "total body",
+      "conditioning"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-066-wall-ball",
+    "name": "Wall Ball",
+    "category": "Conditioning",
+    "movementPattern": "Bodyweight Conditioning",
+    "equipment": "Medicine Ball",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Wall Ball with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "squat",
+      "conditioning"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-067-mountain-climber",
+    "name": "Mountain Climber",
+    "category": "Conditioning",
+    "movementPattern": "Bodyweight Conditioning",
+    "equipment": "Bodyweight",
+    "measurementType": "time",
+    "defaultUnit": "sec",
+    "instructions": "Perform Mountain Climber with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "core",
+      "conditioning"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-068-bear-crawl",
+    "name": "Bear Crawl",
+    "category": "Conditioning",
+    "movementPattern": "Bodyweight Conditioning",
+    "equipment": "Bodyweight",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform Bear Crawl with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "locomotion",
+      "total body"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-069-plank",
+    "name": "Plank",
+    "category": "Core",
+    "movementPattern": "Anti-extension",
+    "equipment": "Bodyweight",
+    "measurementType": "hold_duration",
+    "defaultUnit": "sec",
+    "instructions": "Perform Plank with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "trunk",
+      "isometric"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-070-dead-bug",
+    "name": "Dead Bug",
+    "category": "Core",
+    "movementPattern": "Anti-extension",
+    "equipment": "Bodyweight",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Dead Bug with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "trunk",
+      "control"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-071-ab-wheel-rollout",
+    "name": "Ab Wheel Rollout",
+    "category": "Core",
+    "movementPattern": "Anti-extension",
+    "equipment": "Ab Wheel",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Ab Wheel Rollout with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "trunk",
+      "advanced"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-072-pallof-press",
+    "name": "Pallof Press",
+    "category": "Core",
+    "movementPattern": "Anti-rotation",
+    "equipment": "Cable",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Pallof Press with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "trunk",
+      "anti-rotation"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-073-half-kneeling-pallof-hold",
+    "name": "Half-Kneeling Pallof Hold",
+    "category": "Core",
+    "movementPattern": "Anti-rotation",
+    "equipment": "Band",
+    "measurementType": "hold_duration",
+    "defaultUnit": "sec",
+    "instructions": "Perform Half-Kneeling Pallof Hold with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "trunk",
+      "isometric"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-074-cable-chop",
+    "name": "Cable Chop",
+    "category": "Core",
+    "movementPattern": "Rotation",
+    "equipment": "Cable",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Cable Chop with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "rotation",
+      "trunk"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-075-russian-twist",
+    "name": "Russian Twist",
+    "category": "Core",
+    "movementPattern": "Rotation",
+    "equipment": "Medicine Ball",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Russian Twist with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "rotation",
+      "trunk"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-076-hanging-knee-raise",
+    "name": "Hanging Knee Raise",
+    "category": "Core",
+    "movementPattern": "Flexion",
+    "equipment": "Pull-Up Bar",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Hanging Knee Raise with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "trunk",
+      "hanging"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-077-side-plank",
+    "name": "Side Plank",
+    "category": "Core",
+    "movementPattern": "Carry",
+    "equipment": "Bodyweight",
+    "measurementType": "hold_duration",
+    "defaultUnit": "sec",
+    "instructions": "Perform Side Plank with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "anti-lateral flexion",
+      "isometric"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-078-world-s-greatest-stretch",
+    "name": "World's Greatest Stretch",
+    "category": "Mobility / Warm-up",
+    "movementPattern": "Dynamic Mobility",
+    "equipment": "None",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform World's Greatest Stretch with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "hips",
+      "thoracic"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-079-walking-quad-stretch",
+    "name": "Walking Quad Stretch",
+    "category": "Mobility / Warm-up",
+    "movementPattern": "Dynamic Mobility",
+    "equipment": "None",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform Walking Quad Stretch with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "quads",
+      "dynamic"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-080-inchworm",
+    "name": "Inchworm",
+    "category": "Mobility / Warm-up",
+    "movementPattern": "Movement Preparation",
+    "equipment": "None",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Inchworm with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "hamstrings",
+      "shoulders"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-081-lunge-with-rotation",
+    "name": "Lunge with Rotation",
+    "category": "Mobility / Warm-up",
+    "movementPattern": "Dynamic Mobility",
+    "equipment": "None",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Lunge with Rotation with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "hips",
+      "thoracic"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-082-mini-band-lateral-walk",
+    "name": "Mini-Band Lateral Walk",
+    "category": "Mobility / Warm-up",
+    "movementPattern": "Activation",
+    "equipment": "Mini Band",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform Mini-Band Lateral Walk with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "glutes",
+      "lateral"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-083-glute-bridge-march",
+    "name": "Glute Bridge March",
+    "category": "Mobility / Warm-up",
+    "movementPattern": "Activation",
+    "equipment": "Bodyweight",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Glute Bridge March with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "glutes",
+      "core"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-084-scapular-push-up",
+    "name": "Scapular Push-Up",
+    "category": "Mobility / Warm-up",
+    "movementPattern": "Activation",
+    "equipment": "Bodyweight",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Scapular Push-Up with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "shoulders",
+      "scapula"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-085-band-pull-apart",
+    "name": "Band Pull-Apart",
+    "category": "Mobility / Warm-up",
+    "movementPattern": "Activation",
+    "equipment": "Band",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Band Pull-Apart with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "upper back",
+      "posture"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-086-ankle-rocker",
+    "name": "Ankle Rocker",
+    "category": "Mobility / Warm-up",
+    "movementPattern": "Dynamic Mobility",
+    "equipment": "None",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Ankle Rocker with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "ankle",
+      "mobility"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-087-hip-airplane",
+    "name": "Hip Airplane",
+    "category": "Mobility / Warm-up",
+    "movementPattern": "Movement Preparation",
+    "equipment": "None",
+    "measurementType": "reps",
+    "defaultUnit": "reps",
+    "instructions": "Perform Hip Airplane with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "hip",
+      "balance"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-088-high-knee-march",
+    "name": "High-Knee March",
+    "category": "Mobility / Warm-up",
+    "movementPattern": "Movement Preparation",
+    "equipment": "None",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform High-Knee March with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "running",
+      "coordination"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  },
+  {
+    "exerciseId": "f4f-089-lateral-lunge-walk",
+    "name": "Lateral Lunge Walk",
+    "category": "Mobility / Warm-up",
+    "movementPattern": "Movement Preparation",
+    "equipment": "None",
+    "measurementType": "distance",
+    "defaultUnit": "yd",
+    "instructions": "Perform Lateral Lunge Walk with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.",
+    "tags": [
+      "groin",
+      "lateral"
+    ],
+    "active": true,
+    "customExercise": false,
+    "createdBy": "F4F_LIBRARY",
+    "createdAt": "2026-08-16T00:00:00.000Z",
+    "updatedAt": "2026-08-16T00:00:00.000Z",
+    "demoMedia": null
+  }
+]
