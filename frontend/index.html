@@ -78,6 +78,7 @@
               <label for="exercise-equipment">Equipment<select id="exercise-equipment"></select></label>
               <label for="exercise-pattern">Movement pattern<select id="exercise-pattern"></select></label>
               <label class="check-control"><input id="exercise-favorites" type="checkbox"> Favorites only</label>
+              <label for="exercise-target-section">Add exercises to<select id="exercise-target-section"></select></label>
               <div class="recent-list"><span class="eyebrow">Recently used</span><div id="recent-exercises"></div></div>
               <a class="secondary-button compact-button builder-link" href="#workout-builder">Open Workout Builder</a>
             </aside>
@@ -92,8 +93,12 @@
               <label for="workout-name">Workout name<input id="workout-name" type="text" maxlength="100"></label>
               <label for="workout-description">Description / coach note<textarea id="workout-description" rows="5" maxlength="500"></textarea></label>
               <a class="secondary-button compact-button" href="#exercises">Add from Exercise Library</a>
-              <button class="secondary-button compact-button" id="load-demo-workout" type="button">Restore demo workout</button>
+              <button class="secondary-button compact-button" id="add-section" type="button" aria-expanded="false" aria-controls="section-quick-chooser">+ Add Section</button>
+              <div class="section-quick-chooser" id="section-quick-chooser" aria-label="Choose section type" hidden><button type="button" data-section-preset="Warm-Up">Warm-Up</button><button type="button" data-section-preset="Strength">Strength</button><button type="button" data-section-preset="Superset">Superset</button><button type="button" data-section-preset="Metcon">Metcon</button><button type="button" data-section-preset="Conditioning">Conditioning</button><button type="button" data-section-preset="Core">Core</button><button type="button" data-section-preset="Finisher">Finisher</button><button type="button" data-section-preset="Custom">Custom</button></div>
+              <label for="demo-workout-select">Local session example<select id="demo-workout-select"><option value="day1">Day 1 – Upper / Lower Push</option><option value="day2">Day 2</option><option value="day3">Day 3</option></select></label>
+              <button class="secondary-button compact-button" id="load-demo-workout" type="button">Load selected example</button>
               <button class="primary-button" id="save-template" type="button">Save as Template</button>
+              <button class="secondary-button compact-button" id="new-workout" type="button">New Workout</button>
               <p class="builder-status" id="builder-status" role="status"></p>
               <small class="local-only-note">Local prototype only · no athlete assignment or production write occurs.</small>
             </aside>
@@ -167,7 +172,8 @@
   <script src="js/data.js"></script>
   <script src="js/app-state.js"></script>
   <script src="js/exercise-library.js?v=phase3b"></script>
-  <script src="js/workout-builder.js?v=phase3"></script>
+  <script src="js/workout-builder.js?v=phase3c-workflow-polish"></script>
+  <script src="js/workout-fixtures.js?v=phase3c"></script>
   <script src="js/athlete.js"></script>
   <script src="js/app.js?v=phase3b"></script>
 </body>

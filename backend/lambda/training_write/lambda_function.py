@@ -53,6 +53,14 @@ def retry_result(subject, key, request_hash):
     return None
 
 def version_snapshot(payload, template_id, version, subject, timestamp):
+    if isinstance(payload.get("sections"), list):
+        sections = []
+        for section_order, section in enumerate(payload["sections"]):
+            exercises = []
+            for exercise_order, item in enumerate(section.get("exercises", [])):
+                exercises.append({"order": exercise_order, "exerciseId": item["exerciseId"], "exerciseName": item["exerciseName"], "measurementType": item.get("measurementType", "reps"), "prescription": item["prescription"]})
+            sections.append({"sectionId": section["sectionId"], "order": section_order, "type": section["type"], "format": section["format"], "title": str(section.get("title", "")).strip(), "instructions": str(section.get("instructions", "")).strip(), "rounds": section.get("rounds", ""), "duration": section.get("duration", ""), "durationUnit": section.get("durationUnit", "min"), "exercises": exercises})
+        return {"PK": f"TEMPLATE#{template_id}", "SK": f"VERSION#{version:06d}", "entityType": "WorkoutTemplateVersion", "schemaVersion": 2, "templateId": template_id, "version": version, "name": payload["name"].strip(), "description": str(payload.get("description", "")).strip(), "sections": sections, "createdAt": timestamp, "createdBy": subject}
     exercises = []
     for order, item in enumerate(payload["exercises"]):
         exercises.append({"order": order, "section": item["section"], "exerciseId": item["exerciseId"], "exerciseName": item["exerciseName"], "prescription": item["prescription"]})

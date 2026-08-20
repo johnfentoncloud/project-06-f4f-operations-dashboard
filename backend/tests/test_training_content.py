@@ -97,6 +97,27 @@ class TrainingContentTests(unittest.TestCase):
         bad = json.loads(json.dumps(good)); bad["exercises"][0]["prescription"]["rpe"] = 11
         self.assertTrue(validation.validate_template(bad))
 
+    def test_sectioned_template_validation(self):
+        payload = {
+            "name": "Day 1",
+            "sections": [
+                {"sectionId": "section-1", "type": "Strength", "format": "Superset", "title": "SS 1", "rounds": 4, "duration": "", "instructions": "", "exercises": [
+                    {"exerciseId": "f4f-002-front-squat", "exerciseName": "Front Squat", "measurementType": "weight_reps", "prescription": {"reps": 6, "repQualifier": "total", "loadUnit": "lb"}},
+                    {"exerciseId": "f4f-018-bench-press", "exerciseName": "Bench Press", "measurementType": "weight_reps", "prescription": {"reps": 8, "repQualifier": "total", "loadUnit": "lb"}},
+                ]},
+                {"sectionId": "section-2", "type": "Metcon", "format": "AMRAP", "title": "Metcon", "rounds": "", "duration": 15, "durationUnit": "min", "instructions": "", "exercises": [
+                    {"exerciseId": "f4f-063-ski-erg", "exerciseName": "Ski Erg", "measurementType": "distance", "prescription": {"distance": 500, "distanceUnit": "m"}}
+                ]},
+            ],
+        }
+        self.assertEqual(validation.validate_template(payload), [])
+        repeated = json.loads(json.dumps(payload)); repeated["sections"][1].update({"type": "Strength", "format": "Superset", "title": "SS 2"})
+        self.assertEqual(validation.validate_template(repeated), [], "Repeated section types and formats must be valid")
+        invalid = json.loads(json.dumps(payload)); invalid["sections"][1]["sectionId"] = "section-1"
+        self.assertTrue(any("duplicates sectionId" in error for error in validation.validate_template(invalid)))
+        invalid = json.loads(json.dumps(payload)); invalid["sections"][0]["format"] = "Unknown"
+        self.assertTrue(any("invalid format" in error for error in validation.validate_template(invalid)))
+
     def test_immutable_snapshot_keeps_complete_prescription(self):
         fake_boto3 = types.ModuleType("boto3")
         fake_boto3.resource = lambda service: Mock(Table=lambda name: Mock())
@@ -119,6 +140,28 @@ class TrainingContentTests(unittest.TestCase):
         self.assertEqual(first["SK"], "VERSION#000001")
         self.assertEqual(second["SK"], "VERSION#000002")
         self.assertEqual(first["exercises"][0]["prescription"]["coachInstruction"], "Land quietly")
+
+    def test_sectioned_snapshot_is_complete_and_immutable_between_versions(self):
+        fake_boto3 = types.ModuleType("boto3")
+        fake_boto3.resource = lambda service: Mock(Table=lambda name: Mock())
+        fake_boto3.client = lambda service: Mock()
+        dynamodb_types = types.ModuleType("boto3.dynamodb.types")
+        dynamodb_types.TypeSerializer = lambda: Mock(serialize=lambda value: value)
+        sys.modules["boto3"] = fake_boto3
+        sys.modules["boto3.dynamodb"] = types.ModuleType("boto3.dynamodb")
+        sys.modules["boto3.dynamodb.types"] = dynamodb_types
+        botocore = types.ModuleType("botocore.exceptions"); botocore.ClientError = type("ClientError", (Exception,), {})
+        sys.modules["botocore"] = types.ModuleType("botocore"); sys.modules["botocore.exceptions"] = botocore
+        sys.modules["authz"] = authz; sys.modules["validation"] = validation
+        writer = load("training_writer_section_test", WRITE / "lambda_function.py")
+        payload = {"name": "Day 1", "sections": [{"sectionId": "section-1", "type": "Strength", "format": "Superset", "title": "SS 1", "rounds": 4, "duration": "", "durationUnit": "min", "instructions": "Brace before each rep.", "exercises": [{"exerciseId": "f4f-002-front-squat", "exerciseName": "Front Squat", "measurementType": "weight_reps", "prescription": {"reps": 6, "repQualifier": "total", "loadUnit": "lb"}}]}]}
+        first = writer.version_snapshot(payload, "id-1", 1, "owner-1", "now")
+        payload["sections"][0]["rounds"] = 5
+        second = writer.version_snapshot(payload, "id-1", 2, "owner-1", "later")
+        self.assertEqual(first["schemaVersion"], 2)
+        self.assertEqual(first["sections"][0]["rounds"], 4)
+        self.assertEqual(second["sections"][0]["rounds"], 5)
+        self.assertEqual(first["sections"][0]["exercises"][0]["prescription"]["reps"], 6)
 
     def test_exercise_list_get_and_missing(self):
         fake_boto3 = types.ModuleType("boto3")

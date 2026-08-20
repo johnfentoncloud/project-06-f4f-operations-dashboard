@@ -12,6 +12,7 @@ locals {
         "js/config.js",
         "js/data.js",
         "js/athlete.js",
+        "js/workout-fixtures.js",
         "css/athlete.css",
         "assets/README.md"
       ]),

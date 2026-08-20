@@ -13,12 +13,16 @@ const workoutBuilder = fs.readFileSync(path.join(frontend, "js", "workout-builde
 for (const forbidden of ["css/athlete.css", "js/athlete.js", "js/data.js", "Preview as Athlete", "data-athlete-route", "Fictional demo athlete"]) {
   assert.ok(!productionHtml.includes(forbidden), `Production HTML must exclude ${forbidden}`);
 }
+for (const localFixtureControl of ["demo-workout-select", "load-demo-workout", "Local session example"]) assert.ok(!productionHtml.includes(localFixtureControl), `Production HTML must exclude local fixture control ${localFixtureControl}`);
 
 for (const required of ["id=\"production-login\"", "js/auth.js", "js/api.js", "js/app-state.js", "js/exercise-library.js", "js/workout-builder.js", "css/training.css", "Exercise Library", "Workout Builder", "Workout Templates", "js/app.js"]) {
   assert.ok(productionHtml.includes(required), `Production HTML must include ${required}`);
 }
+for (const workflowControl of ['id="add-section"', 'id="section-quick-chooser"', 'data-section-preset="Superset"', 'id="new-workout"']) assert.ok(productionHtml.includes(workflowControl), `Production Coach bundle must include ${workflowControl}`);
+assert.ok(workoutBuilder.includes('state.targetSectionId = target'), "Exercise destination must persist after assignment");
+assert.ok(workoutBuilder.includes('destinationLabels(state.workout.sections)'), "Builder and movement selectors must use shared display titles");
 
-for (const excludedAsset of ["index.html", "index.production.html", "js/data.js", "js/athlete.js", "css/athlete.css"]) {
+for (const excludedAsset of ["index.html", "index.production.html", "js/data.js", "js/athlete.js", "js/workout-fixtures.js", "css/athlete.css"]) {
   assert.ok(terraform.includes(`\"${excludedAsset}\"`), `Terraform must explicitly exclude ${excludedAsset} from bulk upload`);
 }
 
