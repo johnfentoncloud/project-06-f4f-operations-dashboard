@@ -1,0 +1,257 @@
+[
+  {
+    "candidateId": "f4f-candidate-pendulum-squat",
+    "name": "Pendulum Squat",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-smith-machine-squat",
+    "name": "Smith Machine Squat",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-deficit-reverse-lunge",
+    "name": "Deficit Reverse Lunge",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-pistol-squat-to-box",
+    "name": "Pistol Squat to Box",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-rack-pull",
+    "name": "Rack Pull",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-standing-hamstring-curl",
+    "name": "Standing Hamstring Curl",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-back-extension",
+    "name": "Back Extension",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-plyometric-push-up",
+    "name": "Plyometric Push-Up",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-tall-kneeling-dumbbell-press",
+    "name": "Tall-Kneeling Dumbbell Press",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-assisted-chin-up",
+    "name": "Assisted Chin-Up",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-machine-high-row",
+    "name": "Machine High Row",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-hip-abduction",
+    "name": "Hip Abduction",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-hip-adduction",
+    "name": "Hip Adduction",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-cross-body-carry",
+    "name": "Cross-Body Carry",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-clean-from-blocks",
+    "name": "Clean from Blocks",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-medicine-ball-shot-put-throw",
+    "name": "Medicine Ball Shot-Put Throw",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-depth-jump",
+    "name": "Depth Jump",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-drop-jump",
+    "name": "Drop Jump",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-ins-and-outs-sprint",
+    "name": "Ins-and-Outs Sprint",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-stride-run",
+    "name": "Stride Run",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-dribble-run",
+    "name": "Dribble Run",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-high-knee-run",
+    "name": "High-Knee Run",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-box-drill",
+    "name": "Box Drill",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-four-cone-drill",
+    "name": "Four-Cone Drill",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-figure-eight-drill",
+    "name": "Figure-Eight Drill",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-air-bike-tempo",
+    "name": "Air Bike Tempo",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-bike-tempo",
+    "name": "Bike Tempo",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-sled-push-pull",
+    "name": "Sled Push-Pull",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-stability-ball-rollout",
+    "name": "Stability-Ball Rollout",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-cable-lift",
+    "name": "Cable Lift",
+    "approvalStatus": "COACH_REVIEW"
+  },
+  {
+    "candidateId": "f4f-candidate-curtsy-lunge",
+    "name": "Curtsy Lunge",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-crossover-step-up",
+    "name": "Crossover Step-Up",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-rear-foot-elevated-split-squat",
+    "name": "Rear-Foot-Elevated Split Squat",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-snatch-grip-deadlift",
+    "name": "Snatch-Grip Deadlift",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-single-arm-dumbbell-bench-press",
+    "name": "Single-Arm Dumbbell Bench Press",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-dumbbell-squeeze-press",
+    "name": "Dumbbell Squeeze Press",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-landmine-push-press",
+    "name": "Landmine Push Press",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-seal-row",
+    "name": "Seal Row",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-half-kneeling-cable-row",
+    "name": "Half-Kneeling Cable Row",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-dumbbell-rear-delt-raise",
+    "name": "Dumbbell Rear-Delt Raise",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-waiter-carry",
+    "name": "Waiter Carry",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-dumbbell-hang-clean",
+    "name": "Dumbbell Hang Clean",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-dumbbell-push-jerk",
+    "name": "Dumbbell Push Jerk",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-double-kettlebell-swing",
+    "name": "Double-Kettlebell Swing",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-medicine-ball-step-behind-rotational-throw",
+    "name": "Medicine Ball Step-Behind Rotational Throw",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-tuck-jump",
+    "name": "Tuck Jump",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-repeated-broad-jump",
+    "name": "Repeated Broad Jump",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-crossover-start-sprint",
+    "name": "Crossover Start Sprint",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-flying-20",
+    "name": "Flying 20",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-bike-distance",
+    "name": "Bike Distance",
+    "approvalStatus": "HOLD"
+  },
+  {
+    "candidateId": "f4f-candidate-walking-hamstring-sweep",
+    "name": "Walking Hamstring Sweep",
+    "approvalStatus": "HOLD"
+  }
+]

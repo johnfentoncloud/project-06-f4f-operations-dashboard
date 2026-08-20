@@ -12,6 +12,7 @@
       "bilateral",
       "lower body"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -32,6 +33,7 @@
       "anterior load",
       "lower body"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -52,6 +54,7 @@
       "beginner friendly",
       "lower body"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -72,6 +75,7 @@
       "posterior chain",
       "lower body"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -92,6 +96,7 @@
       "unilateral",
       "lower body"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -112,6 +117,7 @@
       "unilateral",
       "lower body"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -132,6 +138,7 @@
       "unilateral",
       "lower body"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -152,6 +159,7 @@
       "frontal plane",
       "lower body"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -171,6 +179,11 @@
     "tags": [
       "rear-foot elevated",
       "lower body"
+    ],
+    "aliases": [
+      "RFESS",
+      "Rear-Foot-Elevated Split Squat",
+      "Rear Foot Elevated Split Squat"
     ],
     "active": true,
     "customExercise": false,
@@ -192,6 +205,7 @@
       "unilateral",
       "lower body"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -212,6 +226,7 @@
       "posterior chain",
       "bilateral"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -232,6 +247,7 @@
       "posterior chain",
       "power"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -251,6 +267,10 @@
     "tags": [
       "hamstrings",
       "posterior chain"
+    ],
+    "aliases": [
+      "RDL",
+      "Romanian Dead Lift"
     ],
     "active": true,
     "customExercise": false,
@@ -272,6 +292,10 @@
       "unilateral",
       "balance"
     ],
+    "aliases": [
+      "Single-Leg RDL",
+      "Single Leg RDL"
+    ],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -292,6 +316,7 @@
       "glutes",
       "posterior chain"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -312,6 +337,7 @@
       "activation",
       "glutes"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -331,6 +357,9 @@
     "tags": [
       "power",
       "posterior chain"
+    ],
+    "aliases": [
+      "KB Swing"
     ],
     "active": true,
     "customExercise": false,
@@ -352,6 +381,7 @@
       "upper body",
       "bilateral"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -371,6 +401,10 @@
     "tags": [
       "upper body",
       "incline"
+    ],
+    "aliases": [
+      "Incline DB Bench Press",
+      "Incline Dumbbell Bench Press"
     ],
     "active": true,
     "customExercise": false,
@@ -392,6 +426,9 @@
       "upper body",
       "floor"
     ],
+    "aliases": [
+      "DB Floor Press"
+    ],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -411,6 +448,12 @@
     "tags": [
       "upper body",
       "bodyweight"
+    ],
+    "aliases": [
+      "Push Ups",
+      "Push-Ups",
+      "Pushup",
+      "Pushups"
     ],
     "active": true,
     "customExercise": false,
@@ -432,6 +475,11 @@
       "overhead",
       "upper body"
     ],
+    "aliases": [
+      "Overhead Press",
+      "Barbell Overhead Press",
+      "OHP"
+    ],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -451,6 +499,9 @@
     "tags": [
       "power",
       "overhead"
+    ],
+    "aliases": [
+      "Barbell Push Press"
     ],
     "active": true,
     "customExercise": false,
@@ -472,6 +523,7 @@
       "unilateral",
       "core"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -491,6 +543,11 @@
     "tags": [
       "upper body",
       "bodyweight"
+    ],
+    "aliases": [
+      "Pull Ups",
+      "Pull-Ups",
+      "Pullup"
     ],
     "active": true,
     "customExercise": false,
@@ -512,6 +569,11 @@
       "upper body",
       "bodyweight"
     ],
+    "aliases": [
+      "Chin Ups",
+      "Chin-Ups",
+      "Chinup"
+    ],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -532,6 +594,7 @@
       "upper body",
       "back"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -551,6 +614,10 @@
     "tags": [
       "upper body",
       "back"
+    ],
+    "aliases": [
+      "Bent Over Row",
+      "Barbell Row"
     ],
     "active": true,
     "customExercise": false,
@@ -572,6 +639,9 @@
       "upper body",
       "back"
     ],
+    "aliases": [
+      "Chest Supported Row"
+    ],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -591,6 +661,10 @@
     "tags": [
       "unilateral",
       "back"
+    ],
+    "aliases": [
+      "One-Arm Cable Row",
+      "1-Arm Cable Row"
     ],
     "active": true,
     "customExercise": false,
@@ -612,6 +686,7 @@
       "upper body",
       "bodyweight"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -631,6 +706,11 @@
     "tags": [
       "grip",
       "total body"
+    ],
+    "aliases": [
+      "Farmer's Carry",
+      "Farmers Carry",
+      "Farmer Walk"
     ],
     "active": true,
     "customExercise": false,
@@ -652,6 +732,9 @@
       "anti-lateral flexion",
       "unilateral"
     ],
+    "aliases": [
+      "Suitcase Walk"
+    ],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -671,6 +754,9 @@
     "tags": [
       "core",
       "posture"
+    ],
+    "aliases": [
+      "Front Rack Carry"
     ],
     "active": true,
     "customExercise": false,
@@ -692,6 +778,7 @@
       "acceleration",
       "lower body"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -711,6 +798,10 @@
     "tags": [
       "explosive",
       "total body"
+    ],
+    "aliases": [
+      "HPC",
+      "Hang Clean"
     ],
     "active": true,
     "customExercise": false,
@@ -732,6 +823,7 @@
       "explosive",
       "total body"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -751,6 +843,9 @@
     "tags": [
       "unilateral",
       "explosive"
+    ],
+    "aliases": [
+      "DB Snatch"
     ],
     "active": true,
     "customExercise": false,
@@ -772,6 +867,9 @@
       "vertical power",
       "jump"
     ],
+    "aliases": [
+      "Box Jumps"
+    ],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -791,6 +889,10 @@
     "tags": [
       "horizontal power",
       "jump"
+    ],
+    "aliases": [
+      "Broad Jumps",
+      "Standing Broad Jump"
     ],
     "active": true,
     "customExercise": false,
@@ -812,6 +914,7 @@
       "vertical power",
       "jump"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -831,6 +934,10 @@
     "tags": [
       "ankle stiffness",
       "reactive"
+    ],
+    "aliases": [
+      "Pogo Jumps",
+      "Pogos"
     ],
     "active": true,
     "customExercise": false,
@@ -852,6 +959,7 @@
       "lateral power",
       "single leg"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -872,6 +980,7 @@
       "lateral power",
       "balance"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -891,6 +1000,11 @@
     "tags": [
       "upper-body power",
       "throw"
+    ],
+    "aliases": [
+      "Medicine Ball Chest Pass",
+      "Med Ball Chest Pass",
+      "Medball Chest Pass"
     ],
     "active": true,
     "customExercise": false,
@@ -912,6 +1026,10 @@
       "rotational power",
       "throw"
     ],
+    "aliases": [
+      "Medicine Ball Rotational Throw",
+      "Med Ball Rotational Throw"
+    ],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -931,6 +1049,11 @@
     "tags": [
       "total-body power",
       "throw"
+    ],
+    "aliases": [
+      "Medicine Ball Overhead Slam",
+      "Med Ball Slam",
+      "Medball Slam"
     ],
     "active": true,
     "customExercise": false,
@@ -952,6 +1075,7 @@
       "sprint mechanics",
       "warm-up"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -972,6 +1096,7 @@
       "sprint",
       "first step"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -992,6 +1117,7 @@
       "sprint",
       "start"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1012,6 +1138,7 @@
       "max velocity",
       "sprint"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1032,6 +1159,7 @@
       "sprint mechanics",
       "rhythm"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1052,6 +1180,7 @@
       "lateral movement",
       "defense"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1072,6 +1201,7 @@
       "coordination",
       "rotation"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1091,6 +1221,10 @@
     "tags": [
       "5-10-5",
       "change of direction"
+    ],
+    "aliases": [
+      "5-10-5",
+      "5 10 5 Shuttle"
     ],
     "active": true,
     "customExercise": false,
@@ -1112,6 +1246,9 @@
       "agility",
       "multidirectional"
     ],
+    "aliases": [
+      "T Drill"
+    ],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1132,6 +1269,7 @@
       "braking",
       "body control"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1152,6 +1290,7 @@
       "aerobic",
       "conditioning"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1172,6 +1311,7 @@
       "anaerobic",
       "speed"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1192,6 +1332,7 @@
       "aerobic",
       "tempo"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1211,6 +1352,10 @@
     "tags": [
       "erg",
       "total body"
+    ],
+    "aliases": [
+      "Row Erg",
+      "Concept2 Row"
     ],
     "active": true,
     "customExercise": false,
@@ -1232,6 +1377,10 @@
       "erg",
       "lower body"
     ],
+    "aliases": [
+      "Stationary Bike",
+      "Exercise Bike"
+    ],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1251,6 +1400,10 @@
     "tags": [
       "erg",
       "upper body"
+    ],
+    "aliases": [
+      "SkiErg",
+      "Ski Machine"
     ],
     "active": true,
     "customExercise": false,
@@ -1272,6 +1425,9 @@
       "footwork",
       "conditioning"
     ],
+    "aliases": [
+      "Skipping Rope"
+    ],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1291,6 +1447,9 @@
     "tags": [
       "total body",
       "conditioning"
+    ],
+    "aliases": [
+      "Burpees"
     ],
     "active": true,
     "customExercise": false,
@@ -1312,6 +1471,9 @@
       "squat",
       "conditioning"
     ],
+    "aliases": [
+      "Wall Balls"
+    ],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1331,6 +1493,9 @@
     "tags": [
       "core",
       "conditioning"
+    ],
+    "aliases": [
+      "Mountain Climbers"
     ],
     "active": true,
     "customExercise": false,
@@ -1352,6 +1517,7 @@
       "locomotion",
       "total body"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1372,6 +1538,7 @@
       "trunk",
       "isometric"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1391,6 +1558,9 @@
     "tags": [
       "trunk",
       "control"
+    ],
+    "aliases": [
+      "Deadbug"
     ],
     "active": true,
     "customExercise": false,
@@ -1412,6 +1582,10 @@
       "trunk",
       "advanced"
     ],
+    "aliases": [
+      "Ab Rollout",
+      "Ab-Wheel Rollout"
+    ],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1431,6 +1605,9 @@
     "tags": [
       "trunk",
       "anti-rotation"
+    ],
+    "aliases": [
+      "Palloff Press"
     ],
     "active": true,
     "customExercise": false,
@@ -1452,6 +1629,7 @@
       "trunk",
       "isometric"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1472,6 +1650,7 @@
       "rotation",
       "trunk"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1492,6 +1671,7 @@
       "rotation",
       "trunk"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1511,6 +1691,9 @@
     "tags": [
       "trunk",
       "hanging"
+    ],
+    "aliases": [
+      "Hanging Knee Raises"
     ],
     "active": true,
     "customExercise": false,
@@ -1532,6 +1715,7 @@
       "anti-lateral flexion",
       "isometric"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1551,6 +1735,10 @@
     "tags": [
       "hips",
       "thoracic"
+    ],
+    "aliases": [
+      "Worlds Greatest Stretch",
+      "WGS"
     ],
     "active": true,
     "customExercise": false,
@@ -1572,6 +1760,7 @@
       "quads",
       "dynamic"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1592,6 +1781,7 @@
       "hamstrings",
       "shoulders"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1612,6 +1802,7 @@
       "hips",
       "thoracic"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1631,6 +1822,10 @@
     "tags": [
       "glutes",
       "lateral"
+    ],
+    "aliases": [
+      "Mini Band Lateral Walk",
+      "Lateral Band Walk"
     ],
     "active": true,
     "customExercise": false,
@@ -1652,6 +1847,7 @@
       "glutes",
       "core"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1672,6 +1868,7 @@
       "shoulders",
       "scapula"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1691,6 +1888,10 @@
     "tags": [
       "upper back",
       "posture"
+    ],
+    "aliases": [
+      "Band Pull Apart",
+      "Banded Pull-Apart"
     ],
     "active": true,
     "customExercise": false,
@@ -1712,6 +1913,7 @@
       "ankle",
       "mobility"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1732,6 +1934,7 @@
       "hip",
       "balance"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",
@@ -1751,6 +1954,9 @@
     "tags": [
       "running",
       "coordination"
+    ],
+    "aliases": [
+      "High Knee March"
     ],
     "active": true,
     "customExercise": false,
@@ -1772,6 +1978,7 @@
       "groin",
       "lateral"
     ],
+    "aliases": [],
     "active": true,
     "customExercise": false,
     "createdBy": "F4F_LIBRARY",

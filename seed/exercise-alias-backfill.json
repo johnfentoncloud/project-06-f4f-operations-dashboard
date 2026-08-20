@@ -1,0 +1,330 @@
+[
+  {
+    "exerciseId": "f4f-009-bulgarian-split-squat",
+    "expectedName": "Bulgarian Split Squat",
+    "aliases": [
+      "RFESS",
+      "Rear-Foot-Elevated Split Squat",
+      "Rear Foot Elevated Split Squat"
+    ]
+  },
+  {
+    "exerciseId": "f4f-013-romanian-deadlift",
+    "expectedName": "Romanian Deadlift",
+    "aliases": [
+      "RDL",
+      "Romanian Dead Lift"
+    ]
+  },
+  {
+    "exerciseId": "f4f-014-single-leg-romanian-deadlift",
+    "expectedName": "Single-Leg Romanian Deadlift",
+    "aliases": [
+      "Single-Leg RDL",
+      "Single Leg RDL"
+    ]
+  },
+  {
+    "exerciseId": "f4f-017-kettlebell-swing",
+    "expectedName": "Kettlebell Swing",
+    "aliases": [
+      "KB Swing"
+    ]
+  },
+  {
+    "exerciseId": "f4f-019-incline-dumbbell-press",
+    "expectedName": "Incline Dumbbell Press",
+    "aliases": [
+      "Incline DB Bench Press",
+      "Incline Dumbbell Bench Press"
+    ]
+  },
+  {
+    "exerciseId": "f4f-020-dumbbell-floor-press",
+    "expectedName": "Dumbbell Floor Press",
+    "aliases": [
+      "DB Floor Press"
+    ]
+  },
+  {
+    "exerciseId": "f4f-021-push-up",
+    "expectedName": "Push-Up",
+    "aliases": [
+      "Push Ups",
+      "Push-Ups",
+      "Pushup",
+      "Pushups"
+    ]
+  },
+  {
+    "exerciseId": "f4f-022-strict-press",
+    "expectedName": "Strict Press",
+    "aliases": [
+      "Overhead Press",
+      "Barbell Overhead Press",
+      "OHP"
+    ]
+  },
+  {
+    "exerciseId": "f4f-023-push-press",
+    "expectedName": "Push Press",
+    "aliases": [
+      "Barbell Push Press"
+    ]
+  },
+  {
+    "exerciseId": "f4f-025-pull-up",
+    "expectedName": "Pull-Up",
+    "aliases": [
+      "Pull Ups",
+      "Pull-Ups",
+      "Pullup"
+    ]
+  },
+  {
+    "exerciseId": "f4f-026-chin-up",
+    "expectedName": "Chin-Up",
+    "aliases": [
+      "Chin Ups",
+      "Chin-Ups",
+      "Chinup"
+    ]
+  },
+  {
+    "exerciseId": "f4f-028-bent-over-row",
+    "expectedName": "Bent-Over Row",
+    "aliases": [
+      "Bent Over Row",
+      "Barbell Row"
+    ]
+  },
+  {
+    "exerciseId": "f4f-029-chest-supported-row",
+    "expectedName": "Chest-Supported Row",
+    "aliases": [
+      "Chest Supported Row"
+    ]
+  },
+  {
+    "exerciseId": "f4f-030-single-arm-cable-row",
+    "expectedName": "Single-Arm Cable Row",
+    "aliases": [
+      "One-Arm Cable Row",
+      "1-Arm Cable Row"
+    ]
+  },
+  {
+    "exerciseId": "f4f-032-farmer-carry",
+    "expectedName": "Farmer Carry",
+    "aliases": [
+      "Farmer's Carry",
+      "Farmers Carry",
+      "Farmer Walk"
+    ]
+  },
+  {
+    "exerciseId": "f4f-033-suitcase-carry",
+    "expectedName": "Suitcase Carry",
+    "aliases": [
+      "Suitcase Walk"
+    ]
+  },
+  {
+    "exerciseId": "f4f-034-front-rack-carry",
+    "expectedName": "Front-Rack Carry",
+    "aliases": [
+      "Front Rack Carry"
+    ]
+  },
+  {
+    "exerciseId": "f4f-036-hang-power-clean",
+    "expectedName": "Hang Power Clean",
+    "aliases": [
+      "HPC",
+      "Hang Clean"
+    ]
+  },
+  {
+    "exerciseId": "f4f-038-dumbbell-snatch",
+    "expectedName": "Dumbbell Snatch",
+    "aliases": [
+      "DB Snatch"
+    ]
+  },
+  {
+    "exerciseId": "f4f-039-box-jump",
+    "expectedName": "Box Jump",
+    "aliases": [
+      "Box Jumps"
+    ]
+  },
+  {
+    "exerciseId": "f4f-040-broad-jump",
+    "expectedName": "Broad Jump",
+    "aliases": [
+      "Broad Jumps",
+      "Standing Broad Jump"
+    ]
+  },
+  {
+    "exerciseId": "f4f-042-pogo-jump",
+    "expectedName": "Pogo Jump",
+    "aliases": [
+      "Pogo Jumps",
+      "Pogos"
+    ]
+  },
+  {
+    "exerciseId": "f4f-045-med-ball-chest-pass",
+    "expectedName": "Med-Ball Chest Pass",
+    "aliases": [
+      "Medicine Ball Chest Pass",
+      "Med Ball Chest Pass",
+      "Medball Chest Pass"
+    ]
+  },
+  {
+    "exerciseId": "f4f-046-med-ball-rotational-throw",
+    "expectedName": "Med-Ball Rotational Throw",
+    "aliases": [
+      "Medicine Ball Rotational Throw",
+      "Med Ball Rotational Throw"
+    ]
+  },
+  {
+    "exerciseId": "f4f-047-med-ball-overhead-slam",
+    "expectedName": "Med-Ball Overhead Slam",
+    "aliases": [
+      "Medicine Ball Overhead Slam",
+      "Med Ball Slam",
+      "Medball Slam"
+    ]
+  },
+  {
+    "exerciseId": "f4f-055-pro-agility-shuttle",
+    "expectedName": "Pro Agility Shuttle",
+    "aliases": [
+      "5-10-5",
+      "5 10 5 Shuttle"
+    ]
+  },
+  {
+    "exerciseId": "f4f-056-t-drill",
+    "expectedName": "T-Drill",
+    "aliases": [
+      "T Drill"
+    ]
+  },
+  {
+    "exerciseId": "f4f-061-row",
+    "expectedName": "Row",
+    "aliases": [
+      "Row Erg",
+      "Concept2 Row"
+    ]
+  },
+  {
+    "exerciseId": "f4f-062-bike",
+    "expectedName": "Bike",
+    "aliases": [
+      "Stationary Bike",
+      "Exercise Bike"
+    ]
+  },
+  {
+    "exerciseId": "f4f-063-ski-erg",
+    "expectedName": "Ski Erg",
+    "aliases": [
+      "SkiErg",
+      "Ski Machine"
+    ]
+  },
+  {
+    "exerciseId": "f4f-064-jump-rope",
+    "expectedName": "Jump Rope",
+    "aliases": [
+      "Skipping Rope"
+    ]
+  },
+  {
+    "exerciseId": "f4f-065-burpee",
+    "expectedName": "Burpee",
+    "aliases": [
+      "Burpees"
+    ]
+  },
+  {
+    "exerciseId": "f4f-066-wall-ball",
+    "expectedName": "Wall Ball",
+    "aliases": [
+      "Wall Balls"
+    ]
+  },
+  {
+    "exerciseId": "f4f-067-mountain-climber",
+    "expectedName": "Mountain Climber",
+    "aliases": [
+      "Mountain Climbers"
+    ]
+  },
+  {
+    "exerciseId": "f4f-070-dead-bug",
+    "expectedName": "Dead Bug",
+    "aliases": [
+      "Deadbug"
+    ]
+  },
+  {
+    "exerciseId": "f4f-071-ab-wheel-rollout",
+    "expectedName": "Ab Wheel Rollout",
+    "aliases": [
+      "Ab Rollout",
+      "Ab-Wheel Rollout"
+    ]
+  },
+  {
+    "exerciseId": "f4f-072-pallof-press",
+    "expectedName": "Pallof Press",
+    "aliases": [
+      "Palloff Press"
+    ]
+  },
+  {
+    "exerciseId": "f4f-076-hanging-knee-raise",
+    "expectedName": "Hanging Knee Raise",
+    "aliases": [
+      "Hanging Knee Raises"
+    ]
+  },
+  {
+    "exerciseId": "f4f-078-world-s-greatest-stretch",
+    "expectedName": "World's Greatest Stretch",
+    "aliases": [
+      "Worlds Greatest Stretch",
+      "WGS"
+    ]
+  },
+  {
+    "exerciseId": "f4f-082-mini-band-lateral-walk",
+    "expectedName": "Mini-Band Lateral Walk",
+    "aliases": [
+      "Mini Band Lateral Walk",
+      "Lateral Band Walk"
+    ]
+  },
+  {
+    "exerciseId": "f4f-085-band-pull-apart",
+    "expectedName": "Band Pull-Apart",
+    "aliases": [
+      "Band Pull Apart",
+      "Banded Pull-Apart"
+    ]
+  },
+  {
+    "exerciseId": "f4f-088-high-knee-march",
+    "expectedName": "High-Knee March",
+    "aliases": [
+      "High Knee March"
+    ]
+  }
+]

@@ -2,6 +2,50 @@
   "use strict";
 
   const CREATED_AT = "2026-08-16T00:00:00.000Z";
+  const EXISTING_ALIASES = Object.freeze({
+    "Bulgarian Split Squat": ["RFESS", "Rear-Foot-Elevated Split Squat", "Rear Foot Elevated Split Squat"],
+    "Romanian Deadlift": ["RDL", "Romanian Dead Lift"],
+    "Single-Leg Romanian Deadlift": ["Single-Leg RDL", "Single Leg RDL"],
+    "Kettlebell Swing": ["KB Swing"],
+    "Incline Dumbbell Press": ["Incline DB Bench Press", "Incline Dumbbell Bench Press"],
+    "Dumbbell Floor Press": ["DB Floor Press"],
+    "Push-Up": ["Push Ups", "Push-Ups", "Pushup", "Pushups"],
+    "Strict Press": ["Overhead Press", "Barbell Overhead Press", "OHP"],
+    "Push Press": ["Barbell Push Press"],
+    "Pull-Up": ["Pull Ups", "Pull-Ups", "Pullup"],
+    "Chin-Up": ["Chin Ups", "Chin-Ups", "Chinup"],
+    "Bent-Over Row": ["Bent Over Row", "Barbell Row"],
+    "Chest-Supported Row": ["Chest Supported Row"],
+    "Single-Arm Cable Row": ["One-Arm Cable Row", "1-Arm Cable Row"],
+    "Farmer Carry": ["Farmer's Carry", "Farmers Carry", "Farmer Walk"],
+    "Suitcase Carry": ["Suitcase Walk"],
+    "Front-Rack Carry": ["Front Rack Carry"],
+    "Hang Power Clean": ["HPC", "Hang Clean"],
+    "Dumbbell Snatch": ["DB Snatch"],
+    "Box Jump": ["Box Jumps"],
+    "Broad Jump": ["Broad Jumps", "Standing Broad Jump"],
+    "Pogo Jump": ["Pogo Jumps", "Pogos"],
+    "Med-Ball Chest Pass": ["Medicine Ball Chest Pass", "Med Ball Chest Pass", "Medball Chest Pass"],
+    "Med-Ball Rotational Throw": ["Medicine Ball Rotational Throw", "Med Ball Rotational Throw"],
+    "Med-Ball Overhead Slam": ["Medicine Ball Overhead Slam", "Med Ball Slam", "Medball Slam"],
+    "Pro Agility Shuttle": ["5-10-5", "5 10 5 Shuttle"],
+    "T-Drill": ["T Drill"],
+    "Row": ["Row Erg", "Concept2 Row"],
+    "Bike": ["Stationary Bike", "Exercise Bike"],
+    "Ski Erg": ["SkiErg", "Ski Machine"],
+    "Jump Rope": ["Skipping Rope"],
+    "Burpee": ["Burpees"],
+    "Wall Ball": ["Wall Balls"],
+    "Mountain Climber": ["Mountain Climbers"],
+    "Dead Bug": ["Deadbug"],
+    "Ab Wheel Rollout": ["Ab Rollout", "Ab-Wheel Rollout"],
+    "Pallof Press": ["Palloff Press"],
+    "Hanging Knee Raise": ["Hanging Knee Raises"],
+    "World's Greatest Stretch": ["Worlds Greatest Stretch", "WGS"],
+    "Mini-Band Lateral Walk": ["Mini Band Lateral Walk", "Lateral Band Walk"],
+    "Band Pull-Apart": ["Band Pull Apart", "Banded Pull-Apart"],
+    "High-Knee March": ["High Knee March"]
+  });
   const definitions = [
     ["Back Squat", "Strength", "Squat", "Barbell", "weight_reps", "lb", ["bilateral", "lower body"]],
     ["Front Squat", "Strength", "Squat", "Barbell", "weight_reps", "lb", ["anterior load", "lower body"]],
@@ -98,19 +142,23 @@
     return String(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   }
 
+  function normalizeSearchText(value) {
+    return String(value || "").toLowerCase().replace(/&/g, " and ").replace(/['’]/g, "").replace(/[^a-z0-9]+/g, " ").trim().replace(/\s+/g, " ");
+  }
+
   let exercises = Object.freeze(definitions.map((item, index) => Object.freeze({
     exerciseId: `f4f-${String(index + 1).padStart(3, "0")}-${slug(item[0])}`,
     name: item[0], category: item[1], movementPattern: item[2], equipment: item[3],
     measurementType: item[4], defaultUnit: item[5],
     instructions: `Perform ${item[0]} with controlled technique and the prescribed intent. Stop the set if position or movement quality breaks down.`,
-    tags: Object.freeze(item[6]), active: true, customExercise: false, createdBy: "F4F_LIBRARY",
+    tags: Object.freeze(item[6]), aliases: Object.freeze(EXISTING_ALIASES[item[0]] || []), active: true, customExercise: false, createdBy: "F4F_LIBRARY",
     createdAt: CREATED_AT, updatedAt: CREATED_AT, demoMedia: null
   })));
 
   function filterExercises(items, filters = {}) {
-    const query = String(filters.query || "").trim().toLowerCase();
+    const query = normalizeSearchText(filters.query);
     return items.filter(exercise => exercise.active !== false)
-      .filter(exercise => !query || [exercise.name, ...exercise.tags].join(" ").toLowerCase().includes(query))
+      .filter(exercise => !query || normalizeSearchText([exercise.name, ...(exercise.aliases || []), ...exercise.tags].join(" ")).includes(query))
       .filter(exercise => !filters.category || filters.category === "all" || exercise.category === filters.category)
       .filter(exercise => !filters.equipment || filters.equipment === "all" || exercise.equipment === filters.equipment)
       .filter(exercise => !filters.movementPattern || filters.movementPattern === "all" || exercise.movementPattern === filters.movementPattern);
@@ -122,11 +170,11 @@
 
   function setExercises(items) {
     if (!Array.isArray(items)) throw new Error("Exercise payload must be an array.");
-    exercises = Object.freeze(items.map(item => Object.freeze({ ...item, tags: Object.freeze([...(item.tags || [])]) })));
+    exercises = Object.freeze(items.map(item => Object.freeze({ ...item, tags: Object.freeze([...(item.tags || [])]), aliases: Object.freeze([...(item.aliases || [])]) })));
     return exercises;
   }
 
-  const api = Object.freeze({ get exercises() { return exercises; }, filterExercises, uniqueValues, setExercises });
+  const api = Object.freeze({ get exercises() { return exercises; }, filterExercises, uniqueValues, normalizeSearchText, setExercises });
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   root.F4F_EXERCISES = api;
 })(typeof window !== "undefined" ? window : globalThis);
