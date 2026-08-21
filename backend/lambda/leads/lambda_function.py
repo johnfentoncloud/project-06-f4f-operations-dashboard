@@ -53,8 +53,8 @@ def lambda_handler(event, context):
     cursor = _decode_cursor(query.get("cursor"))
     scan_options = {
         "Limit": MAX_RESULTS,
-        "ProjectionExpression": "leadId,#name,firstName,lastName,email,phone,parentName,parentEmail,parentPhone,leadType,submissionType,createdAt,submittedAt,#status,followUpStatus,athleteName",
-        "ExpressionAttributeNames": {"#name": "name", "#status": "status"},
+        "ProjectionExpression": "leadId,#name,firstName,lastName,email,phone,parentName,parentEmail,parentPhone,leadType,submissionType,createdAt,submittedAt,#status,followUpStatus,athleteName,#source,#location,#program,campaign",
+        "ExpressionAttributeNames": {"#name": "name", "#status": "status", "#source": "source", "#location": "location", "#program": "program"},
     }
     if cursor:
         scan_options["ExclusiveStartKey"] = cursor

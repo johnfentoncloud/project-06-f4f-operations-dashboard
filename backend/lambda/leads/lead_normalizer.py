@@ -9,6 +9,9 @@ ALLOWED_STATUSES = {
     "Not Interested",
     "Spam",
 }
+ALLOWED_SOURCES = {"old_line_lobby", "old_line_team_flyer", "rise_lobby", "rise_small_group_flyer", "coffee_shop", "lacrosse_event", "instagram", "facebook"}
+ALLOWED_LOCATIONS = {"old_line", "rise", "community", "event", "online"}
+ALLOWED_PROGRAMS = {"team_training", "small_group_athlete_development", "athlete_development", "individual_training", "not_sure"}
 
 
 def _text(value, maximum=200):
@@ -56,6 +59,9 @@ def normalize_lead(item):
     status = _text(item.get("status"), 40) or "New"
     if status not in ALLOWED_STATUSES:
         status = "New"
+    source = _text(item.get("source"), 64)
+    location = _text(item.get("location"), 64)
+    program = _text(item.get("program"), 80)
     return {
         "leadId": lead_id,
         "firstName": first_name,
@@ -67,4 +73,8 @@ def normalize_lead(item):
         "submittedAt": _submitted_at(item.get("submittedAt") or item.get("createdAt")),
         "status": status,
         "followUpStatus": _text(item.get("followUpStatus"), 80) or "Not started",
+        "source": source if source in ALLOWED_SOURCES else "",
+        "location": location if location in ALLOWED_LOCATIONS else "",
+        "program": program if program in ALLOWED_PROGRAMS else "",
+        "campaign": _text(item.get("campaign"), 64),
     }

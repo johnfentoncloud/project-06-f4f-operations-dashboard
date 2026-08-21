@@ -25,14 +25,18 @@
     return [lead.firstName, lead.lastName].filter(Boolean).join(" ") || "Name unavailable";
   }
 
-  function selectedLeads(filter = "all") {
-    return leads.filter(lead => filter === "all" || (filter === "training" ? lead.submissionType === "lead" : lead.submissionType === filter));
+  function activeLeadFilters() {
+    return { leadType: document.querySelector("#lead-filter")?.value || "all", source: document.querySelector("#source-filter")?.value || "all", location: document.querySelector("#location-filter")?.value || "all", program: document.querySelector("#program-filter")?.value || "all" };
   }
 
-  function renderLeads(filter = "all") {
-    const filtered = selectedLeads(filter);
+  function selectedLeads(filters = activeLeadFilters()) {
+    return window.F4F_APP_STATE.filterLeads(leads, filters);
+  }
+
+  function renderLeads() {
+    const filtered = selectedLeads();
     const body = document.querySelector("#leads-table-body");
-    body.innerHTML = filtered.map(lead => `<tr><td>${escapeHtml(displayName(lead))}</td><td>${escapeHtml(lead.email)}<small>${escapeHtml(lead.phone || "No phone provided")}</small></td><td>${escapeHtml(lead.leadType)}<small>${escapeHtml(lead.submissionType)}</small></td><td>${escapeHtml(formatDate(lead.submittedAt))}</td><td><span class="lead-status">${escapeHtml(lead.status || "New")}</span></td><td>${escapeHtml(lead.followUpStatus || "Not started")}</td></tr>`).join("");
+    body.innerHTML = filtered.map(lead => `<tr><td>${escapeHtml(displayName(lead))}</td><td>${escapeHtml(lead.email)}<small>${escapeHtml(lead.phone || "No phone provided")}</small></td><td><strong>${escapeHtml(window.F4F_APP_STATE.friendlyLabel("program", lead.program))}</strong><small>${escapeHtml(window.F4F_APP_STATE.friendlyLabel("location", lead.location))}</small></td><td>${escapeHtml(window.F4F_APP_STATE.friendlyLabel("source", lead.source))}<small>${lead.campaign ? `Campaign: ${escapeHtml(lead.campaign)}` : ""}</small></td><td>${escapeHtml(formatDate(lead.submittedAt))}</td><td><span class="lead-status">${escapeHtml(lead.status || "New")}</span></td><td>${escapeHtml(lead.followUpStatus || "Not started")}</td></tr>`).join("");
     document.querySelector("#leads-empty").hidden = filtered.length > 0 || document.querySelector("#leads-state").dataset.state === "loading";
   }
 
@@ -40,6 +44,8 @@
     const summary = window.F4F_APP_STATE.summarize(leads);
     document.querySelector("#new-leads-value").textContent = String(summary.newLeadCount);
     document.querySelector("#new-leads-note").textContent = "Read-only production lead records";
+    const sourceSummary = document.querySelector("#leads-by-source");
+    if (sourceSummary) sourceSummary.innerHTML = summary.leadsBySource.length ? summary.leadsBySource.map(item => `<li><span>${escapeHtml(item.label)}</span><strong>${item.count}</strong></li>`).join("") : "<li><span>Direct / Unknown</span><strong>0</strong></li>";
     const recent = summary.recent;
     const container = document.querySelector("#recent-inquiries");
     if (!recent.length) {
@@ -56,6 +62,23 @@
     status.hidden = !message;
   }
 
+  function addAttributionControls() {
+    const toolbar = document.querySelector("#view-leads .toolbar");
+    if (!toolbar || document.querySelector("#source-filter")) return;
+    const headingRow = document.querySelector("#view-leads thead tr");
+    if (headingRow) headingRow.innerHTML = "<th>Name</th><th>Contact</th><th>Program / location</th><th>Source</th><th>Submitted</th><th>Status</th><th>Follow-up</th>";
+    [["source-filter", "Source", window.F4F_APP_STATE.labels.source], ["location-filter", "Location", window.F4F_APP_STATE.labels.location], ["program-filter", "Program", window.F4F_APP_STATE.labels.program]].forEach(([id, label, values]) => {
+      const wrapper = document.createElement("label"); wrapper.textContent = label;
+      const select = document.createElement("select"); select.id = id;
+      select.innerHTML = `<option value="all">All ${escapeHtml(label.toLowerCase())}s</option>${Object.entries(values).map(([value, text]) => `<option value="${escapeHtml(value)}">${escapeHtml(text)}</option>`).join("")}${id === "source-filter" ? '<option value="unknown">Direct / Unknown</option>' : ""}`;
+      wrapper.appendChild(select); toolbar.appendChild(wrapper);
+    });
+    const panel = document.querySelector("#view-leads .table-panel");
+    const summary = document.createElement("section"); summary.className = "lead-source-summary"; summary.setAttribute("aria-labelledby", "leads-by-source-title");
+    summary.innerHTML = '<h2 id="leads-by-source-title">Leads by source</h2><ul id="leads-by-source"></ul>';
+    panel.parentNode.insertBefore(summary, panel);
+  }
+
   async function loadLeadData() {
     setDataState("loading", "Loading authenticated lead data…");
     document.querySelector("#new-leads-note").textContent = "Loading authenticated lead data…";
@@ -67,7 +90,7 @@
         leads = window.F4F_APP_STATE.leadsFromPayload(payload);
       }
       setDataState(leads.length ? "ready" : "empty", "");
-      renderLeads(document.querySelector("#lead-filter").value);
+      renderLeads();
       renderOverview();
     } catch (error) {
       leads = [];
@@ -154,10 +177,11 @@
       window.F4F_ATHLETE.initialize(window.F4F_DATA.demoAthlete);
     }
     updateAuthGate(authenticationMessage);
+    addAttributionControls();
     renderLeads();
     await showExperience();
     window.addEventListener("hashchange", () => window.F4F_AUTH.getExperience() === "athlete" && window.F4F_ATHLETE ? window.F4F_ATHLETE.route() : route());
-    document.querySelector("#lead-filter").addEventListener("change", event => renderLeads(event.target.value));
+    document.querySelectorAll("#lead-filter,#source-filter,#location-filter,#program-filter").forEach(control => control.addEventListener("change", renderLeads));
     document.querySelector("#menu-button").addEventListener("click", event => { const sidebar = document.querySelector("#sidebar"); const open = sidebar.classList.toggle("open"); event.currentTarget.setAttribute("aria-expanded", String(open)); });
     document.querySelector("#preview-coach-login")?.addEventListener("click", () => localLogin("coach"));
     document.querySelector("#preview-athlete-login")?.addEventListener("click", () => localLogin("athlete"));

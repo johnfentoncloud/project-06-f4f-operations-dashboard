@@ -75,6 +75,19 @@ class DashboardBackendTests(unittest.TestCase):
         self.assertIsNone(normalize_lead({"leadId": "missing-email"}))
         self.assertIsNone(normalize_lead({"email": "missing-id@example.test"}))
 
+    def test_attribution_projection_is_allowlisted(self):
+        result = normalize_lead({"leadId": "abc", "email": "sample@example.test", "source": "rise_small_group_flyer", "location": "rise", "program": "small_group_athlete_development", "campaign": "fall_2026"})
+        self.assertEqual(result["source"], "rise_small_group_flyer")
+        self.assertEqual(result["location"], "rise")
+        self.assertEqual(result["program"], "small_group_athlete_development")
+        self.assertEqual(result["campaign"], "fall_2026")
+
+    def test_arbitrary_attribution_identifiers_are_not_projected(self):
+        result = normalize_lead({"leadId": "abc", "email": "sample@example.test", "source": "<script>", "location": "invented", "program": "malicious"})
+        self.assertEqual(result["source"], "")
+        self.assertEqual(result["location"], "")
+        self.assertEqual(result["program"], "")
+
     def test_invalid_status_falls_back_to_new(self):
         result = normalize_lead({"leadId": "abc", "email": "sample@example.test", "status": "Invented"})
         self.assertEqual(result["status"], "New")
