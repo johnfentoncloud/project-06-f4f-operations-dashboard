@@ -1,0 +1,25 @@
+"use strict";
+const assert = require("assert");
+const fs = require("fs");
+const path = require("path");
+const root = path.resolve(__dirname, "..");
+const production = fs.readFileSync(path.join(root, "index.production.html"), "utf8");
+const auth = fs.readFileSync(path.join(root, "js", "auth.js"), "utf8");
+const terraform = fs.readFileSync(path.resolve(root, "..", "terraform", "main.tf"), "utf8");
+const athleteTerraform = fs.readFileSync(path.resolve(root, "..", "terraform", "athlete.tf"), "utf8");
+
+assert.match(production, /athlete-production\.js/);
+assert.match(production, /Today/);
+assert.match(production, /Workouts/);
+assert.match(production, /Profile/);
+assert.doesNotMatch(production, /demoAthlete|fixture selector|Last comparable workout|recent PR/i);
+assert.match(auth, /groups\.length === 1 && groups\[0\] === "Athlete"/);
+assert.match(auth, /groups\.length === 1 && groups\[0\] === "OwnerAdmin"/);
+assert.match(auth, /return "unauthorized"/);
+assert.match(terraform, /"js\/data\.js"/);
+assert.match(terraform, /"js\/athlete\.js"/);
+assert.match(terraform, /"js\/workout-fixtures\.js"/);
+assert.match(athleteTerraform, /name\s*=\s*"f4f-athlete-training"/);
+assert.match(athleteTerraform, /name\s*=\s*"Athlete"/);
+assert.doesNotMatch(athleteTerraform, /ASSIGNMENT#/);
+console.log("Athlete production boundary tests passed.");

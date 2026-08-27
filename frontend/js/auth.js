@@ -109,9 +109,27 @@
     return isConfiguredForCognito() && tokenIsCurrent();
   }
 
+  function decodeClaims(token) {
+    try {
+      const payload = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+      return JSON.parse(window.atob(payload.padEnd(Math.ceil(payload.length / 4) * 4, "=")));
+    } catch (error) {
+      return {};
+    }
+  }
+
+  function productionGroups() {
+    const token = window.sessionStorage.getItem(KEYS.idToken) || window.sessionStorage.getItem(KEYS.accessToken) || "";
+    const groups = decodeClaims(token)["cognito:groups"];
+    return Array.isArray(groups) ? groups : [];
+  }
+
   function getExperience() {
-    if (!isLocalPreviewAllowed()) return "coach";
-    return window.sessionStorage.getItem(KEYS.previewRole) === "athlete" ? "athlete" : "coach";
+    if (isLocalPreviewAllowed()) return window.sessionStorage.getItem(KEYS.previewRole) === "athlete" ? "athlete" : "coach";
+    const groups = productionGroups();
+    if (groups.length === 1 && groups[0] === "OwnerAdmin") return "coach";
+    if (groups.length === 1 && groups[0] === "Athlete") return "athlete";
+    return "unauthorized";
   }
 
   function setLocalExperience(role) {

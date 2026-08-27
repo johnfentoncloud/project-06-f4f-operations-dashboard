@@ -19,6 +19,7 @@ function authContext({ hostname, config, fetch }) {
       F4F_CONFIG: config,
       crypto: webcrypto,
       btoa: value => Buffer.from(value, "binary").toString("base64"),
+      atob: value => Buffer.from(value, "base64").toString("binary"),
       fetch,
       location: { hostname, search: "", pathname: "/", hash: "", assign: value => assigned.push(value) },
       history: { replaceState: () => {} },
@@ -50,7 +51,7 @@ function authContext({ hostname, config, fetch }) {
   const blocked = authContext({ hostname: "app.fenton4fitness.com", config: { authMode: "local-preview", cognito: {} } });
   assert.strictEqual(blocked.auth.isLocalPreviewAllowed(), false);
   assert.strictEqual(blocked.auth.setLocalExperience("athlete"), false);
-  assert.strictEqual(blocked.auth.getExperience(), "coach");
+  assert.strictEqual(blocked.auth.getExperience(), "unauthorized");
   await assert.rejects(() => blocked.auth.login(), /not configured/);
 
   const production = authContext({
@@ -63,6 +64,13 @@ function authContext({ hostname, config, fetch }) {
   await production.auth.initialize();
   assert.strictEqual(production.auth.isAuthenticated(), true);
   assert.strictEqual(await production.auth.getAccessToken(), "refreshed-access");
+  const tokenFor = groups => `header.${Buffer.from(JSON.stringify({ "cognito:groups": groups })).toString("base64url")}.signature`;
+  production.storage.set("f4f-dashboard-id-token", tokenFor(["OwnerAdmin"]));
+  assert.strictEqual(production.auth.getExperience(), "coach");
+  production.storage.set("f4f-dashboard-id-token", tokenFor(["Athlete"]));
+  assert.strictEqual(production.auth.getExperience(), "athlete");
+  production.storage.set("f4f-dashboard-id-token", tokenFor(["Athlete", "OwnerAdmin"]));
+  assert.strictEqual(production.auth.getExperience(), "unauthorized");
   production.auth.expireSession();
   assert.strictEqual(production.auth.isAuthenticated(), false);
 

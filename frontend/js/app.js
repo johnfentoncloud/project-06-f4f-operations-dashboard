@@ -10,6 +10,7 @@
     functionalRoutes.add("workout-templates");
     labels["workout-templates"] = "Workout Templates";
   }
+  if (window.F4F_ATHLETE_ADMIN) functionalRoutes.add("athletes");
   let leads = [];
 
   function escapeHtml(value) {
@@ -121,9 +122,10 @@
 
   function updateAuthGate(message = "") {
     const authenticated = window.F4F_AUTH.isAuthenticated();
+    const authorized = !authenticated || window.F4F_AUTH.getExperience() !== "unauthorized";
     const localPreview = window.F4F_AUTH.isLocalPreviewAllowed();
-    document.querySelector("#auth-gate").hidden = authenticated;
-    document.querySelector("#auth-message").textContent = message || (localPreview ? "Choose a fictional localhost experience. This is not a production login." : "Sign in through the protected Fenton4Fitness identity service.");
+    document.querySelector("#auth-gate").hidden = authenticated && authorized;
+    document.querySelector("#auth-message").textContent = message || (!authorized ? "This account does not have exactly one approved F4F application role." : localPreview ? "Choose a fictional localhost experience. This is not a production login." : "Sign in through the protected Fenton4Fitness identity service.");
     const localChoices = document.querySelector("#local-preview-choices");
     if (localChoices) localChoices.hidden = !localPreview;
     document.querySelector("#production-login").hidden = localPreview;
@@ -131,20 +133,26 @@
 
   async function showExperience({ loadCoachData = true } = {}) {
     const authenticated = window.F4F_AUTH.isAuthenticated();
-    const athlete = authenticated && window.F4F_AUTH.getExperience() === "athlete";
+    const experience = authenticated ? window.F4F_AUTH.getExperience() : "unauthenticated";
+    const athlete = experience === "athlete";
     const headerLogout = document.querySelector("#header-logout-button");
     if (headerLogout) headerLogout.hidden = !authenticated || athlete;
     document.querySelector("#coach-shell").hidden = athlete || !authenticated;
     const athleteShell = document.querySelector("#athlete-shell");
     if (athleteShell) athleteShell.hidden = !athlete;
+    const productionAthleteShell = document.querySelector("#athlete-production-shell");
+    if (productionAthleteShell) productionAthleteShell.hidden = !athlete;
     if (athlete) {
-      if (!athleteShell || !window.F4F_ATHLETE) throw new Error("The Athlete preview is available only in the localhost development entry.");
+      const athleteApp = window.F4F_AUTH.isLocalPreviewAllowed() ? window.F4F_ATHLETE : window.F4F_ATHLETE_PRODUCTION;
+      if (!athleteApp || (!athleteShell && !productionAthleteShell)) throw new Error("The Athlete experience is unavailable.");
       if (!window.location.hash.startsWith("#athlete-")) window.location.hash = "athlete-today";
-      window.F4F_ATHLETE.route();
-    } else if (authenticated) {
+      await athleteApp.initialize?.();
+      athleteApp.route();
+    } else if (experience === "coach") {
       if (window.location.hash.startsWith("#athlete-")) window.location.hash = "dashboard";
       route();
       if (loadCoachData) await loadLeadData();
+      await window.F4F_ATHLETE_ADMIN?.initialize();
     }
   }
 
@@ -162,6 +170,8 @@
     document.querySelector("#coach-shell").hidden = true;
     const athleteShell = document.querySelector("#athlete-shell");
     if (athleteShell) athleteShell.hidden = true;
+    const productionAthleteShell = document.querySelector("#athlete-production-shell");
+    if (productionAthleteShell) productionAthleteShell.hidden = true;
     updateAuthGate();
   }
 
@@ -180,7 +190,7 @@
     addAttributionControls();
     renderLeads();
     await showExperience();
-    window.addEventListener("hashchange", () => window.F4F_AUTH.getExperience() === "athlete" && window.F4F_ATHLETE ? window.F4F_ATHLETE.route() : route());
+    window.addEventListener("hashchange", () => window.F4F_AUTH.getExperience() === "athlete" ? (window.F4F_AUTH.isLocalPreviewAllowed() ? window.F4F_ATHLETE : window.F4F_ATHLETE_PRODUCTION)?.route() : route());
     document.querySelectorAll("#lead-filter,#source-filter,#location-filter,#program-filter").forEach(control => control.addEventListener("change", renderLeads));
     document.querySelector("#menu-button").addEventListener("click", event => { const sidebar = document.querySelector("#sidebar"); const open = sidebar.classList.toggle("open"); event.currentTarget.setAttribute("aria-expanded", String(open)); });
     document.querySelector("#preview-coach-login")?.addEventListener("click", () => localLogin("coach"));
@@ -189,6 +199,8 @@
     document.querySelector("#logout-button").addEventListener("click", logout);
     document.querySelector("#header-logout-button")?.addEventListener("click", logout);
     document.querySelector("#athlete-logout-button")?.addEventListener("click", logout);
+    document.querySelector("#athlete-production-logout")?.addEventListener("click", logout);
+    document.querySelector("#athlete-profile-logout")?.addEventListener("click", logout);
     document.querySelectorAll("[data-switch-role]").forEach(button => button.addEventListener("click", async () => {
       if (!window.F4F_AUTH.setLocalExperience(button.dataset.switchRole)) return;
       await showExperience({ loadCoachData: button.dataset.switchRole === "coach" });

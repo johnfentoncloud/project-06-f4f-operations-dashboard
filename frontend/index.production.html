@@ -7,6 +7,7 @@
   <title>F4F Operations Dashboard</title>
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="stylesheet" href="css/training.css">
+  <link rel="stylesheet" href="css/athlete-production.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to dashboard content</a>
@@ -79,6 +80,13 @@
           <div class="page-heading"><div><p class="eyebrow">Coach programming</p><h1>Workout Templates</h1><p>Open a saved template, edit it, and save the next immutable version.</p></div></div><div class="panel template-list" id="template-list" aria-live="polite"></div>
         </section>
 
+        <section class="view" id="view-athletes" data-view="athletes" hidden>
+          <div class="page-heading"><div><p class="eyebrow">Adult beta</p><h1>Athletes</h1><p>Review provisioned adult beta profiles, assignments, and completed training results.</p></div><span class="status-pill">OwnerAdmin</span></div>
+          <form class="panel" id="athlete-assignment-form" hidden><h2>Assign immutable workout</h2><input id="assignment-athlete-id" type="hidden"><label for="assignment-template">Template version<select id="assignment-template" required></select></label><label for="assignment-date">Scheduled date<input id="assignment-date" type="date" required></label><button class="primary-button" type="submit">Assign workout</button><p id="assignment-status" role="status"></p></form>
+          <div class="panel template-list" id="athlete-admin-list" aria-live="polite"></div>
+          <div class="panel"><h2>Selected athlete results</h2><pre id="athlete-admin-results">Select an athlete to review results.</pre></div>
+        </section>
+
         <section class="view" id="view-coming-soon" data-view="coming-soon" hidden>
           <div class="coming-soon"><img class="brand-logo brand-logo-large" src="assets/f4f-logo.png" alt=""><p class="eyebrow">Planned Coach module</p><h1 id="coming-soon-title">Coming soon</h1><p>This module is intentionally deferred while production remains read-only.</p></div>
         </section>
@@ -86,13 +94,26 @@
     </div>
   </div>
 
-  <div class="auth-gate" id="auth-gate" hidden><div class="auth-card"><img class="brand-logo brand-logo-large" src="assets/f4f-logo.png" alt="Fenton4Fitness"><p class="eyebrow">Protected application</p><h1>Authentication required</h1><p>Access uses Amazon Cognito and is limited to approved OwnerAdmin users.</p><button class="primary-button" id="production-login" type="button">Sign in securely</button><small id="auth-message">Sign in through the protected Fenton4Fitness identity service.</small></div></div>
+  <div class="athlete-production-shell" id="athlete-production-shell" hidden>
+    <header class="athlete-topbar"><a class="brand" href="#athlete-today"><img class="brand-logo" src="assets/f4f-logo.png" alt=""><span><strong>Fenton4Fitness</strong><small>Athlete Hub</small></span></a><button class="text-button" id="athlete-production-logout" type="button">Sign Out</button></header>
+    <main class="athlete-main">
+      <section data-athlete-view="today"><div class="athlete-hero"><p class="eyebrow">Today</p><h1 id="athlete-greeting">Welcome</h1><p>Your assigned training, last effort, and progress in one focused view.</p></div><article class="athlete-primary-card" id="athlete-today-card"></article><section id="athlete-session-card" hidden></section></section>
+      <section data-athlete-view="workouts" hidden><div class="athlete-hero"><p class="eyebrow">Training</p><h1>Workouts</h1></div><div id="athlete-workout-list"></div></section>
+      <section data-athlete-view="profile" hidden><div class="athlete-hero"><p class="eyebrow">Account</p><h1>Profile</h1></div><article class="athlete-primary-card" id="athlete-profile-card"></article><div class="athlete-profile-actions"><button class="secondary-button" id="athlete-profile-logout" type="button">Sign Out</button></div></section>
+    </main>
+    <nav class="athlete-bottom-nav" aria-label="Athlete navigation"><a href="#athlete-today" data-athlete-route="today">Today</a><a href="#athlete-workouts" data-athlete-route="workouts">Workouts</a><a href="#athlete-profile" data-athlete-route="profile">Profile</a></nav>
+  </div>
+
+  <div class="auth-gate" id="auth-gate" hidden><div class="auth-card"><img class="brand-logo brand-logo-large" src="assets/f4f-logo.png" alt="Fenton4Fitness"><p class="eyebrow">Protected application</p><h1>Authentication required</h1><p>Access uses Amazon Cognito and is limited to approved F4F application users.</p><button class="primary-button" id="production-login" type="button">Sign in securely</button><small id="auth-message">Sign in through the protected Fenton4Fitness identity service.</small></div></div>
   <script src="js/config.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/api.js"></script>
   <script src="js/app-state.js"></script>
   <script src="js/exercise-library.js"></script>
   <script src="js/workout-builder.js?v=phase3c-workflow-polish"></script>
+  <script src="js/athlete-session.js"></script>
+  <script src="js/athlete-production.js"></script>
+  <script src="js/athlete-admin.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

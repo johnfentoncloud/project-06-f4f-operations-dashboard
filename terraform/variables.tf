@@ -57,7 +57,7 @@ variable "existing_leads_table_arn" {
 variable "allowed_origins" {
   description = "Dashboard origins allowed by API Gateway CORS."
   type        = list(string)
-  default     = ["https://app.fenton4fitness.com", "http://localhost:8080", "http://127.0.0.1:8080"]
+  default     = ["https://app.fenton4fitness.com"]
 }
 
 variable "dashboard_domain_name" {

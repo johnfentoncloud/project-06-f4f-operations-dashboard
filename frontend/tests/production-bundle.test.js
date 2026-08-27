@@ -7,15 +7,17 @@ const frontend = path.resolve(__dirname, "..");
 const productionHtml = fs.readFileSync(path.join(frontend, "index.production.html"), "utf8");
 const terraform = fs.readFileSync(path.resolve(frontend, "..", "terraform", "main.tf"), "utf8");
 const terraformVariables = fs.readFileSync(path.resolve(frontend, "..", "terraform", "variables.tf"), "utf8");
+const productionVariables = fs.readFileSync(path.resolve(frontend, "..", "terraform", "production.auto.tfvars"), "utf8");
+const athleteTerraform = fs.readFileSync(path.resolve(frontend, "..", "terraform", "athlete.tf"), "utf8");
 const sharedApp = fs.readFileSync(path.join(frontend, "js", "app.js"), "utf8");
 const workoutBuilder = fs.readFileSync(path.join(frontend, "js", "workout-builder.js"), "utf8");
 
-for (const forbidden of ["css/athlete.css", "js/athlete.js", "js/data.js", "Preview as Athlete", "data-athlete-route", "Fictional demo athlete"]) {
+for (const forbidden of ["css/athlete.css", "js/athlete.js", "js/data.js", "Preview as Athlete", "Fictional demo athlete"]) {
   assert.ok(!productionHtml.includes(forbidden), `Production HTML must exclude ${forbidden}`);
 }
 for (const localFixtureControl of ["demo-workout-select", "load-demo-workout", "Local session example"]) assert.ok(!productionHtml.includes(localFixtureControl), `Production HTML must exclude local fixture control ${localFixtureControl}`);
 
-for (const required of ["id=\"production-login\"", "js/auth.js", "js/api.js", "js/app-state.js", "js/exercise-library.js", "js/workout-builder.js", "css/training.css", "Exercise Library", "Workout Builder", "Workout Templates", "js/app.js"]) {
+for (const required of ["id=\"production-login\"", "js/auth.js", "js/api.js", "js/app-state.js", "js/exercise-library.js", "js/workout-builder.js", "css/training.css", "css/athlete-production.css", "js/athlete-production.js", "Exercise Library", "Workout Builder", "Workout Templates", "js/app.js"]) {
   assert.ok(productionHtml.includes(required), `Production HTML must include ${required}`);
 }
 for (const workflowControl of ['id="add-section"', 'id="section-quick-chooser"', 'data-section-preset="Superset"', 'id="new-workout"']) assert.ok(productionHtml.includes(workflowControl), `Production Coach bundle must include ${workflowControl}`);
@@ -41,4 +43,12 @@ assert.ok(corsBlock.includes('allow_methods     = ["GET", "OPTIONS", "POST", "PU
 assert.ok(corsBlock.includes("allow_origins     = var.allowed_origins"), "Production CORS must use the approved origin allowlist");
 assert.ok(!corsBlock.includes('"*"'), "Production CORS must not allow wildcard origins");
 assert.ok(terraformVariables.includes('"https://app.fenton4fitness.com"'), "The approved production origin must remain allowlisted");
+assert.ok(!terraformVariables.includes("localhost:8080") && !terraformVariables.includes("127.0.0.1:8080"), "Terraform defaults must not allow localhost origins");
+assert.ok(productionVariables.includes('"https://app.fenton4fitness.com"') && !productionVariables.includes("localhost"), "Production must allow only the custom application origin");
+assert.ok(athleteTerraform.includes('projection_type = "INCLUDE"'), "Active Athlete profile GSI must use a minimal INCLUDE projection");
+for (const internalField of ['"cognitoSub"', '"createdBy"']) assert.ok(!athleteTerraform.match(new RegExp(`non_key_attributes[\\s\\S]{0,180}${internalField}`)), `GSI must not project ${internalField}`);
+const athleteReadPolicy = athleteTerraform.match(/resource "aws_iam_role_policy" "athlete_read"[\s\S]*?\n\}/)?.[0] || "";
+assert.ok(athleteReadPolicy.includes("aws_dynamodb_table.athlete_training[0].arn"), "Athlete read must target the base table");
+assert.ok(!athleteReadPolicy.includes("/index/GSI1"), "Athlete read must not access the active-profile GSI");
+for (const route of [...athleteTerraform.matchAll(/"(?:GET|POST|PUT) \/(?:me|athletes)[^"]+"/g)].map(match => match[0])) assert.ok(athleteTerraform.includes('authorization_type = "JWT"'), `${route} must use JWT authorization`);
 console.log("Coach training production bundle and Athlete asset exclusions passed.");
