@@ -34,6 +34,12 @@ The local preview gate is a UI convenience only. Production mode refuses that
 bypass. Tokens remain in session storage, are cleared on expiry/logout, and are
 never logged.
 
-The fictional Athlete experience is also localhost-only. Production role
-resolution remains Coach/OwnerAdmin until athlete identity, relationship-based
-authorization, and production data controls receive separate approval.
+The richer fictional Athlete prototype remains localhost-only and is excluded
+from the production bundle. Production now includes the bounded Phase 4A adult
+Athlete slice: Athlete self-service routes require exactly the Cognito `Athlete`
+group, an active subject-to-profile mapping, and an active adult-beta profile;
+ownership is derived from the JWT subject rather than a browser-supplied Athlete
+identity. Conflicting Coach or OwnerAdmin membership is denied on Athlete routes.
+First-login and bounded assignment/session acceptance remain incomplete, and
+minor, guardian, medical, nutrition, and free-text Athlete note data remain out
+of scope.
