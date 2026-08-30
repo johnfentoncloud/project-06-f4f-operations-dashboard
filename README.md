@@ -1,54 +1,122 @@
 # F4F Operations Dashboard
 
-Project 06 is the authenticated internal application for managing Fenton4Fitness
-operations. It is separate from the public marketing website and exposes only a
-small, read-only projection of production lead data.
+Project 06 is the authenticated Fenton4Fitness Coach/Athlete application. It is
+the most complete and integrated project in this portfolio, bringing together
+lessons and architecture developed through the earlier IAM, hosting, serverless,
+and Terraform projects.
 
-## Phase 2 status
+## Problem
 
-Phase 2 is prepared for an authenticated Coach/OwnerAdmin production deployment
-at `app.fenton4fitness.com`. It adds Cognito managed login with authorization
-code and PKCE, mandatory TOTP MFA, OwnerAdmin authorization, and read-only
-access to allowlisted fields in the existing Project 04 lead table. The Athlete
-experience remains a fictional localhost-only prototype. No application
-resources, real users, or DNS records have been created by this work.
+The public Fenton4Fitness website captures leads, but coaches also need a private
+place to review operational data, maintain an exercise library, build reusable
+workouts, and eventually deliver assigned sessions to athletes. This project
+creates that internal application without exposing private workflows through the
+public marketing site.
+
+## Current capabilities
+
+### OwnerAdmin Coach experience
+
+- authenticated lead review with an allowlisted response projection
+- exercise search, categories, equipment/movement filters, aliases, and favorites
+- sectioned workout builder with rounds, supersets, AMRAPs, prescriptions, and instructions
+- immutable workout-template versions with idempotent create/update behavior
+- production Sign Out and responsive desktop/mobile layouts
+- adult Athlete profile/assignment administration for the bounded beta slice
+
+### Adult Athlete beta — Phase 4A Slice 1
+
+- separate Athlete Cognito identity and exact-group authorization
+- active subject-to-profile ownership mapping
+- Coach-created assignments containing immutable versioned workout snapshots
+- one resumable session per assignment
+- optimistic revision checks and server-enforced assignment/session transitions
+- adult-only scope with no minor, guardian, medical, nutrition, or free-text Athlete notes
+
+The richer fictional Athlete prototype remains available only on localhost for
+future design work. Production bundle tests prevent fixture data and preview
+controls from being uploaded.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    Owner[John or Jess] -->|HTTPS| CF[CloudFront]
-    CF --> S3[Private S3 frontend]
-    Owner -->|Code plus PKCE and TOTP| Cognito[Cognito]
-    S3 -->|Bearer JWT| API[API Gateway HTTP API]
-    Cognito --> API
-    API --> Health[Health Lambda]
-    API --> Leads[Read-only leads Lambda]
-    Leads --> Existing[(Existing Project 04 DynamoDB table)]
-    Health --> Logs[CloudWatch Logs]
-    Leads --> Logs
+    Browser[Coach or Athlete browser] -->|HTTPS| CF[CloudFront]
+    CF -->|Origin Access Control| S3[Private S3 frontend]
+    Browser -->|Authorization code + PKCE + MFA| Cognito[Cognito]
+    Browser -->|Bearer JWT| API[API Gateway HTTP API]
+    API -->|OwnerAdmin only| OwnerAPI[Coach and Athlete-admin Lambdas]
+    API -->|Athlete only| AthleteAPI[Athlete self-service Lambdas]
+    OwnerAPI --> Leads[(Existing lead table)]
+    OwnerAPI --> Training[(Training-content table)]
+    OwnerAPI --> AthleteDB[(Athlete-training table)]
+    AthleteAPI --> AthleteDB
+    OwnerAPI --> Logs[CloudWatch Logs]
+    AthleteAPI --> Logs
 ```
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for trust boundaries and the
-staged custom-domain rollout.
+See [Architecture](docs/ARCHITECTURE.md), [Security](docs/SECURITY.md),
+[Data model](docs/DATA-MODEL.md), and
+[Adult Beta design](docs/ADULT-BETA-DESIGN.md).
 
 ## Technologies
 
-- Semantic HTML, modular vanilla JavaScript, and responsive CSS
-- Cognito authorization-code flow with PKCE and mandatory TOTP MFA
-- API Gateway HTTP API with a Cognito JWT authorizer
-- Python Lambda functions with a second OwnerAdmin authorization check
-- Exact-table, read-only DynamoDB access
-- Private S3 origin and CloudFront HTTPS delivery
-- Terraform with local, certificate, and application approval gates
+- semantic HTML, responsive CSS, and modular vanilla JavaScript
+- Python Lambda handlers
+- Cognito managed login with authorization code, PKCE, and MFA
+- API Gateway HTTP API with JWT authorizers and explicit CORS
+- DynamoDB conditional writes, transactions, sparse indexes, PITR, encryption,
+  and deletion protection
+- CloudFront, private S3, ACM HTTPS, CloudWatch Logs, and scoped IAM
+- Terraform with staged deployment gates and reviewed saved plans
 
-## Relationship to Projects 03-05
+## Request and trust flow
 
-- Project 03 remains the public Fenton4Fitness website and form frontend.
-- Project 04 remains the production lead ingestion and notification pipeline.
-- Project 05 remains the public website infrastructure.
-- Project 06 reads an allowlisted projection of Project 04 leads; it does not
-  change that table, its capture Lambda, or any existing production resource.
+1. Cognito authenticates the browser and issues tokens.
+2. The browser sends a bearer token to an API Gateway route.
+3. API Gateway validates the JWT.
+4. The Lambda performs a second exact-group check.
+5. Athlete routes derive ownership from the token subject mapping; the browser
+   cannot select another Athlete identity.
+6. IAM limits each Lambda to the actions and tables required by that route group.
+
+## Important technical decisions
+
+- **Defense in depth:** API JWT validation does not replace Lambda role checks.
+- **Immutable history:** workout edits create new versions rather than rewriting old ones.
+- **Stable assignments:** Athlete assignments contain a snapshot of the approved template version.
+- **Retry safety:** idempotency receipts and conditional writes prevent duplicate versions.
+- **Concurrency safety:** session writes require the expected revision.
+- **Data minimization:** lead responses and the adult beta exclude unnecessary narrative and sensitive fields.
+- **Bundle separation:** local prototype assets and fictional data are not production objects.
+
+## Production problems solved
+
+- diagnosed a DynamoDB transaction failure using sanitized CloudWatch details and
+  added only the exact missing IAM actions
+- corrected API Gateway CORS when browser preflight evidence showed the custom
+  `idempotency-key` header was not allowed
+- made Lambda packaging deterministic by excluding bytecode/cache artifacts
+- stopped full Workout Builder rerenders on normal input so focus, caret, and
+  scroll position remain stable
+- preserved legacy flat workouts while introducing sectioned schema version 2
+
+## My role and what I learned
+
+I developed this project by extending each phase in small, reviewed slices and
+verifying the result with local tests, Terraform plans, and production acceptance
+checks. My work included connecting the frontend to authenticated APIs, shaping
+the DynamoDB access patterns, tightening role and IAM boundaries, documenting
+deployment decisions, and troubleshooting failures across the browser and AWS
+services.
+
+The biggest progression for me was learning to think about the application as
+one integrated system rather than as a collection of separate AWS services. A
+browser failure can originate in CORS, authentication, IAM, Lambda code, or data
+conditions, so I learned to follow evidence across those boundaries and make the
+smallest correction that preserved working behavior. I am still developing this
+skill, and the remaining adult-beta acceptance work is intentionally documented
+rather than presented as complete.
 
 ## Local development
 
@@ -57,45 +125,55 @@ cd frontend
 python -m http.server 8080
 ```
 
-Open `http://localhost:8080`. The local preview gate uses `sessionStorage`, works
-only on localhost, and is not a production security boundary.
+Open `http://localhost:8080`. Local preview behavior is a development tool, not
+a production security boundary. Production refuses preview bypasses.
 
-Run all checks from the repository root:
+Run all repository checks:
 
 ```powershell
 powershell -File scripts/check.ps1
 ```
 
-## Security approach
+## Deployment safety
 
-- The browser receives no AWS credentials and no Cognito client secret.
-- Production routes require a valid Cognito JWT and OwnerAdmin membership.
-- The leads Lambda can only scan the exact existing table ARN.
-- DynamoDB projection and response allowlists exclude messages, goals, injury
-  history, medical notes, and sensitive narrative fields.
-- CORS uses explicit origins; API throttling and finite log retention are set.
-- Terraform state, tfvars, plans, environment files, and build output are ignored.
+Terraform state, production tfvars, plans, provider caches, Lambda archives,
+backups, and real operational data are ignored. Normal workflow:
 
-See [docs/SECURITY.md](docs/SECURITY.md) before deployment.
+1. verify the approved AWS identity and region
+2. run formatting and validation separately
+3. generate and review a fresh Terraform plan
+4. stop on destructive, replacement, or unrelated changes
+5. apply only an explicitly approved saved plan
+6. invalidate only changed CloudFront paths when required
+7. run authenticated and unauthenticated verification
+8. confirm a final no-change plan
 
-## Staged deployment plan
+Never run the provisioning scripts with write flags without a separately
+reviewed identity/data approval.
 
-1. Copy `terraform/terraform.tfvars.example` to an ignored tfvars file and set
-   the exact existing table identifiers.
-2. Plan and separately approve `deployment_stage = "certificate"` to request
-   only the ACM certificate in `us-east-1`.
-3. Add the reported ACM validation CNAME in Porkbun and wait for `ISSUED`.
-4. Review a fresh `deployment_stage = "application"` plan.
-5. Apply only after separate approval. Do not create real Cognito users yet.
-6. Separately approve and add the Porkbun `app` CNAME to the new
-   CloudFront hostname, then verify HTTPS, authentication, and read-only data.
+## Testing
 
-The ignored production tfvars and Terraform state must never be committed.
-Terraform generates `js/config.js` with public API/Cognito identifiers at
-deployment time; no client secret is generated.
+The repository includes frontend and backend tests for authentication guards,
+role-aware navigation, production bundle exclusions, lead projection, exercise
+filtering, workout serialization/versioning, Athlete ownership, assignment/session
+transitions, idempotency, revision conflicts, and invalid input. Terraform
+formatting/validation, secret patterns, forbidden paths, and diff whitespace are
+included in the project check script.
 
-## Planned expansion
+## Current limitations and next work
 
-Future phases cover audited workflow updates, athlete/client profiles,
-scheduling, programs, revenue, messaging, analytics, and governed AI-assisted
-workflows. See [docs/ROADMAP.md](docs/ROADMAP.md).
+- complete the bounded adult-beta first-login and assignment/session acceptance
+- add CI validation without long-lived AWS credentials
+- add CloudWatch metrics/alarms and a recovery exercise
+- replace the capped lead-table scan when data volume justifies a read-model migration
+- add audited correction workflows before expanding Athlete data scope
+
+Do not over-engineer this application with containers, microservices, or a
+framework rewrite without a concrete operational need.
+
+## What this project demonstrates
+
+For a hiring manager, this project demonstrates junior-level growth in systems
+thinking: connecting identity, APIs, serverless code, data models, IAM, edge
+delivery, testing, and production troubleshooting while maintaining explicit
+scope and privacy boundaries.
