@@ -160,10 +160,19 @@ transitions, idempotency, revision conflicts, and invalid input. Terraform
 formatting/validation, secret patterns, forbidden paths, and diff whitespace are
 included in the project check script.
 
+## Continuous integration
+
+GitHub Actions runs CI on pushes to `main` and pull requests targeting `main`.
+It checks JavaScript syntax, runs the frontend and backend tests, verifies that
+generated deployment artifacts are not tracked, and runs Terraform formatting
+and configuration validation. The workflow has read-only repository permission,
+receives no AWS credentials, and cannot plan, apply, or deploy infrastructure.
+Keeping validation separate from deployment provides useful feedback without
+giving routine CI access to production.
+
 ## Current limitations and next work
 
 - complete the bounded adult-beta first-login and assignment/session acceptance
-- add CI validation without long-lived AWS credentials
 - add CloudWatch metrics/alarms and a recovery exercise
 - replace the capped lead-table scan when data volume justifies a read-model migration
 - add audited correction workflows before expanding Athlete data scope

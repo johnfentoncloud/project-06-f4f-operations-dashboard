@@ -7,7 +7,7 @@ const frontend = path.resolve(__dirname, "..");
 const productionHtml = fs.readFileSync(path.join(frontend, "index.production.html"), "utf8");
 const terraform = fs.readFileSync(path.resolve(frontend, "..", "terraform", "main.tf"), "utf8");
 const terraformVariables = fs.readFileSync(path.resolve(frontend, "..", "terraform", "variables.tf"), "utf8");
-const productionVariables = fs.readFileSync(path.resolve(frontend, "..", "terraform", "production.auto.tfvars"), "utf8");
+const exampleVariables = fs.readFileSync(path.resolve(frontend, "..", "terraform", "terraform.tfvars.example"), "utf8");
 const athleteTerraform = fs.readFileSync(path.resolve(frontend, "..", "terraform", "athlete.tf"), "utf8");
 const sharedApp = fs.readFileSync(path.join(frontend, "js", "app.js"), "utf8");
 const workoutBuilder = fs.readFileSync(path.join(frontend, "js", "workout-builder.js"), "utf8");
@@ -44,7 +44,7 @@ assert.ok(corsBlock.includes("allow_origins     = var.allowed_origins"), "Produc
 assert.ok(!corsBlock.includes('"*"'), "Production CORS must not allow wildcard origins");
 assert.ok(terraformVariables.includes('"https://app.fenton4fitness.com"'), "The approved production origin must remain allowlisted");
 assert.ok(!terraformVariables.includes("localhost:8080") && !terraformVariables.includes("127.0.0.1:8080"), "Terraform defaults must not allow localhost origins");
-assert.ok(productionVariables.includes('"https://app.fenton4fitness.com"') && !productionVariables.includes("localhost"), "Production must allow only the custom application origin");
+assert.ok(exampleVariables.includes('"https://app.fenton4fitness.com"') && !exampleVariables.includes("localhost"), "The tracked deployment example must allow only the custom application origin");
 assert.ok(athleteTerraform.includes('projection_type = "INCLUDE"'), "Active Athlete profile GSI must use a minimal INCLUDE projection");
 for (const internalField of ['"cognitoSub"', '"createdBy"']) assert.ok(!athleteTerraform.match(new RegExp(`non_key_attributes[\\s\\S]{0,180}${internalField}`)), `GSI must not project ${internalField}`);
 const athleteReadPolicy = athleteTerraform.match(/resource "aws_iam_role_policy" "athlete_read"[\s\S]*?\n\}/)?.[0] || "";
