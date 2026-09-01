@@ -77,3 +77,16 @@ variable "log_retention_days" {
   type        = number
   default     = 30
 }
+
+variable "monitoring_alert_email" {
+  description = "Optional internal email endpoint for Project 06 operational alarms. Set only in private configuration; never commit a personal address."
+  type        = string
+  default     = null
+  nullable    = true
+  sensitive   = true
+
+  validation {
+    condition     = var.monitoring_alert_email == null ? true : can(regex("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", trimspace(var.monitoring_alert_email)))
+    error_message = "monitoring_alert_email must be null or a valid email address supplied through private configuration."
+  }
+}

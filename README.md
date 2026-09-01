@@ -170,10 +170,24 @@ receives no AWS credentials, and cannot plan, apply, or deploy infrastructure.
 Keeping validation separate from deployment provides useful feedback without
 giving routine CI access to production.
 
+## Operational monitoring
+
+Production now uses a small Terraform-managed monitoring baseline: API Gateway
+server errors plus unhandled errors from the Athlete-session and workout-template
+write Lambdas. All three alarms route to a dedicated Project 06 operations topic
+that is isolated from business lead notifications. The internal email endpoint
+is supplied only through private Terraform configuration; no address, SMS
+subscription, or notification credential is stored in this repository.
+
+This first baseline intentionally omits browser telemetry, authentication-denial
+alarms, custom metrics, DynamoDB throttling, CloudFront alarms, and automated
+remediation. Thresholds should be reviewed after enough production observations
+exist to justify tuning.
+
 ## Current limitations and next work
 
 - complete the bounded adult-beta first-login and assignment/session acceptance
-- add CloudWatch metrics/alarms and a recovery exercise
+- confirm the monitoring email subscription and run a controlled alarm-notification exercise
 - replace the capped lead-table scan when data volume justifies a read-model migration
 - add audited correction workflows before expanding Athlete data scope
 

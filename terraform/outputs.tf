@@ -38,3 +38,8 @@ output "dashboard_dns_target" {
   description = "Create a Porkbun CNAME for dashboard only after CloudFront is deployed."
   value       = local.application_enabled ? aws_cloudfront_distribution.frontend[0].domain_name : null
 }
+
+output "monitoring_alert_topic_arn" {
+  description = "Dedicated Project 06 operational-alert topic ARN."
+  value       = local.application_enabled ? aws_sns_topic.monitoring_alerts[0].arn : null
+}
