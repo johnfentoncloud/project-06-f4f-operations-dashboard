@@ -4,6 +4,8 @@ SECTION_TYPES = {"Stretch / Mobility", "Warm-Up", "Power", "Strength", "Conditio
 SECTION_FORMATS = {"Standard", "Superset", "Circuit", "AMRAP", "For Time", "EMOM", "E2MOM", "Intervals", "Rounds", "Steady State", "Freeform / Instructions Only"}
 PRESCRIPTION_FIELDS = {"sets", "reps", "repQualifier", "load", "loadUnit", "duration", "distance", "distanceUnit", "calories", "rounds", "rest", "tempo", "rpe", "percentage", "coachInstruction"}
 ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{2,99}$")
+EXERCISE_CATEGORIES = {"Strength", "Power", "Plyometrics", "Speed", "Agility / Change of Direction", "Conditioning", "Core", "Mobility / Warm-up"}
+MEASUREMENT_TYPES = {"weight_reps", "reps", "bodyweight", "time", "hold_duration", "distance", "calories", "rounds", "completion"}
 
 
 def _valid_number(value, *, minimum=0, maximum=None):
@@ -66,4 +68,18 @@ def validate_template(payload):
     exercises = payload.get("exercises")
     if not isinstance(exercises, list) or not exercises or len(exercises) > 100: return errors + ["sections or exercises must contain workout content"]
     for index, item in enumerate(exercises): errors.extend(_validate_exercise(item, f"exercise {index + 1}"))
+    return errors
+
+
+def validate_exercise(payload):
+    if not isinstance(payload, dict): return ["JSON body must be an object"]
+    errors = []
+    name = str(payload.get("name", "")).strip()
+    if not name or len(name) > 100: errors.append("name is required and must be at most 100 characters")
+    if payload.get("category") not in EXERCISE_CATEGORIES: errors.append("category is invalid")
+    if not str(payload.get("movementPattern", "")).strip() or len(str(payload.get("movementPattern", ""))) > 100: errors.append("movementPattern is required and must be at most 100 characters")
+    if not str(payload.get("equipment", "")).strip() or len(str(payload.get("equipment", ""))) > 100: errors.append("equipment is required and must be at most 100 characters")
+    if payload.get("measurementType") not in MEASUREMENT_TYPES: errors.append("measurementType is invalid")
+    if not str(payload.get("defaultUnit", "")).strip() or len(str(payload.get("defaultUnit", ""))) > 20: errors.append("defaultUnit is required and must be at most 20 characters")
+    if len(str(payload.get("instructions", ""))) > 1000: errors.append("instructions must be at most 1000 characters")
     return errors

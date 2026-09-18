@@ -2,7 +2,9 @@ import importlib
 import json
 import os
 import sys
+import types
 import unittest
+from decimal import Decimal
 from unittest.mock import MagicMock, patch
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "lambda"))
@@ -48,6 +50,60 @@ class AthleteSnapshotTests(unittest.TestCase):
         self.assertIn("transact_write_items", script)
         self.assertIn("--apply", script)
         self.assertIn("No writes performed", script)
+
+
+class AthleteReadResponseTests(unittest.TestCase):
+    @staticmethod
+    def load_common(table):
+        sys.modules.pop("athlete_common", None)
+        boto3 = types.ModuleType("boto3")
+        boto3.resource = MagicMock()
+        boto3.resource.return_value.Table.return_value = table
+        dynamodb = types.ModuleType("boto3.dynamodb")
+        conditions = types.ModuleType("boto3.dynamodb.conditions")
+        conditions.Key = MagicMock()
+        with patch.dict(sys.modules, {"boto3": boto3, "boto3.dynamodb": dynamodb, "boto3.dynamodb.conditions": conditions}):
+            return importlib.import_module("athlete_common")
+
+    def test_active_mapping_and_profile_resolve_without_exposing_subject(self):
+        table = MagicMock()
+        table.get_item.side_effect = [
+            {"Item": {"athleteId": "athlete-sanitized", "status": "ACTIVE"}},
+            {"Item": {"athleteId": "athlete-sanitized", "displayName": "Test Athlete", "status": "ACTIVE", "adultBeta": True}},
+        ]
+        common = self.load_common(table)
+        event = {"requestContext": {"authorizer": {"jwt": {"claims": {"sub": "subject-sanitized", "cognito:groups": "Athlete"}}}}}
+
+        athlete_id, profile = common.athlete_context(event)
+
+        self.assertEqual(athlete_id, "athlete-sanitized")
+        self.assertEqual(profile["displayName"], "Test Athlete")
+        self.assertEqual(table.get_item.call_count, 2)
+
+    def test_same_day_assignment_snapshots_serialize_nested_dynamodb_numbers(self):
+        common = self.load_common(MagicMock())
+        assignment = lambda suffix, load: {
+            "assignmentId": f"assignment-{suffix}",
+            "athleteId": "athlete-sanitized",
+            "scheduledDate": "2026-09-18",
+            "programTimeZone": "America/New_York",
+            "status": "ASSIGNED",
+            "prescriptionSnapshot": {
+                "sections": [{
+                    "order": Decimal("0"),
+                    "exercises": [{"exerciseName": "Sanitized movement", "prescription": {"sets": Decimal("3"), "load": Decimal(load)}}],
+                }],
+            },
+        }
+
+        result = common.response(200, {"ok": True, "items": [assignment("one", "12.5"), assignment("two", "20")]})
+        decoded = json.loads(result["body"])
+
+        self.assertEqual(result["statusCode"], 200)
+        self.assertEqual(len(decoded["items"]), 2)
+        self.assertEqual(decoded["items"][0]["prescriptionSnapshot"]["sections"][0]["order"], 0)
+        self.assertEqual(decoded["items"][0]["prescriptionSnapshot"]["sections"][0]["exercises"][0]["prescription"]["load"], 12.5)
+        self.assertEqual(decoded["items"][1]["prescriptionSnapshot"]["sections"][0]["exercises"][0]["prescription"]["load"], 20)
 
 
 if __name__ == "__main__":

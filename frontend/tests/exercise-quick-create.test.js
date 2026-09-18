@@ -1,0 +1,10 @@
+"use strict";
+const assert = require("assert"); const fs = require("fs"); const path = require("path");
+const root = path.resolve(__dirname, "..");
+const builder = fs.readFileSync(path.join(root, "js", "workout-builder.js"), "utf8");
+const production = fs.readFileSync(path.join(root, "index.production.html"), "utf8");
+assert(builder.includes("Create New Exercise")); assert(builder.includes("root.F4F_API.createExercise"));
+assert(builder.includes("addLibraryExercise(result.item.exerciseId)")); assert(builder.includes("Your workout draft is unchanged."));
+assert(builder.includes("data-use-duplicate")); assert(production.includes('id="exercise-create-form"'));
+assert(!production.match(/athlete-production-shell[\s\S]*data-create-exercise/));
+console.log("Owner quick-create, immediate insertion, duplicate choice, failure preservation, and Athlete absence passed.");

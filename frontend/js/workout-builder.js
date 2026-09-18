@@ -323,7 +323,48 @@
     document.querySelector("#exercise-count").textContent = `${items.length} exercises`;
     const disabled = state.workout.sections.length ? "" : " disabled";
     document.querySelector("#recent-exercises").innerHTML = state.recent.length ? state.recent.map(id => `<button type="button" data-add-exercise="${id}"${disabled}>${escapeHtml(findExercise(id).name)}</button>`).join("") : "<span>No exercises selected yet.</span>";
-    container.innerHTML = items.map(exercise => `<article class="exercise-card"><div><span class="library-source">F4F Library</span><h3>${escapeHtml(exercise.name)}</h3><p>${escapeHtml(exercise.category)} · ${escapeHtml(exercise.movementPattern)}</p><small>${escapeHtml(exercise.equipment)} · ${escapeHtml(exercise.measurementType.replaceAll("_", " "))}</small></div><div class="exercise-actions"><button class="icon-button" type="button" data-favorite-exercise="${exercise.exerciseId}" aria-label="${state.favorites.has(exercise.exerciseId) ? "Remove from" : "Add to"} favorites" aria-pressed="${state.favorites.has(exercise.exerciseId)}">★</button><button class="secondary-button compact-button" type="button" data-add-exercise="${exercise.exerciseId}"${disabled}>Add</button></div></article>`).join("") || "<div class=\"empty-state\"><strong>No exercises match those filters.</strong></div>";
+    const query = filters.query.trim();
+    const exact = root.F4F_EXERCISES.exercises.some(item => root.F4F_EXERCISES.normalizeSearchText(item.name) === root.F4F_EXERCISES.normalizeSearchText(query));
+    const create = `<div class="quick-create-action"><button class="secondary-button compact-button" type="button" data-create-exercise${disabled}>${query && !exact ? `Create &quot;${escapeHtml(query)}&quot;` : "Create New Exercise"}</button></div>`;
+    container.innerHTML = create + (items.map(exercise => `<article class="exercise-card"><div><span class="library-source">F4F Library</span><h3>${escapeHtml(exercise.name)}</h3><p>${escapeHtml(exercise.category)} · ${escapeHtml(exercise.movementPattern)}</p><small>${escapeHtml(exercise.equipment)} · ${escapeHtml(exercise.measurementType.replaceAll("_", " "))}</small></div><div class="exercise-actions"><button class="icon-button" type="button" data-favorite-exercise="${exercise.exerciseId}" aria-label="${state.favorites.has(exercise.exerciseId) ? "Remove from" : "Add to"} favorites" aria-pressed="${state.favorites.has(exercise.exerciseId)}">★</button><button class="secondary-button compact-button" type="button" data-add-exercise="${exercise.exerciseId}"${disabled}>Add</button></div></article>`).join("") || "<div class=\"empty-state\"><strong>No exercises match those filters.</strong></div>");
+  }
+
+  function openExerciseCreate() {
+    const dialog = document.querySelector("#exercise-create-dialog");
+    const form = document.querySelector("#exercise-create-form");
+    form.reset();
+    document.querySelector("#quick-exercise-name").value = document.querySelector("#exercise-search").value.trim();
+    document.querySelector("#quick-exercise-unit").value = "lb";
+    document.querySelector("#exercise-create-status").textContent = "";
+    document.querySelector("#exercise-create-duplicate").hidden = true;
+    dialog.showModal();
+    document.querySelector("#quick-exercise-name").focus();
+  }
+
+  function closeExerciseCreate() { document.querySelector("#exercise-create-dialog")?.close(); }
+
+  async function submitExerciseCreate(event) {
+    event.preventDefault();
+    const form = event.currentTarget; const submit = form.querySelector('[type="submit"]');
+    const payload = Object.fromEntries(new FormData(form).entries());
+    const status = document.querySelector("#exercise-create-status"); const duplicate = document.querySelector("#exercise-create-duplicate");
+    submit.disabled = true; status.textContent = "Creating exercise…"; duplicate.hidden = true;
+    try {
+      const key = root.crypto?.randomUUID?.() || `exercise-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      const result = await root.F4F_API.createExercise(payload, key);
+      root.F4F_EXERCISES.setExercises([...root.F4F_EXERCISES.exercises, result.item]);
+      addLibraryExercise(result.item.exerciseId);
+      closeExerciseCreate();
+      root.location.hash = "workout-builder";
+      renderBuilder(`${result.item.name} created in the Exercise Library and added to this section.`);
+    } catch (error) {
+      if (error.status === 409 && error.payload?.duplicate) {
+        const item = error.payload.duplicate;
+        duplicate.innerHTML = `<strong>Likely duplicate:</strong> ${escapeHtml(item.name)} <button class="secondary-button compact-button" type="button" data-use-duplicate="${escapeHtml(item.exerciseId)}">Use existing exercise</button>`;
+        duplicate.hidden = false;
+      }
+      status.textContent = `${error.message} Your workout draft is unchanged.`;
+    } finally { submit.disabled = false; }
   }
 
   function fieldMarkup(field, value) {
@@ -469,7 +510,11 @@
     state.workout = createWorkout();
     renderLibrary(); renderBuilder("Add your first section to begin building the session.");
     document.querySelectorAll("#exercise-search,#exercise-category,#exercise-equipment,#exercise-pattern,#exercise-favorites").forEach(control => control.addEventListener(control.tagName === "INPUT" ? "input" : "change", renderLibrary));
-    document.querySelector("#exercise-results").addEventListener("click", event => { const add = event.target.closest("[data-add-exercise]"); const favorite = event.target.closest("[data-favorite-exercise]"); if (add) addLibraryExercise(add.dataset.addExercise); if (favorite) { state.favorites.has(favorite.dataset.favoriteExercise) ? state.favorites.delete(favorite.dataset.favoriteExercise) : state.favorites.add(favorite.dataset.favoriteExercise); renderLibrary(); } });
+    document.querySelector("#exercise-results").addEventListener("click", event => { const add = event.target.closest("[data-add-exercise]"); const favorite = event.target.closest("[data-favorite-exercise]"); if (event.target.closest("[data-create-exercise]")) openExerciseCreate(); if (add) addLibraryExercise(add.dataset.addExercise); if (favorite) { state.favorites.has(favorite.dataset.favoriteExercise) ? state.favorites.delete(favorite.dataset.favoriteExercise) : state.favorites.add(favorite.dataset.favoriteExercise); renderLibrary(); } });
+    document.querySelector("#quick-exercise-category").innerHTML = root.F4F_EXERCISES.uniqueValues(library, "category").map(value => `<option>${escapeHtml(value)}</option>`).join("");
+    document.querySelector("#exercise-create-form").addEventListener("submit", submitExerciseCreate);
+    document.querySelectorAll("#exercise-create-close,#exercise-create-cancel").forEach(button => button.addEventListener("click", closeExerciseCreate));
+    document.querySelector("#exercise-create-duplicate").addEventListener("click", event => { const button = event.target.closest("[data-use-duplicate]"); if (!button) return; addLibraryExercise(button.dataset.useDuplicate); closeExerciseCreate(); root.location.hash = "workout-builder"; });
     document.querySelector("#recent-exercises").addEventListener("click", event => { const add = event.target.closest("[data-add-exercise]"); if (add) addLibraryExercise(add.dataset.addExercise); });
     document.querySelector("#workout-name").addEventListener("input", event => { state.workout.name = event.target.value; });
     document.querySelector("#workout-description").addEventListener("input", event => { state.workout.description = event.target.value; });

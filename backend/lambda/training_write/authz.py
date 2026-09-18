@@ -14,4 +14,4 @@ def _groups(value):
 
 def owner_subject(event):
     claims = (((event or {}).get("requestContext") or {}).get("authorizer", {}).get("jwt", {}).get("claims", {}))
-    return claims.get("sub") if OWNER_GROUP in _groups(claims.get("cognito:groups")) else None
+    return claims.get("sub") if _groups(claims.get("cognito:groups")) == {OWNER_GROUP} else None

@@ -2,6 +2,7 @@ import json
 import os
 import re
 from datetime import datetime, timezone
+from decimal import Decimal
 from zoneinfo import ZoneInfo
 
 import boto3
@@ -13,8 +14,14 @@ PROGRAM_TIMEZONE = ZoneInfo("America/New_York")
 UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$", re.I)
 
 
+def json_default(value):
+    if isinstance(value, Decimal):
+        return int(value) if value == value.to_integral_value() else float(value)
+    raise TypeError(f"Object of type {value.__class__.__name__} is not JSON serializable")
+
+
 def response(status, payload):
-    return {"statusCode": status, "headers": {"Content-Type": "application/json"}, "body": json.dumps(payload)}
+    return {"statusCode": status, "headers": {"Content-Type": "application/json"}, "body": json.dumps(payload, default=json_default)}
 
 
 def claims(event):

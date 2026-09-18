@@ -90,12 +90,23 @@ class TrainingContentTests(unittest.TestCase):
         self.assertEqual(authz.owner_subject(owner()), "owner-1")
         event = owner(); event["requestContext"]["authorizer"]["jwt"]["claims"]["cognito:groups"] = "[Coach]"
         self.assertIsNone(authz.owner_subject(event))
+        event = owner(); event["requestContext"]["authorizer"]["jwt"]["claims"]["cognito:groups"] = "[OwnerAdmin, Athlete]"
+        self.assertIsNone(authz.owner_subject(event))
 
     def test_valid_and_invalid_prescriptions(self):
         good = {"name": "Power", "exercises": [{"exerciseId": "f4f-001", "exerciseName": "Jump", "section": "Power", "prescription": {"sets": 3, "reps": 4, "rpe": 7}}]}
         self.assertEqual(validation.validate_template(good), [])
         bad = json.loads(json.dumps(good)); bad["exercises"][0]["prescription"]["rpe"] = 11
         self.assertTrue(validation.validate_template(bad))
+
+    def test_quick_exercise_validation(self):
+        good = {"name": "Front-Foot Elevated Split Squat", "category": "Strength", "movementPattern": "Single-Leg", "equipment": "Dumbbell", "measurementType": "weight_reps", "defaultUnit": "lb", "instructions": "Stay controlled."}
+        self.assertEqual(validation.validate_exercise(good), [])
+        bad = {**good, "name": "", "category": "Invented", "measurementType": "unknown"}
+        errors = validation.validate_exercise(bad)
+        self.assertTrue(any("name is required" in error for error in errors))
+        self.assertTrue(any("category is invalid" in error for error in errors))
+        self.assertTrue(any("measurementType is invalid" in error for error in errors))
 
     def test_sectioned_template_validation(self):
         payload = {

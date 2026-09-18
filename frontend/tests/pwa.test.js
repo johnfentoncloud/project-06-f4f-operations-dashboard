@@ -1,0 +1,12 @@
+"use strict";
+const assert = require("assert"); const fs = require("fs"); const path = require("path");
+const root = path.resolve(__dirname, "..");
+const manifest = JSON.parse(fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"));
+assert.equal(manifest.id, "/"); assert.equal(manifest.start_url, "/"); assert.equal(manifest.display, "standalone");
+for (const size of ["192x192", "512x512"]) assert(manifest.icons.some(icon => icon.sizes === size));
+const sw = fs.readFileSync(path.join(root, "service-worker.js"), "utf8");
+for (const forbidden of ["/me/", "/athletes", "/workout-templates", "Authorization"]) assert(!sw.includes(forbidden), `service worker must not cache ${forbidden}`);
+assert(sw.includes('request.headers.has("authorization")')); assert(sw.includes("/offline.html"));
+const production = fs.readFileSync(path.join(root, "index.production.html"), "utf8");
+assert(production.includes('rel="manifest"')); assert(production.includes('js/pwa.js')); assert(production.includes('id="exercise-create-dialog"'));
+console.log("PWA manifest, icons, production registration, and sensitive-cache exclusions passed.");

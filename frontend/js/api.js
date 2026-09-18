@@ -25,6 +25,7 @@
       const payload = await response.json().catch(() => ({}));
       const error = new Error(payload.message || `Dashboard API returned HTTP ${response.status}.`);
       error.status = response.status;
+      error.payload = payload;
       throw error;
     }
     return response.json();
@@ -36,6 +37,7 @@
     listLeads: cursor => request(`/leads${cursor ? `?cursor=${encodeURIComponent(cursor)}` : ""}`),
     listExercises: cursor => request(`/exercises${cursor ? `?cursor=${encodeURIComponent(cursor)}` : ""}`),
     getExercise: exerciseId => request(`/exercises/${encodeURIComponent(exerciseId)}`),
+    createExercise: (payload, key) => request("/exercises", json("POST", { ...payload, idempotencyKey: key }, key)),
     listWorkoutTemplates: cursor => request(`/workout-templates${cursor ? `?cursor=${encodeURIComponent(cursor)}` : ""}`),
     getWorkoutTemplate: (templateId, version) => request(`/workout-templates/${encodeURIComponent(templateId)}${version ? `/versions/${encodeURIComponent(version)}` : ""}`),
     createWorkoutTemplate: (payload, key) => request("/workout-templates", json("POST", { ...payload, idempotencyKey: key }, key)),

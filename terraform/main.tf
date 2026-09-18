@@ -20,12 +20,13 @@ locals {
     )
   )
   content_types = {
-    css  = "text/css"
-    html = "text/html"
-    js   = "application/javascript"
-    png  = "image/png"
-    svg  = "image/svg+xml"
-    webp = "image/webp"
+    css         = "text/css"
+    html        = "text/html"
+    js          = "application/javascript"
+    png         = "image/png"
+    svg         = "image/svg+xml"
+    webp        = "image/webp"
+    webmanifest = "application/manifest+json"
   }
   tags = {
     Project     = "Project-06"
@@ -131,7 +132,7 @@ resource "aws_s3_object" "frontend" {
   source        = "${local.frontend_path}/${each.value}"
   etag          = filemd5("${local.frontend_path}/${each.value}")
   content_type  = lookup(local.content_types, lower(element(split(".", each.value), length(split(".", each.value)) - 1)), "application/octet-stream")
-  cache_control = endswith(each.value, ".html") || endswith(each.value, ".js") ? "no-cache, must-revalidate" : "public, max-age=3600, must-revalidate"
+  cache_control = endswith(each.value, ".html") || endswith(each.value, ".js") || endswith(each.value, ".webmanifest") ? "no-cache, must-revalidate" : "public, max-age=3600, must-revalidate"
 }
 
 resource "aws_s3_object" "frontend_index" {
@@ -450,8 +451,8 @@ resource "aws_iam_role_policy" "training_read" {
 data "aws_iam_policy_document" "training_write" {
   count = local.application_enabled ? 1 : 0
   statement {
-    actions   = ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:TransactWriteItems", "dynamodb:UpdateItem"]
-    resources = [aws_dynamodb_table.training_content[0].arn]
+    actions   = ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:Query", "dynamodb:TransactWriteItems", "dynamodb:UpdateItem"]
+    resources = [aws_dynamodb_table.training_content[0].arn, "${aws_dynamodb_table.training_content[0].arn}/index/GSI1"]
   }
 }
 
@@ -705,6 +706,7 @@ locals {
     "GET /workout-templates/{templateId}/versions/{version}"
   ])
   training_write_routes = toset([
+    "POST /exercises",
     "POST /workout-templates",
     "PUT /workout-templates/{templateId}"
   ])
@@ -744,4 +746,13 @@ resource "aws_lambda_permission" "training_write_api" {
   function_name = aws_lambda_function.training_write[0].function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.dashboard[0].execution_arn}/*/*/workout-templates*"
+}
+
+resource "aws_lambda_permission" "training_write_exercises_api" {
+  count         = local.application_enabled ? 1 : 0
+  statement_id  = "AllowDashboardApiExerciseWrite"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.training_write[0].function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.dashboard[0].execution_arn}/*/POST/exercises"
 }

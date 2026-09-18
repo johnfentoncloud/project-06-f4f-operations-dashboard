@@ -2,6 +2,7 @@ import hashlib
 import json
 import logging
 import os
+import re
 import uuid
 from datetime import datetime, timezone
 from decimal import Decimal
@@ -10,7 +11,7 @@ import boto3
 from boto3.dynamodb.types import TypeSerializer
 from botocore.exceptions import ClientError
 from authz import owner_subject
-from validation import validate_template
+from validation import validate_exercise, validate_template
 
 LOGGER = logging.getLogger(); LOGGER.setLevel(logging.INFO)
 TABLE_NAME = os.environ.get("TRAINING_TABLE_NAME", "")
@@ -22,6 +23,7 @@ def response(status, payload): return {"statusCode": status, "headers": {"Conten
 def now(): return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 def ddb(item): return {key: SERIALIZER.serialize(value) for key, value in item.items()}
 def stable_hash(payload): return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+def normalized_name(value): return re.sub(r"[^a-z0-9]+", " ", str(value).casefold()).strip()
 
 def log_client_error(error):
     response_data = error.response if isinstance(getattr(error, "response", None), dict) else {}
@@ -49,8 +51,65 @@ def body(event):
 
 def retry_result(subject, key, request_hash):
     item = TABLE.get_item(Key={"PK": f"IDEMPOTENCY#{subject}#{key}", "SK": "REQUEST"}, ConsistentRead=True).get("Item")
-    if item and item.get("requestHash") == request_hash: return {"templateId": item["templateId"], "version": int(item["version"]), "idempotentReplay": True}
+    if item and item.get("requestHash") == request_hash:
+        result = {"idempotentReplay": True}
+        if item.get("exerciseId"): result["exerciseId"] = item["exerciseId"]
+        if item.get("templateId"): result.update({"templateId": item["templateId"], "version": int(item["version"])})
+        return result
     return None
+
+def find_duplicate_exercise(name):
+    expected = normalized_name(name)
+    options = {"IndexName": "GSI1", "KeyConditionExpression": "GSI1PK = :partition", "ExpressionAttributeValues": {":partition": "LIBRARY#F4F#EXERCISE"}}
+    while True:
+        result = TABLE.query(**options)
+        for item in result.get("Items", []):
+            if normalized_name(item.get("name")) == expected:
+                return {key: value for key, value in item.items() if key not in {"PK", "SK", "GSI1PK", "GSI1SK"}}
+        cursor = result.get("LastEvaluatedKey")
+        if not cursor: return None
+        options["ExclusiveStartKey"] = cursor
+
+def create_exercise(payload, subject):
+    errors = validate_exercise(payload)
+    if errors: return response(400, {"ok": False, "message": "Invalid exercise.", "errors": errors})
+    key = str(payload.get("idempotencyKey", ""))
+    if not 8 <= len(key) <= 100: return response(400, {"ok": False, "message": "A valid idempotencyKey is required."})
+    request_hash = stable_hash({k: v for k, v in payload.items() if k != "idempotencyKey"})
+    replay = retry_result(subject, key, request_hash)
+    if replay and replay.get("exerciseId"):
+        item = TABLE.get_item(Key={"PK": f"EXERCISE#{replay['exerciseId']}", "SK": "METADATA"}).get("Item", {})
+        return response(200, {"ok": True, "item": {k: v for k, v in item.items() if k not in {"PK", "SK", "GSI1PK", "GSI1SK"}}, "idempotentReplay": True})
+    duplicate = find_duplicate_exercise(payload["name"])
+    if duplicate: return response(409, {"ok": False, "message": "An exercise with this name already exists.", "duplicate": duplicate})
+    exercise_id = str(uuid.uuid4())
+    timestamp = now()
+    item = {
+        "PK": f"EXERCISE#{exercise_id}", "SK": "METADATA", "entityType": "Exercise", "exerciseId": exercise_id,
+        "name": payload["name"].strip(), "category": payload["category"], "movementPattern": payload["movementPattern"].strip(),
+        "equipment": payload["equipment"].strip(), "measurementType": payload["measurementType"], "defaultUnit": payload["defaultUnit"].strip(),
+        "instructions": str(payload.get("instructions", "")).strip(), "tags": [], "aliases": [], "active": True,
+        "customExercise": True, "createdBy": subject, "createdAt": timestamp, "updatedAt": timestamp,
+        "GSI1PK": "LIBRARY#F4F#EXERCISE", "GSI1SK": f"NAME#{payload['name'].casefold()}#{exercise_id}"
+    }
+    idem = {"PK": f"IDEMPOTENCY#{subject}#{key}", "SK": "REQUEST", "requestHash": request_hash, "exerciseId": exercise_id, "createdAt": timestamp}
+    name_lock = {"PK": f"EXERCISE_NAME#{normalized_name(payload['name'])}", "SK": "UNIQUE", "exerciseId": exercise_id}
+    try:
+        CLIENT.transact_write_items(TransactItems=[
+            {"Put": {"TableName": TABLE_NAME, "Item": ddb(item), "ConditionExpression": "attribute_not_exists(PK)"}},
+            {"Put": {"TableName": TABLE_NAME, "Item": ddb(name_lock), "ConditionExpression": "attribute_not_exists(PK)"}},
+            {"Put": {"TableName": TABLE_NAME, "Item": ddb(idem), "ConditionExpression": "attribute_not_exists(PK)"}}
+        ])
+        return response(201, {"ok": True, "item": {k: v for k, v in item.items() if k not in {"PK", "SK", "GSI1PK", "GSI1SK"}}, "idempotentReplay": False})
+    except ClientError as error:
+        log_client_error(error)
+        replay = retry_result(subject, key, request_hash)
+        if replay and replay.get("exerciseId"):
+            saved = TABLE.get_item(Key={"PK": f"EXERCISE#{replay['exerciseId']}", "SK": "METADATA"}).get("Item", {})
+            return response(200, {"ok": True, "item": {k: v for k, v in saved.items() if k not in {"PK", "SK", "GSI1PK", "GSI1SK"}}, "idempotentReplay": True})
+        duplicate = find_duplicate_exercise(payload["name"])
+        if duplicate: return response(409, {"ok": False, "message": "An exercise with this name already exists.", "duplicate": duplicate})
+        return response(409, {"ok": False, "message": "This exercise creation request conflicts with an existing write."})
 
 def version_snapshot(payload, template_id, version, subject, timestamp):
     if isinstance(payload.get("sections"), list):
@@ -71,12 +130,13 @@ def lambda_handler(event, context):
     if not subject: return response(403, {"ok": False, "message": "OwnerAdmin access is required."})
     if TABLE is None: return response(503, {"ok": False, "message": "Training storage is not configured."})
     payload = body(event)
+    route = ((event or {}).get("requestContext") or {}).get("http", {}).get("path", "")
+    if route == "/exercises": return create_exercise(payload, subject)
     errors = validate_template(payload)
     if errors: return response(400, {"ok": False, "message": "Invalid workout template.", "errors": errors})
     key = str(payload.get("idempotencyKey", ""))
     if not 8 <= len(key) <= 100: return response(400, {"ok": False, "message": "A valid idempotencyKey is required."})
     request_hash = stable_hash({k: v for k, v in payload.items() if k != "idempotencyKey"})
-    route = ((event or {}).get("requestContext") or {}).get("http", {}).get("path", "")
     template_id = ((event or {}).get("pathParameters") or {}).get("templateId") or str(payload.get("templateId") or uuid.uuid4())
     timestamp = now()
     try:

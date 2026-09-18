@@ -5,11 +5,32 @@
   let activeSession = null;
   let autosave = null;
   let visibilityBound = false;
+  let recoveryBound = false;
+  let loadGeneration = 0;
+  let profileLoading = false;
+  let assignmentsLoading = false;
+  let profileFailed = false;
+  let assignmentsFailed = false;
 
   const escapeHtml = value => String(value ?? "").replace(/[&<>'"]/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character]);
-  const currentAssignment = () => assignments.find(item => item.status === "IN_PROGRESS") || assignments.find(item => item.status === "ASSIGNED") || null;
   const scoreTypes = Object.freeze({ load: "LOAD", reps: "REPS", bodyweight: "REPS", time: "TIME", hold_duration: "TIME", distance: "DISTANCE", calories: "CALORIES", completion: "COMPLETION", rounds: "ROUNDS", rounds_reps: "ROUNDS_REPS", weight_reps: "LOAD_REPS_BY_SET", load_reps_sets: "LOAD_REPS_BY_SET", load_reps_by_set: "LOAD_REPS_BY_SET", distance_time: "DISTANCE_TIME", duration_distance: "DURATION_DISTANCE" });
   const resultFields = Object.freeze({ LOAD: ["load"], REPS: ["reps"], TIME: ["durationMs"], DISTANCE: ["distance"], CALORIES: ["calories"], COMPLETION: ["completed"], ROUNDS: ["rounds"], ROUNDS_REPS: ["rounds", "extraReps"], LOAD_REPS_BY_SET: ["load", "reps"], DISTANCE_TIME: ["distance", "completionTimeMs"], DURATION_DISTANCE: ["durationMs", "distance"] });
+
+  function todayInProgramTimeZone(date = new Date()) {
+    const parts = Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(date).map(part => [part.type, part.value]));
+    return `${parts.year}-${parts.month}-${parts.day}`;
+  }
+
+  const todaysAssignments = () => assignments.filter(item => item.scheduledDate === todayInProgramTimeZone());
+  const profileName = () => profile?.displayName || [profile?.firstName, profile?.lastName].filter(Boolean).join(" ") || "Athlete";
+  const failureMarkup = (message, scope) => `<div class="empty-state" role="alert"><strong>${escapeHtml(message)}</strong><p>No workout or account data was changed.</p><div class="athlete-profile-actions"><button class="secondary-button" type="button" data-athlete-retry="${scope}">Retry</button><button class="text-button" type="button" data-athlete-sign-out>Sign Out</button></div></div>`;
+
+  function withTimeout(request, milliseconds = 15000) {
+    return new Promise((resolve, reject) => {
+      const timer = window.setTimeout(() => reject(new Error("Athlete request timed out.")), milliseconds);
+      Promise.resolve(request).then(value => { window.clearTimeout(timer); resolve(value); }, error => { window.clearTimeout(timer); reject(error); });
+    });
+  }
 
   function resultFor(scope, section, exercise, requestedType) {
     const scoreType = scoreTypes[String(requestedType || "reps").toLowerCase()] || "REPS";
@@ -36,18 +57,52 @@
   }
 
   function renderToday() {
-    const assignment = currentAssignment();
-    document.querySelector("#athlete-greeting").textContent = profile ? `Welcome, ${profile.firstName || "Athlete"}` : "Welcome";
-    document.querySelector("#athlete-today-card").innerHTML = assignment ? `<p class="eyebrow">Today's training</p><h2>${escapeHtml(assignment.workoutName || "Assigned workout")}</h2><p>${escapeHtml(assignment.summary || "Your assigned session is ready.")}</p><button class="primary-button" id="athlete-start-session" type="button">${assignment.status === "in_progress" ? "Continue workout" : "Start workout"}</button>` : '<div class="empty-state"><strong>No workout assigned today</strong><p>Your coach will post your next session here.</p></div>';
-    document.querySelector("#athlete-start-session")?.addEventListener("click", () => start(assignment));
+    document.querySelector("#athlete-greeting").textContent = profile ? `Welcome, ${profileName()}` : "Welcome";
+    const container = document.querySelector("#athlete-today-card");
+    if (assignmentsLoading) {
+      container.innerHTML = '<div class="empty-state"><strong>Loading today\'s training…</strong></div>';
+      return;
+    }
+    if (assignmentsFailed) {
+      container.innerHTML = failureMarkup("We couldn't load your workouts. Please try again.", "assignments");
+      return;
+    }
+    const today = todaysAssignments();
+    container.innerHTML = today.length ? today.map((assignment, index) => {
+      const status = String(assignment.status || "ASSIGNED").toUpperCase();
+      const action = status === "ASSIGNED" || status === "IN_PROGRESS" ? `<button class="primary-button" type="button" data-athlete-start-index="${index}">${status === "IN_PROGRESS" ? "Continue workout" : "Start workout"}</button>` : "";
+      return `<section class="${today.length > 1 ? "athlete-list-card" : ""}"><div><p class="eyebrow">Today's training${today.length > 1 ? ` ${index + 1} of ${today.length}` : ""}</p><h2>${escapeHtml(assignment.workoutName || "Assigned workout")}</h2><p>${escapeHtml(assignment.summary || "Your assigned session is ready.")}</p><small>${escapeHtml(status)}</small></div>${action}</section>`;
+    }).join("") : '<div class="empty-state"><strong>No workout assigned today</strong><p>Your coach will post your next session here.</p></div>';
   }
 
   function renderWorkouts() {
-    document.querySelector("#athlete-workout-list").innerHTML = assignments.length ? assignments.map(item => `<article class="athlete-list-card"><div><strong>${escapeHtml(item.workoutName || "Assigned workout")}</strong><small>${escapeHtml(item.status || "assigned")}</small></div><span>${escapeHtml(item.scheduledDate || "Unscheduled")}</span></article>`).join("") : '<div class="empty-state"><strong>No workouts yet</strong></div>';
+    const container = document.querySelector("#athlete-workout-list");
+    if (assignmentsLoading) {
+      container.innerHTML = '<div class="empty-state"><strong>Loading workouts…</strong></div>';
+    } else if (assignmentsFailed) {
+      container.innerHTML = failureMarkup("We couldn't load your workout list. Please try again.", "assignments");
+    } else {
+      container.innerHTML = assignments.length ? assignments.map(item => `<article class="athlete-list-card"><div><strong>${escapeHtml(item.workoutName || "Assigned workout")}</strong><small>${escapeHtml(item.status || "assigned")}</small></div><span>${escapeHtml(item.scheduledDate || "Unscheduled")}</span></article>`).join("") : '<div class="empty-state"><strong>No workouts yet</strong></div>';
+    }
   }
 
   function renderProfile() {
-    document.querySelector("#athlete-profile-card").innerHTML = profile ? `<h2>${escapeHtml([profile.firstName, profile.lastName].filter(Boolean).join(" ") || "Athlete")}</h2><p>${escapeHtml(profile.program || "F4F Athlete")}</p>` : "";
+    const container = document.querySelector("#athlete-profile-card");
+    if (profileLoading) {
+      container.innerHTML = '<div class="empty-state"><strong>Loading profile…</strong></div>';
+    } else if (profileFailed) {
+      container.innerHTML = failureMarkup("We couldn't load your profile. Please try again.", "profile");
+    } else {
+      container.innerHTML = profile ? `<h2>${escapeHtml(profileName())}</h2><p>${escapeHtml(profile.program || "F4F Athlete")}</p>` : "";
+    }
+  }
+
+  function renderAll() {
+    renderToday();
+    renderWorkouts();
+    renderProfile();
+    renderSession();
+    route();
   }
 
   function renderSession() {
@@ -89,13 +144,54 @@
     document.querySelector("#athlete-complete-session").disabled = true;
   }
 
+  async function handleShellClick(event) {
+    const retry = event.target.closest?.("[data-athlete-retry]");
+    if (retry) {
+      await initialize();
+      return;
+    }
+    if (event.target.closest?.("[data-athlete-sign-out]")) {
+      document.querySelector("#athlete-production-logout")?.click();
+      return;
+    }
+    const startButton = event.target.closest?.("[data-athlete-start-index]");
+    if (startButton) {
+      const assignment = todaysAssignments()[Number(startButton.dataset.athleteStartIndex)];
+      if (assignment) await start(assignment);
+    }
+  }
+
   async function initialize() {
-    const [profileResult, assignmentResult] = await Promise.all([window.F4F_API.athleteProfile(), window.F4F_API.athleteAssignments()]);
-    profile = profileResult.profile; assignments = assignmentResult.items || [];
-    renderToday(); renderWorkouts(); renderProfile(); renderSession(); route();
+    const generation = ++loadGeneration;
+    profileLoading = true;
+    assignmentsLoading = true;
+    profileFailed = false;
+    assignmentsFailed = false;
+    renderAll();
+    const [profileResult, assignmentResult] = await Promise.allSettled([withTimeout(window.F4F_API.athleteProfile()), withTimeout(window.F4F_API.athleteAssignments())]);
+    if (generation !== loadGeneration) return;
+    profileLoading = false;
+    assignmentsLoading = false;
+    if (profileResult.status === "fulfilled") {
+      profile = profileResult.value.profile || null;
+    } else {
+      profile = null;
+      profileFailed = true;
+    }
+    if (assignmentResult.status === "fulfilled") {
+      assignments = assignmentResult.value.items || [];
+    } else {
+      assignments = [];
+      assignmentsFailed = true;
+    }
+    renderAll();
     if (!visibilityBound) {
       document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && autosave) autosave.flush(); });
       visibilityBound = true;
+    }
+    if (!recoveryBound) {
+      document.querySelector("#athlete-production-shell").addEventListener("click", handleShellClick);
+      recoveryBound = true;
     }
   }
   window.F4F_ATHLETE_PRODUCTION = Object.freeze({ initialize, route });
